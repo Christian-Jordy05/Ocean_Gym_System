@@ -1,0 +1,38 @@
+services:
+  react:
+    container_name: ocean_gym_react
+    image: ocean_gym_react  
+    build:
+      context: ./OCean_gym_react
+    volumes:
+      - ./OCean_gym_react:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    
+  ocean_gym_django:  
+    image: ocean_gym_django 
+    container_name: ocean_gym_django
+    build:
+      context: ./OCean_gym_django
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./OCean_gym_django:/app
+    command: ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Ocean_Gym
+    volumes:
+      - django_react_data:/data/db
+      - ./dumps:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  django_react_data:
