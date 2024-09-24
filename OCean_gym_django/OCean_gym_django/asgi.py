@@ -1,5 +1,5 @@
 """
-ASGI config for djangoApp project.
+ASGI config for OCean_gym_django project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoApp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'OCean_gym_django.settings')
 
 application = get_asgi_application()
