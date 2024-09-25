@@ -2,11 +2,12 @@ import './stylelogin.css'
 // import Swal from 'sweetalert2';
 import { GetDataUsers } from '../../services/server';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Loginfor() {
   const [Email,SetName] = useState("");
   const [Password,SetPass] = useState("");
-  // const navegar = useNavigate("");
+  const navegar = useNavigate("");
   
   // const ref = useRef("")
 
@@ -22,9 +23,9 @@ function Loginfor() {
     const user = Get.find(e => Email === e.email && Password === e.password);
   
     if (user) {
-      alert("usuario existe");
+      alert("inicio de sesion correcto");
       // Swal.fire("Bienvenido", "success");
-      // navegar("/home");
+      navegar("/home");
     } else {
       alert("Usuario o contraseña incorrectos.");
     }

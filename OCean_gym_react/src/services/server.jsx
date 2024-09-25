@@ -12,24 +12,30 @@ const GetDataUsers = async () => {
 
 //////////////////////////////////////////////////////////////////////////////
 
-const postUsers = async (newUser) => {
+
+const PostUsers = async (inpunUser,inpuntPass,inputGmail) => {
+  const url = 'http://localhost:8000/api/client/';
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',  // Asegúrate de este encabezado
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: newUser.name, age: newUser.age, mail: newUser.mail, password: newUser.password }),
+      body: JSON.stringify({ 
+      email: inputGmail,    
+      name: inpunUser,    
+      password: inpuntPass,})
     });
     if (!response.ok) {
-      throw new Error('Error en la solicitud POST');
+      throw new Error(`Error en la solicitud POST: ${response.status} ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(data);
+    console.log('Usuario registrado correctamente:', data);
   } catch (error) {
-    console.error('ERROR POST:', error);
+    console.error('ERROR POST:', error.message);
   }
 };
+
 
 
 
@@ -89,4 +95,4 @@ const deleteUsers = async (id) => {
 // deleteToy(1);  // Elimina el juguete con ID 1
 
 
-export { GetDataUsers, postUsers, updateUsers, deleteUsers }
+export { GetDataUsers, PostUsers, updateUsers, deleteUsers }

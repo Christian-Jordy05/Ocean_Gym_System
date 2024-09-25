@@ -3,39 +3,38 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff;
+    background-color: #F0F0F0;
 }
-
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #E1E6F8;
 }
-
 .login-box {
     background-color: #fff;
-    padding: 60px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 450px;
+    width: 350px;
 }
-
-h1 {
+.logo {
+    width: 100px;
     margin-bottom: 20px;
-    font-size: 24px;
+}
+h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
     color: #333;
 }
-
 form {
     display: flex;
     flex-direction: column;
 }
-
 input {
     margin-bottom: 15px;
     padding: 10px;
@@ -43,41 +42,27 @@ input {
     border-radius: 5px;
     font-size: 16px;
 }
-
+.forgot-password {
+    margin-bottom: 15px;
+    text-align: right;
+}
+.forgot-password a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #007BFF;
+}
 .btn {
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #0056B3;
+    color: #fff;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 10px;
 }
-
 .btn:hover {
     background-color: #004494;
 }
-
-
-#titulogym{
-color: blue;
-
-}
-
-#titulocorreo{
-margin-left: -160px;
-font-size: 15px; 
-color: #000000; 
-font-family: Arial, Helvetica, sans-serif;
-}
-#titulocontra{
-margin-left: -196px;
-font-size: 15px; 
-
-}
-
-.btnsession{
-background-color: #000094;
-border-radius: 30px;  
-color: #f0f0f0;
+#logo1{
+width: 130px;
 }

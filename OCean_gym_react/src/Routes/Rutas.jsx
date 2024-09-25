@@ -1,26 +1,19 @@
-import  { Routes,Route} from "react-router-dom"
-// import Registro from "../pages/Registro"
-import Login from "../pages/Login"
-// import Home from "../pages/Home"
-// import Contact from "../pages/Contact"
-// import Admi from "../pages/Admi"
-// import Catalogo from "../pages/Catalogo"
+import { Routes, Route } from 'react-router-dom';
+import PagSignUp from '../pages/pag_sign_up';
+import PagLogin from '../pages/PagLogin';
+import PagHome from '../pages/PagHome';
 
-const Rutas = () => { // Todas mi rutas para navegar entre las diferentes paginas 
-
+const Rutas = () => { 
   return (
-    <div>
+    <>
       <Routes>
-             {/* <Route path="/registro" element={<Registro />} /> */}
-             <Route path="/login" element={<Login />} />
-             {/* <Route path="/" element={<Home />} />
-             <Route path="/home" element={<Home />} />
-             <Route path="/contacto" element={<Contact/>} />
-             <Route path="/administracion" element={<Admi/> } />
-             <Route path="/catalogo" element={<Catalogo/> } /> */}
+        <Route path="/Login" element={<PagLogin />} /> 
+        <Route path="/Sign_up" element={<PagSignUp />} />
+        <Route path="/Home" element={<PagHome />} />
+
       </Routes>
-  </div>
-  )
+    </>
+  );
 }
 
-export default Rutas
+export default Rutas;
