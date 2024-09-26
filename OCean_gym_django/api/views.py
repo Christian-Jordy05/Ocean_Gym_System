@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Client  # Nombre del modelo corregido
+from .models import Client  
 from .serializers import ClientSerializer
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
@@ -49,3 +49,5 @@ def client_detail(request, pk=None):
                 return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
             except Client.DoesNotExist:
                 return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
