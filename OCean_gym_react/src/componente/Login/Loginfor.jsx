@@ -3,6 +3,7 @@ import './stylelogin.css'
 import { GetDataUsers } from '../../services/server';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
 
 function Loginfor() {
   const [Email,SetName] = useState("");
@@ -36,14 +37,15 @@ function Loginfor() {
   return (
     <div className="container">
       <div className="login-box">
-        <h1 id='titulogym'>Ocean Gym</h1> <br /> <br />
-        <form>
-          <p id='titulocorreo'>Correo Electronico</p>
-          <input type="text" placeholder="Ingrese Correo Electronico" value={Email} onChange={(e) => SetName(e.target.value)}  />
-          <p id='titulocontra'>Contraseña</p>
-          <input type="password" placeholder="Contraseña" value={Password} onChange={(e) => SetPass(e.target.value)}/> 
-          <button type="submit" className="btnsession" onClick={Login}>INICIAR SESSION</button> 
-          <button type="button" className="btn">Join now</button>
+        <img className='logo_Ocean_gym' src={ocean_gym_transparent} alt="imf" />
+        <form className='input_y_boton'>
+          {/* <p id='titulocorreo'>Correo Electronico</p> */}
+          <input type="text" className='Input_de_correo' placeholder="Ingrese Correo Electronico" value={Email} onChange={(e) => SetName(e.target.value)}  />
+          {/* <p id='titulocontra'>Contraseña</p> */}
+          <input type="password" className='Input_de_contraseña'  placeholder="Contraseña" value={Password} onChange={(e) => SetPass(e.target.value)}/>
+          <a href="#" className='letra_de_olvidar_contraseña'>Olvidaste la contraseña?</a>
+          <button type="submit" className="btnsession" onClick={Login}>Iniciar Sesion</button> 
+          {/* <button type="button" className="btn">Join now</button> */}
         </form>
       </div>
     </div>

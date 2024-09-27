@@ -1,7 +1,7 @@
 from django.db import models
 
 class Client(models.Model):
-    id_cliente = models.AutoField(primary_key=True)  # Definición manual del campo ID
+    id_cliente = models.AutoField(primary_key=True) 
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
     apellido = models.CharField(max_length=200, null=True, blank=True)
@@ -26,22 +26,9 @@ class Administrador(models.Model):
     
     
 class Venta(models.Model):
-    id_venta = models.AutoField(primary_key=True)  # Definición manual del campo ID
+    id_venta = models.AutoField(primary_key=True)
     fecha_venta = models.DateTimeField(auto_now_add=True)
     total = models.FloatField()
-    id_cliente = models.ForeignKey('Client', on_delete=models.CASCADE)
-    id_administrador = models.ForeignKey('Administrador', on_delete=models.SET_NULL, null=True, blank=True)
-    def __str__(self):
-        return f"Venta {self.id_venta} - {self.fecha_venta}"
-
-
-
-
-
-
-
-
-
-
-
+    id_cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
+    id_administrador = models.ForeignKey(Administrador, on_delete=models.SET_NULL, null=True, blank=True)
 
