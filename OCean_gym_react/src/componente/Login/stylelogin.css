@@ -52,11 +52,12 @@ form {
 }
 
 input {
-    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1.5px solid black;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 0px;
+    margin-bottom: 20px;
+    outline: none;
 }
 
 /* .Input_de_correo{
@@ -74,7 +75,7 @@ aun nose usa
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 11px;
+    margin-top: 13px;
 }
 
 .btnsession:hover {
