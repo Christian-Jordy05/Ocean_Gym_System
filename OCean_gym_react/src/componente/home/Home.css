@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #003366;
+    color: white;
+  }
+  
+  .navbar h1 {
+    margin-left: 10px;
+  }
+  
+  .navbar ul {
+    display: flex;
+    list-style: none;
+  }
+  
+  .navbar ul li {
+    margin: 0 15px;
+  }
+  
+  .navbar ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .main-section {
+    position: relative;
+    height: 500px;
+    background-image: url('https://via.placeholder.com/1920x500'); /* Aquí se debería poner la imagen real */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+  
+  .overlay h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .overlay p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .overlay button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .contact-section {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .contact-info {
+    flex: 1;
+  }
+  
+  .social-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .social-links ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  .social-links ul li {
+    margin: 0 10px;
+  }
+  
+  .social-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+  
+#logoinsta{
+width: 30px;
+
+}
+
+#logofacebook{
+width: 30px;
+
+}
+
+#editcorreo{
+color: #ffffff;  
+}
+.subrayado{
+  text-decoration: none;
+}

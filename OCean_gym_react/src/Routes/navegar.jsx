@@ -10,6 +10,9 @@ function Navegar() {
       <Link to="/sign_up">
         <button id='signup-btn' type="button" name="signup">Sign Up</button>
       </Link>
+      <Link to="/Home">
+        <button id='Home-btn' type="button" name="Home">Home</button>
+      </Link>
     </div>
   );
 }

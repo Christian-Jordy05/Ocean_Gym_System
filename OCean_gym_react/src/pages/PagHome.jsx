@@ -1,4 +1,3 @@
-import React from 'react'
 import Home from '../componente/home/Home'
 
 function PagHome() {
