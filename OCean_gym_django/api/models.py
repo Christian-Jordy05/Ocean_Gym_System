@@ -31,3 +31,4 @@ class Venta(models.Model):
     total = models.FloatField()
     id_cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     id_administrador = models.ForeignKey(Administrador, on_delete=models.SET_NULL, null=True, blank=True)
+
