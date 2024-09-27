@@ -1,4 +1,4 @@
-const url = 'http://localhost:8000/api/client/';
+const url = 'http://localhost:8000/client/';
 
 const GetDataUsers = async () => {
   try {
@@ -14,7 +14,7 @@ const GetDataUsers = async () => {
 
 
 const PostUsers = async (inpunUser,inpuntPass,inputGmail) => {
-  const url = 'http://localhost:8000/api/client/';
+  const url = 'http://localhost:8000/client/';
   try {
     const response = await fetch(url, {
       method: 'POST',

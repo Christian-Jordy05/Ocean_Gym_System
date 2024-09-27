@@ -10,6 +10,8 @@ const Rutas = () => {
         <Route path="/Login" element={<PagLogin />} /> 
         <Route path="/Sign_up" element={<PagSignUp />} />
         <Route path="/Home" element={<PagHome />} />
+        <Route path="/" element={<PagHome />} />
+
 
       </Routes>
     </>

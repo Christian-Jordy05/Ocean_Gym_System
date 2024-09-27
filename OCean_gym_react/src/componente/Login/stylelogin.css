@@ -23,6 +23,12 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 450px;
+    height: 500px;
+}
+
+.logo_Ocean_gym{
+    width: 130px;
+    height: 132px;
 }
 
 h1 {
@@ -44,17 +50,25 @@ input {
     font-size: 16px;
 }
 
-.btn {
-    background-color: #007bff;
+/* .Input_de_correo{
+aun nose usa
+} */
+
+.Input_de_contraseña{
+    margin-top: 10px;
+}
+
+.btnsession {
+    background-color: rgb(3, 81, 164);
     color: #ffffff;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-top: 11px;
 }
 
-.btn:hover {
+.btnsession:hover {
     background-color: #004494;
 }
 
@@ -76,8 +90,18 @@ font-size: 15px;
 
 }
 
-.btnsession{
-background-color: #000094;
-border-radius: 30px;  
-color: #f0f0f0;
+
+
+.input_y_boton{
+height: 250px
+}
+
+.letra_de_olvidar_contraseña{
+    margin-bottom: 15px;
+    text-align: right;
+}
+.letra_de_olvidar_contraseña a {
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(2, 63, 128);
 }

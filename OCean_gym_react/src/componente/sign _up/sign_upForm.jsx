@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sign_style.css';
-import imggym from '../img/imggym.png';
+import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
 import { PostUsers } from '../../services/server';
 import { GetDataUsers } from '../../services/server';
 // import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -35,19 +35,18 @@ function Registrofor() {
   return (
     <div className="container">
       <div className="login-box">
-        <img id='logo1' src={imggym} alt="Gym" />
-        <h2>Login to your account</h2>
+        <img id='logo1' src={ocean_gym_transparent} alt="Gym" />
+        {/* <h2>Login to your account</h2> */}
         <form onSubmit={regis}>
           {/* Input para el nombre */}
-          <input type="text" value={inpunUser} onChange={(e) => setUser(e.target.value)} placeholder="Enter your name" />
+          <input type="text" value={inpunUser} onChange={(e) => setUser(e.target.value)} placeholder="Ingrese su nombre" />
           {/* Input para el correo electrónico */}
-          <input type="email" value={inputGmail} onChange={(e) => setGmail(e.target.value)} placeholder="Enter your email" />
+          <input type="email" value={inputGmail} onChange={(e) => setGmail(e.target.value)} placeholder="Ingrese su gmail" />
           {/* Input para la contraseña */}
-          <input type="password" value={inpuntPass} onChange={(e) => setPasswor(e.target.value)} placeholder="Enter your password" />
+          <input type="password" value={inpuntPass} onChange={(e) => setPasswor(e.target.value)} placeholder="Ingrese su contraseña" />
           <div className="forgot-password">
-            <a href="#">Forgot password?</a>
           </div>
-          <button type="submit" className="btn">Login</button>
+          <button type="submit" className="btn">Registrarse</button>
         </form>
       </div>
     </div>
