@@ -11,11 +11,19 @@ const MainSection = () => (
   </section>
 );
 
-const ContactSection = () => (
+const ContactSection = () => { 
+  const direccion = "300mts al Norte de la entrada del Boli,Puntarenas,Costa Rica"; // Tu dirección
+  const url = `https://www.google.com/maps/place/Ocean+Gym/@9.9802644,-84.7577344,18.3z/data=!4m6!3m5!1s0x8fa0316cd1bda3f9:0xb6112bf209eefd7b!8m2!3d9.9802966!4d-84.7574158!16s%2Fg%2F11t0rlkxnn?entry=ttu&g_ep=EgoyMDI0MDkyNC4wIKXMDSoASAFQAw%3D%3D${encodeURIComponent(direccion)}`;
+
+  return (
   <section className="contact-section">
     <div className="contact-info">
       <h3>Contactanos!</h3>
-      <p>300mts al Norte de la entrada del Boli,Puntarenas, Costa Rica</p>
+      <p>
+          <a href={url} target="_blank" rel="noopener noreferrer" className='direccionOceangym'>
+            {direccion}
+          </a>
+      </p>
       <p>Telefono: (506) 8456-7890</p>
       <a href="mailto:oceangympuntarenas@gmail.com" className='subrayado'><p id='editcorreo'>Correo: oceangympuntarenas@gmail</p></a>
     </div>
@@ -26,17 +34,20 @@ const ContactSection = () => (
         <li><a href="https://www.instagram.com/ocean_gym0?igsh=MTFyeDlxZGxkZGRhaA=="><img id='logoinsta' src={instalogo} alt="insta"/></a></li>
         <li><a href="https://wa.me/50686647624"><img id='logowhatsApp' src={Whatsapp} alt="WhatsApp"/></a></li>
       </ul>
-    </div>
+    </div>    
   </section>
-);
-function App() {
+ );
+};
+function Home() {
+ 
   return (
     <div className="App">
       <MainSection />
       <ContactSection />
     </div>
+    
   );
-}
+};
 
-export default App;
+export default Home;
 
