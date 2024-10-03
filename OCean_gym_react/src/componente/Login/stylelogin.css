@@ -115,3 +115,11 @@ height: 250px
     font-size: 14px;
     color: rgb(2, 63, 128);
 }
+
+.letra_de_olvidar_contraseña{
+    text-decoration: none;
+    color: rgb(2, 63, 128);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+}
