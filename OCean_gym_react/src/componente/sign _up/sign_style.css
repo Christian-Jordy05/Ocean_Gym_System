@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body {
-    background-size: cover;
+    /* background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     width: 100vw;
@@ -15,7 +15,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: auto;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif; */
 }
 
 .Input_Nombre,.Input_Contraseña,.Input_Gmail{

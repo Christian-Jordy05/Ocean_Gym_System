@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sign_style.css';
-import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
+import ocean_gym_transparent from '../img/ocean_gym.png';
 import { PostUsers } from '../../services/server';
 import { GetDataUsers } from '../../services/server';
 import Swal from 'sweetalert2';

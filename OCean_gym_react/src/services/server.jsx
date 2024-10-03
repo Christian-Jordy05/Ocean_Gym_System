@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2'; // Importar Swal aquí
+
 const url = 'http://localhost:8000/client/';
 
 const GetDataUsers = async () => {
@@ -12,6 +12,7 @@ const GetDataUsers = async () => {
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
   const url = 'http://localhost:8000/client/';
   try {
@@ -56,7 +57,7 @@ const UpdateUsers = async (userId, email, name, newPassword) => {
     }
 
     const data = await response.json();
-    console.log(data);  // Datos actualizados
+    console.log(data);  
   } catch (error) {
     console.error('ERROR PUT:', error);
   }
@@ -80,7 +81,6 @@ const deleteUsers = async (id) => {
   }
 };
 
-// Ejemplo de uso
-// deleteToy(1);  // Elimina el juguete con ID 1
+
 
 export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers };

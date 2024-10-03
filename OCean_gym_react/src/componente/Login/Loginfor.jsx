@@ -3,7 +3,7 @@ import { GetDataUsers, UpdateUsers} from '../../services/server';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
+import ocean_gym_transparent from '../img/ocean_gym.png';
 
 function Loginfor() {
   const [email, setEmail] = useState("");

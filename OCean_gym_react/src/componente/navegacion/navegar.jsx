@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Nav.css'
-import ocean_gym_transparent from '../componente/img/ocean_gym_transparent.png'
+import '../navegacion/Nav.css'
+import ocean_gym_transparent from '../img/ocean_gym.png'
 
 function Navegar() {
   return (
@@ -19,6 +19,10 @@ function Navegar() {
         <button id='home-btn' type="button" name="home">Home</button>
       </Link>
 
+       {/* BOTON PARA DIRIGIR HOME */}
+       <Link to="/Contacto">
+        <button id='home-btn' type="button" name="home">contacto</button>
+      </Link>
 
       {/* BOTON PARA DIRIGIRLO A LOGIN  */}
       <Link to="/login">
