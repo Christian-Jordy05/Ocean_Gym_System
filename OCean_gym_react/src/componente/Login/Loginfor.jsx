@@ -1,10 +1,10 @@
-import { GetDataUsers } from '../../services/server';
 import './stylelogin.css';
 import { GetDataUsers, UpdateUsers} from '../../services/server';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
+import ocean_gym_transparent from '../img/ocean_gym.png';
+
 function Loginfor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,18 +13,12 @@ function Loginfor() {
   const login = async (e) => {
     e.preventDefault();
 
-  
-
-    if (Email.trim() === "" || Password.trim() === "") {
-      Swal("Por favor, complete todos los campos.")
-
     if (email.trim() === "" || password.trim() === "") {
       Swal.fire({
         title: 'Error!',
         text: 'Debes de completar todos los datos',
         icon: 'error',
       });
-
       return;
     }
 
@@ -32,12 +26,6 @@ function Loginfor() {
     const user = response.find((e) => email === e.email && password === e.password);
 
     if (user) {
-
-      Swal.fire("Bienvenido", "success");
-      navegar("/home");
-    } else {
-      Swal("Usuario o contraseña incorrectos.")
-
       Swal.fire({
         title: 'Correcto!',
         text: 'Se inició sesión correctamente',
@@ -50,7 +38,6 @@ function Loginfor() {
         text: 'El usuario o la contraseña son incorrectos',
         icon: 'error',
       });
-
     }
   };
 
