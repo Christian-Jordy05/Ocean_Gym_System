@@ -1,19 +1,19 @@
+
 const url = 'http://localhost:8000/client/';
 
 const GetDataUsers = async () => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    return data // Hay que traer de una vez el nombre del array, PERROS!!!
+    return data;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 };
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-
-const PostUsers = async (inpunUser,inpuntPass,inputGmail) => {
+const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
   const url = 'http://localhost:8000/client/';
   try {
     const response = await fetch(url, {
@@ -22,9 +22,10 @@ const PostUsers = async (inpunUser,inpuntPass,inputGmail) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 
-      email: inputGmail,    
-      name: inpunUser,    
-      password: inpuntPass,})
+        email: inputGmail,    
+        name: inpunUser,    
+        password: inpuntPass,
+      }),
     });
     if (!response.ok) {
       throw new Error(`Error en la solicitud POST: ${response.status} ${response.statusText}`);
@@ -35,22 +36,20 @@ const PostUsers = async (inpunUser,inpuntPass,inputGmail) => {
     console.error('ERROR POST:', error.message);
   }
 };
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-////////////////////////////////////////////////////////////////////////////
-
-
-
-const updateUsers = async (id, updatedToy) => {
+const UpdateUsers = async (userId, email, name, newPassword) => {
   try {
-    const response = await fetch(url + id + '/', {
+    const response = await fetch(url + userId + '/', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedToy),  // Enviar los datos actualizados
+      body: JSON.stringify({
+        email,
+        name,
+        password: newPassword,
+      }),
     });
 
     if (!response.ok) {
@@ -58,21 +57,12 @@ const updateUsers = async (id, updatedToy) => {
     }
 
     const data = await response.json();
-    console.log(data);  // Datos actualizados
+    console.log(data);  
   } catch (error) {
     console.error('ERROR PUT:', error);
   }
 };
-
-// Ejemplo de uso
-// updateToy(1, { name: 'New Toy Name', description: 'Updated description' });
-
-
-
-
-////////////////////////////////////////////////////////////////////////////
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 const deleteUsers = async (id) => {
   try {
@@ -85,14 +75,12 @@ const deleteUsers = async (id) => {
     if (!response.ok) {
       throw new Error('Error en la solicitud DELETE');
     }
-    console.log('User deleted successfully');
+    console.log('Usuario eliminado correctamente');
   } catch (error) {
     console.error('ERROR DELETE:', error);
   }
 };
 
-// Ejemplo de uso
-// deleteToy(1);  // Elimina el juguete con ID 1
 
 
-export { GetDataUsers, PostUsers, updateUsers, deleteUsers }
+export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers };
