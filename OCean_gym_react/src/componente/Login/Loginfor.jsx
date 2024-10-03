@@ -1,5 +1,5 @@
 import './stylelogin.css'
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { GetDataUsers } from '../../services/server';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ function Loginfor() {
     e.preventDefault();
   
     if (Email.trim() === "" || Password.trim() === "") {
-      alert("Por favor, complete todos los campos.");
+      Swal("Por favor, complete todos los campos.")
       return;
     }
   
@@ -24,16 +24,13 @@ function Loginfor() {
     const user = Get.find(e => Email === e.email && Password === e.password);
   
     if (user) {
-      alert("inicio de sesion correcto");
-      // Swal.fire("Bienvenido", "success");
+      Swal.fire("Bienvenido", "success");
       navegar("/home");
     } else {
-      alert("Usuario o contraseña incorrectos.");
+      Swal("Usuario o contraseña incorrectos.")
     }
   };
-  
 
-  
   return (
     <div className="container">
       <div className="login-box">

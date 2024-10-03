@@ -4,9 +4,7 @@ import './sign_style.css';
 import ocean_gym_transparent from '../img/ocean_gym_transparent.png';
 import { PostUsers } from '../../services/server';
 import { GetDataUsers } from '../../services/server';
-// import Swal from 'sweetalert2/dist/sweetalert2.js'
-// import 'sweetalert2/src/sweetalert2.scss'
-
+import swal from "sweetalert2";
 
 function Registrofor() {
   const navigate = useNavigate();
@@ -17,18 +15,18 @@ function Registrofor() {
   const regis = async (e) => {
     e.preventDefault();
     if (inpunUser.trim() === "" || inpuntPass.trim() === "" || inputGmail.trim() === "") {
-      alert("no dejes espacios")
+      swal("no dejes espacios")
      
       return;
     }
     const datos = await GetDataUsers();
     const usuarioExiste = datos.find(e => e.name === inpunUser || e.email === inputGmail);
     if (usuarioExiste) {
-      alert("ya existe")
+      swal("usuario ya existe");
       return;
     }
     PostUsers(inpunUser, inpuntPass, inputGmail);
-    alert("Registro correctamente");
+    swal("Registro correctamente")
     navigate('/login');
   };
 
