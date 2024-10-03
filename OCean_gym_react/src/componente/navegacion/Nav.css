@@ -42,7 +42,7 @@
 .conte_de_btn_register_iniciar{
     text-align: right;
     display: grid;
-    grid-template-columns: 400px 600px 110px;
+    grid-template-columns: 350px 120px 480px 100px;
     gap: 10px;
     width: 200px;
     margin-left: 130px;
@@ -58,6 +58,6 @@
     margin-top: -20px;
 }
 .color_fondo_de_img{
-    background-color: white;
+    /* background-color: white; */
     width: 130px;
 }
