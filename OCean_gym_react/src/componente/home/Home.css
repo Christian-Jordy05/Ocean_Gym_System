@@ -10,33 +10,7 @@
     color: #333;
   }
   
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #003366;
-    color: white;
-  }
-  
-  .navbar h1 {
-    margin-left: 10px;
-  }
-  
-  .navbar ul {
-    display: flex;
-    list-style: none;
-  }
-  
-  .navbar ul li {
-    margin: 0 15px;
-  }
-  
-  .navbar ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  
+
   .main-section {
     position: relative;
     height: 500px;

@@ -1,3 +1,5 @@
+
+
 .Conteiner_del_nav{
     background-color: #004494;
     height: 70px;
@@ -40,7 +42,7 @@
 .conte_de_btn_register_iniciar{
     text-align: right;
     display: grid;
-    grid-template-columns: 400px 600px 120px;
+    grid-template-columns: 400px 600px 110px;
     gap: 10px;
     width: 200px;
     margin-left: 130px;
