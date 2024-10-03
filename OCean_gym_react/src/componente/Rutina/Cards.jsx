@@ -1,8 +1,9 @@
-import './cards.css'
-import imgfit from '../img/imgfit.png'
-import imginfo from '../img/imginfo.png'
+import './cards.css';
+import imgfit from '../img/imgfit.png';
+import imginfo from '../img/imginfo.png';
+import { Link } from 'react-router-dom';
 
-const Card = ({ title, info, image }) => {
+const Cards = ({ title, info, image }) => {
   return (
     <div className="card">
       <img src={image} alt={title} className="card-image" />
@@ -18,12 +19,14 @@ const App = () => {
   return (
     <div className="app">
       <div className="cards-container">
-        <Card 
-          title="RUTINA" 
-          image={imgfit}
-        />
-        <Card 
-          title="INFORMACIÓN" 
+        <Link to="/Seleccion_de_Rutinas">
+          <Cards
+            title="RUTINA"
+            image={imgfit}
+          />
+        </Link>
+        <Cards
+          title="INFORMACIÓN"
           image={imginfo}
         />
       </div>
@@ -31,4 +34,5 @@ const App = () => {
   );
 };
 
+export { Cards };
 export default App;
