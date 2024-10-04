@@ -39,113 +39,74 @@ function SeleccionDeRutinas() {
 
   const verificacion = () => {
     if (sexoSeleccionado && nivelSeleccionado) {
+      let ruta = '';
       if (sexoSeleccionado === "hombre") {
-        if (nivelSeleccionado === "principiante") {
-          navigate('/Rutinas_Principiante')
-        } else if (nivelSeleccionado === "intermedio") {
-          navigate('/Rutinas_Intermedio')
-        } else {
-          navigate('/Rutinas_Experto')
-        }
+        ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante' : nivelSeleccionado === "intermedio" ? '/Rutinas_Intermedio' : '/Rutinas_Experto';
       } else {
-        if (nivelSeleccionado === "principiante") {
-          navigate('/Rutinas_Principiante_mujer')
-        } else if (nivelSeleccionado === "intermedio") {
-          navigate('/Rutinas_Principiante_mujer')
-        } else {
-          navigate('/Rutinas_Principiante_mujer')
-        }
+        ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante_mujer' : nivelSeleccionado === "intermedio" ? '/Rutinas_Intermedio_mujer' : '/Rutinas_Experto_mujer';
       }
+      navigate(ruta);
     }
   };
 
   return (
     <div className="contenedor">
+      <h1 className="nombre_del_titulo">Elige tu Camino</h1>
+
       {mostrarImagenes && (
         <>
-          <h1 className="nombre_del_titulo">Sexo</h1>
+          <h2 className="nombre_del_titulo">Selecciona tu Género</h2>
           <div className="conte_de_imagenes">
             <div
-              className={`contenedor_imagen_hombre ${
-                imagenSeleccionada === Img_hombre ? "oculto" : ""
-              }`}
+              className={`contenedor_imagen_hombre ${imagenSeleccionada === Img_hombre ? "seleccionado" : ""}`}
               onClick={() => seleccionarImagen(Img_hombre)}
             >
-              <img
-                className="imagen_hombre"
-                src={Img_hombre}
-                alt="Imagen de hombre"
-              />
+              <img className="imagen_hombre" src={Img_hombre} alt="Imagen de hombre" />
+              <span className="imagen_label">Hombre</span>
             </div>
 
+            {imagenSeleccionada && (
+              <div className="contenedor_central">
+                <div className="envoltorio_imagen_seleccionada">
+                  <img className="imagen_seleccionada" src={imagenSeleccionada} alt="Imagen seleccionada" />
+                </div>
+              </div>
+            )}
+
             <div
-              className={`contenedor_imagen_mujer ${
-                imagenSeleccionada === Img_mujer ? "oculto" : ""
-              }`}
+              className={`contenedor_imagen_mujer ${imagenSeleccionada === Img_mujer ? "seleccionado" : ""}`}
               onClick={() => seleccionarImagen(Img_mujer)}
             >
-              <img
-                className="imagen_mujer"
-                src={Img_mujer}
-                alt="Imagen de mujer"
-              />
+              <img className="imagen_mujer" src={Img_mujer} alt="Imagen de mujer" />
+              <span className="imagen_label">Mujer</span>
             </div>
           </div>
         </>
       )}
 
-      {imagenSeleccionada && mostrarImagenes && (
-        <div className="contenedor_central">
-          <div className="envoltorio_imagen_seleccionada">
-            <img
-              className="imagen_seleccionada"
-              src={imagenSeleccionada}
-              alt="Imagen seleccionada"
-            />
-          </div>
-        </div>
-      )}
-
       {mostrarNiveles && (
-        <div className="contenedor_niveles">
-          <div
-            className="nivel_contenedor"
-            onClick={() => seleccionarNivel("principiante")}
-          >
-            <img
-              className="imagen_nivel"
-              src={img_principiante}
-              alt="Principiante"
-            />
-            <div className="texto_sobre_imagen">
-              <p className="titulo_nivel">PRINCIPIANTE</p>
-            </div>
+        <>
+          <h2 className="nombre_del_titulo">Define tu Desafío</h2>
+          <div className="contenedor_niveles">
+            {[
+              { nivel: "principiante", imagen: img_principiante, titulo: "PRINCIPIANTE" },
+              { nivel: "intermedio", imagen: img_intermedio, titulo: "INTERMEDIO" },
+              { nivel: "experto", imagen: img_experto, titulo: "EXPERTO" }
+            ].map((item) => (
+              <div
+                key={item.nivel}
+                className={`nivel_contenedor ${nivelSeleccionado === item.nivel ? "seleccionado" : ""}`}
+                onClick={() => seleccionarNivel(item.nivel)}
+              >
+                <img className="imagen_nivel" src={item.imagen} alt={item.titulo} />
+                <div className="texto_sobre_imagen">
+                  <p className="titulo_nivel">{item.titulo}</p>
+                  <p className="detalles_nivel">Selecciona para personalizar tu experiencia</p>
+                </div>
+              </div>
+            ))}
           </div>
-
-          <div
-            className="nivel_contenedor"
-            onClick={() => seleccionarNivel("intermedio")}
-          >
-            <img
-              className="imagen_nivel"
-              src={img_intermedio}
-              alt="Intermedio"
-            />
-            <div className="texto_sobre_imagen">
-              <p className="titulo_nivel">INTERMEDIO</p>
-            </div>
-          </div>
-
-          <div
-            className="nivel_contenedor"
-            onClick={() => seleccionarNivel("experto")}
-          >
-            <img className="imagen_nivel" src={img_experto} alt="Experto" />
-            <div className="texto_sobre_imagen">
-              <p className="titulo_nivel">EXPERTO</p>
-            </div>
-          </div>
-        </div>
+        </>
       )}
 
       {mostrarBoton && (
@@ -162,4 +123,5 @@ function SeleccionDeRutinas() {
     </div>
   );
 }
+
 export default SeleccionDeRutinas;
