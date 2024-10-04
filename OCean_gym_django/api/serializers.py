@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Client, Administrador, Venta
+from .models import Client, Administrador, Venta, Producto, Inscripcion, MetodoDePago
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +19,20 @@ class VentaSerializer(serializers.ModelSerializer):
         model = Venta
         fields = ['id_venta', 'fecha_venta', 'total', 'cliente', 'administrador']
         read_only_fields = ['fecha_venta']  
+
+class ProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Producto
+        fields = ['id_producto', 'nombre', 'descripcion', 'precio']
+
+class InscripcionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inscripcion
+        fields = ['id_inscripcion', 'id_cliente', 'id_administrador', 'fecha_inscripcion', 'tipo_inscripcion', 'costo']
+
+class MetodoDePagoSerializer(serializers.ModelSerializer):
+    descripcion = serializers.CharField(source='get_descripcion_display', read_only=True)
+
+    class Meta:
+        model = MetodoDePago
+        fields = ['id_inscripcion', 'descripcion']

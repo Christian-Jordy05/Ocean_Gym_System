@@ -32,3 +32,34 @@ class Venta(models.Model):
     id_cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     id_administrador = models.ForeignKey(Administrador, on_delete=models.SET_NULL, null=True, blank=True)
 
+
+class Producto(models.Model):
+    id_producto = models.AutoField(primary_key=True)  # PK
+    nombre = models.CharField(max_length=100)  # string (se define el tamaño máximo)
+    descripcion = models.TextField()  # string (campo de texto largo)
+    precio = models.FloatField()  # float
+
+    def _str_(self):
+        return self.nombre
+
+class Inscripcion(models.Model):
+    id_inscripcion = models.AutoField(primary_key=True)  # PK
+    id_cliente = models.ForeignKey(Client, on_delete=models.CASCADE)  # FK a cliente
+    id_administrador = models.ForeignKey(Administrador, on_delete=models.CASCADE)  # FK a administrador
+    fecha_inscripcion = models.DateTimeField()  # Fecha de inscripción
+    tipo_inscripcion = models.CharField(max_length=50)  # Tipo de inscripción (día, semana, quincena, mes)
+    costo = models.FloatField()  # Costo
+
+    def _str_(self):
+        return f"Inscripción {self.id_inscripcion} - {self.tipo_inscripcion}"
+
+class MetodoDePago(models.Model):
+    TIPO_PAGO_CHOICES = [
+        ('SP', 'Sinpe'),
+        ('EF', 'Efectivo'),
+    ]
+    id_inscripcion = models.AutoField(primary_key=True) 
+    descripcion = models.CharField(max_length=100, choices=TIPO_PAGO_CHOICES)
+ 
+    def __str__(self):
+        return self.get_nombre_display()  # Muestra el nombre legible en lugar del código
