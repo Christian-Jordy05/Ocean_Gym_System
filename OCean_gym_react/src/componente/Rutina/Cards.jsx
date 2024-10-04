@@ -1,3 +1,4 @@
+import React from 'react';
 import './cards.css';
 import imgfit from '../img/imgfit.png';
 import imginfo from '../img/imginfo.png';
@@ -19,14 +20,16 @@ const App = () => {
   return (
     <div className="app">
       <div className="cards-container">
-        <Link to="/Seleccion_de_Rutinas">
+        <Link to="/Seleccion_de_Rutinas" style={{ textDecoration: 'none' }}>
           <Cards
             title="RUTINA"
+            info="Descubre tu rutina personalizada"
             image={imgfit}
           />
         </Link>
         <Cards
           title="INFORMACIÓN"
+          info="Aprende más sobre fitness y salud"
           image={imginfo}
         />
       </div>
