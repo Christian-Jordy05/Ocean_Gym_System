@@ -4,7 +4,7 @@ import Rutina_Intermedio_mujer from '../../componente/Rutinas_mujer/Rutina_Inter
 function Pag_de_Rutina_intermedio_mujer() {
   return (
     <div>
-      <Pag_de_Rutina_intermedio_mujer/>
+      <Rutina_Intermedio_mujer/>
     </div>
   )
 }
