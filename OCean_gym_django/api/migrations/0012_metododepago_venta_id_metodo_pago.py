@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venta',
             name='id_metodo_pago',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='api.metododepago'),
+            field=models.ForeignKey( on_delete=django.db.models.deletion.CASCADE, to='api.metododepago'),
             preserve_default=False,
         ),
     ]

@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ocean_gym_transparent from '../img/ocean_gym.png';
 
+
 function Loginfor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
   const login = async (e) => {
     e.preventDefault();
-
     if (email.trim() === "" || password.trim() === "") {
       Swal.fire({
         title: 'Error!',
@@ -21,10 +20,8 @@ function Loginfor() {
       });
       return;
     }
-
     const response = await GetDataUsers();
     const user = response.find((e) => email === e.email && password === e.password);
-
     if (user) {
       Swal.fire({
         title: 'Correcto!',
@@ -40,7 +37,6 @@ function Loginfor() {
       });
     }
   };
-
 const Restablecer_contraseña = async () => {
   const { value: emailBuscar } = await Swal.fire({
     title: 'Restablecer contraseña',
@@ -53,7 +49,6 @@ const Restablecer_contraseña = async () => {
     confirmButtonText: 'Buscar',
     showLoaderOnConfirm: true,
   });
-
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailBuscar)) {
     Swal.fire({
       title: 'Error!',
@@ -62,11 +57,9 @@ const Restablecer_contraseña = async () => {
     });
     return;
   }
-
   try {
     const response = await GetDataUsers();
     const user = response.find((e) => emailBuscar === e.email);
-
     if (user) {
       const { value: newPassword } = await Swal.fire({
         title: 'Restablecer contraseña',
@@ -79,7 +72,6 @@ const Restablecer_contraseña = async () => {
         confirmButtonText: 'Restablecer',
         showLoaderOnConfirm: true,
       });
-
       if (newPassword) {
         await UpdateUsers(user.id_cliente, user.email, user.name, newPassword);
         Swal.fire({
@@ -110,7 +102,6 @@ const Restablecer_contraseña = async () => {
     });
   }
 };
-
   return (
     <div className="container">
       <div className="login-box">
@@ -119,11 +110,10 @@ const Restablecer_contraseña = async () => {
           <input type="text" className='Input_de_correo' placeholder="Ingrese Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" className='Input_de_contraseña' placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
           <a href="#" className='letra_de_olvidar_contraseña' onClick={Restablecer_contraseña}>Olvidaste la contraseña?</a>
-          <button type="submit" className="btnsession">Iniciar Sesión</button> 
+          <button type="submit" className="btnsession">Iniciar Sesión</button>
         </form>
       </div>
     </div>
   );
 }
-
 export default Loginfor;
