@@ -3,6 +3,7 @@ import PagSignUp from '../pages/pag_sign_up';
 import PagLogin from '../pages/PagLogin';
 import PagHome from '../pages/PagHome';
 
+
 import Pag_de_seleccion_Rutinas from '../pages/Pag_de_seleccion_Rutinas';
 
 import Pag_de_Rutina_principiante from '../pages/rutinas_hombre/Pag_de_Rutina_principiante_hombre';
@@ -22,6 +23,7 @@ const Rutas = () => {
         <Route path="/Sign_up" element={<PagSignUp />} />
         <Route path="/Home" element={<PagHome />} />
         <Route path="/" element={<PagHome />} />
+
 
         <Route path="/Seleccion_de_Rutinas" element={<Pag_de_seleccion_Rutinas/>} />
 
