@@ -1,7 +1,7 @@
 
-const url = 'http://localhost:8000/client/';
+const url = 'http://localhost:8000/productos/';
 
-const GetDataUsers = async () => {
+const Getproductos = async () => {
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -13,8 +13,8 @@ const GetDataUsers = async () => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
-  const url = 'http://localhost:8000/client/';
+const Postproductos = async (inputnombre, inputprecio, inpuntdescripcion, inputimg) => {
+  const url = 'http://localhost:8000/productos/';
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -22,9 +22,10 @@ const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 
-        email: inputGmail,    
-        name: inpunUser,    
-        password: inpuntPass,
+        nombre: inputnombre,    
+        precio: inputprecio,    
+        descripcion: inpuntdescripcion,
+        img: inputimg,
       }),
     });
     if (!response.ok) {
@@ -38,7 +39,7 @@ const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
 };
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const UpdateUsers = async (userId, email, name, newPassword) => {
+const Updateproductos = async (userId, email, name, newPassword) => {
   try {
     const response = await fetch(url + userId + '/', {
       method: 'PUT',
@@ -64,7 +65,7 @@ const UpdateUsers = async (userId, email, name, newPassword) => {
 };
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const deleteUsers = async (id) => {
+const Deleteproductos = async (id) => {
   try {
     const response = await fetch(url + id + '/', {
       method: 'DELETE',
@@ -82,4 +83,4 @@ const deleteUsers = async (id) => {
 };
 
 
-export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers };
+export { Getproductos, Postproductos, Updateproductos, Deleteproductos };
