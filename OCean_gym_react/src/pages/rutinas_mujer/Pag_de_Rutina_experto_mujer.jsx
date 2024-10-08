@@ -1,5 +1,5 @@
 import React from 'react'
-import Rutina_Experto_mujer from '../../componente/Rutinas_mujer/Rutina_Experto_mujer'
+import Rutina_Experto_mujer from '../../componente/Rutinas_mujer/experto/Rutina_Experto_mujer'
 
 function Pag_de_Rutina_experto_mujer() {
   return (

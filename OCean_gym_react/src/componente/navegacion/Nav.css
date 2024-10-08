@@ -1,27 +1,25 @@
-
-
-.Conteiner_del_nav{
+.Conteiner_del_nav {
     background-color: #004494;
     height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
 }
 
-
-#home-btn,#signup-btn,#login-btn{
-    margin-top: 25px;
+#home-btn, #signup-btn, #login-btn {
     text-decoration: none;
     background-color: transparent;
     border: none;
     font-size: 20px;
     color: white;
-    position: relative;
+    margin: 0 15px;
+    cursor: pointer;
     transition: all 0.3s ease-out;
+    position: relative;
 }
 
-#home-btn:hover, #signup-btn:hover, #login-btn:hover, #home-btn:active, #signup-btn:active, #login-btn:active{
-    color: white;
-}
-
-#home-btn::after, #signup-btn::after, #login-btn::after{
+#home-btn::after, #signup-btn::after, #login-btn::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -32,34 +30,25 @@
     transition: all 0.3s ease-out;
 }
 
-#home-btn:hover::after, #signup-btn:hover::after, #login-btn:hover::after, #home-btn:active::after, #signup-btn:active::after, #login-btn:active::after{
+#home-btn:hover::after, #signup-btn:hover::after, #login-btn:hover::after,
+#home-btn:active::after, #signup-btn:active::after, #login-btn:active::after {
     width: 100%;
     left: 0;
 }
 
+.conte_de_btn_register_iniciar {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    align-items: center;
+}
 
-
-.conte_de_btn_register_iniciar{
-    text-align: right;
-    display: grid;
-    grid-template-columns: 350px 120px 590px 150px;
-    gap: 10px;
-    width: 200px;
-    margin-left: 130px;
+.logo_Nav {
     height: 70px;
-    margin-top: -114px;
-    width: 1150px;
-    background-color: transparent;
+    width: auto; 
 }
 
-.logo_Nav{
-    height: 130px;
-    width: 130px;
-    margin-top: -20px;
+.color_fondo_de_img {
+    display: flex;
+    align-items: center;
 }
-.color_fondo_de_img{
-    /* background-color: white; */
-    width: 130px;
-}
-
-
