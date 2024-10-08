@@ -3,7 +3,7 @@ import './Home.css'
 import instalogo from '../img/instalogo.png'
 import facebooklogo from '../img/facebooklogo.png'
 import Whatsapp from '../img/Whatsapp.png'
-import Cards from '../Rutina/Cards'
+import Cards from '../Card/Cards'
 import videofit from '../video/videofit.mp4'
 
 const MainSection = () => (

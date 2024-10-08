@@ -1,4 +1,4 @@
-import Rutina_principiante from "../../componente/Rutinas_hombre/Rutina_principiante_hombre";
+import RutinaPrincipiante from '../../componente/Rutinas_hombre/principiantes/Rutina_principiante_hombre'
 
 import React from 'react'
 
@@ -7,7 +7,7 @@ function Pag_de_Rutina_principiante() {
     <>
 
     <div>
-      <Rutina_principiante/>
+      <RutinaPrincipiante/>
     </div>
     </>
   )

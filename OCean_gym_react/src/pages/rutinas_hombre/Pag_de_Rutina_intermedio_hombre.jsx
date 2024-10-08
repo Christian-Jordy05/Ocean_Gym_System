@@ -1,11 +1,11 @@
-import Rutinas_Intermedio from "../../componente/Rutinas_hombre/Rutinas_Intermedio_hombre";
+import RutinaIntermedio from '../../componente/Rutinas_hombre/Intermedio/Rutinas_Intermedio_hombre'
 
 import React from 'react'
 
 function Pag_de_Rutina_intermedio() {
   return (
     <div>
-      <Rutinas_Intermedio/>
+      <RutinaIntermedio/>
     </div>
   )
 }
