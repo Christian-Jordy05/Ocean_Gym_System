@@ -17,5 +17,7 @@ urlpatterns = [
     path('ventas/<int:pk>/', views.ventas_detail, name='venta_detail'),  # Cambié a 'venta_detail' para diferenciación
     
     # -----------------------------------------------------------------
+    path('productos/', views.producto_detail, name='producto_list'),           # Para la lista de productos (GET) o crear (POST)
+    path('productos/<int:pk>/', views.producto_detail,name='producto_list'),  # Para obtener, actualizar o eliminar un producto específico
     # NOSE
 ]

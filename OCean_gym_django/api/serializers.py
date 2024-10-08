@@ -23,7 +23,7 @@ class VentaSerializer(serializers.ModelSerializer):
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ['id_producto', 'nombre', 'descripcion', 'precio']
+        fields = ['id_producto', 'nombre', 'descripcion', 'precio', 'img']
 
 class InscripcionSerializer(serializers.ModelSerializer):
     class Meta:
