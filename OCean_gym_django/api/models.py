@@ -31,7 +31,6 @@ class Administrador(models.Model):
     def __str__(self):
         return self.usuario
     
-    
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     fecha_venta = models.DateTimeField(auto_now_add=True)
@@ -40,14 +39,7 @@ class Venta(models.Model):
     id_administrador = models.ForeignKey(Administrador, on_delete=models.SET_NULL, null=True, blank=True)
     id_metododepago = models.ForeignKey(MetodoDePago, on_delete=models.CASCADE)  # Relación con MetodoDePago
     
-class Producto(models.Model):
-    id_producto = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
-    precio = models.FloatField()
-    img = models.URLField(max_length=500, blank=True)
-    def _str_(self):
-        return self.nombre
+
 class Inscripcion(models.Model):
     
     id_inscripcion = models.AutoField(primary_key=True)  # PK
@@ -59,3 +51,12 @@ class Inscripcion(models.Model):
     id_metododepago = models.ForeignKey(MetodoDePago, on_delete=models.CASCADE)
     def _str_(self):
         return f"Inscripción {self.id_inscripcion} - {self.tipo_inscripcion}"
+    
+class Producto(models.Model):
+    id_producto = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    precio = models.FloatField()
+    img = models.URLField(max_length=500, blank=True)
+    def _str_(self):
+        return self.nombre
