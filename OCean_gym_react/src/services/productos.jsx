@@ -1,4 +1,3 @@
-
 const url = 'http://localhost:8000/productos/';
 
 const Getproductos = async () => {
@@ -14,7 +13,6 @@ const Getproductos = async () => {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const Postproductos = async (inputnombre, inputprecio, inpuntdescripcion, inputimg) => {
-  const url = 'http://localhost:8000/productos/';
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -39,32 +37,27 @@ const Postproductos = async (inputnombre, inputprecio, inpuntdescripcion, inputi
 };
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const Updateproductos = async (userId, email, name, newPassword) => {
+const Updateproductos = async (id, updatedData) => {
+  const url = `http://localhost:8000/productos/${id}/`; // Actualiza con tu URL
   try {
-    const response = await fetch(url + userId + '/', {
+    const response = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email,
-        name,
-        password: newPassword,
-      }),
+      body: JSON.stringify(updatedData),
     });
-
     if (!response.ok) {
-      throw new Error('Error en la solicitud PUT');
+      throw new Error('Error al actualizar el producto');
     }
-
-    const data = await response.json();
-    console.log(data);  
+    return await response.json();
   } catch (error) {
-    console.error('ERROR PUT:', error);
+    console.error('Error al actualizar el producto:', error);
+    throw error;
   }
 };
-/////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 const Deleteproductos = async (id) => {
   try {
     const response = await fetch(url + id + '/', {
@@ -81,6 +74,4 @@ const Deleteproductos = async (id) => {
     console.error('ERROR DELETE:', error);
   }
 };
-
-
 export { Getproductos, Postproductos, Updateproductos, Deleteproductos };

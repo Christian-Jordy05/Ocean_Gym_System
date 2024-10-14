@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import subir_imagen_a_imgur
 
 urlpatterns = [
     # CLIENTES
@@ -19,5 +20,8 @@ urlpatterns = [
     # -----------------------------------------------------------------
     path('productos/', views.producto_detail, name='producto_list'),           # Para la lista de productos (GET) o crear (POST)
     path('productos/<int:pk>/', views.producto_detail,name='producto_list'),  # Para obtener, actualizar o eliminar un producto específico
-    # NOSE
+   # -----------------------------------------------------------------
+   #IMGUR
+   path('api/subir-imagen/', subir_imagen_a_imgur, name='subir_imagen_a_imgur'),
 ]
+
