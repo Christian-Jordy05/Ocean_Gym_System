@@ -15,6 +15,11 @@ import Pag_de_Rutina_intermedio_mujer from '../pages/rutinas_mujer/Pag_de_Rutina
 import Pag_de_Rutina_principiante_mujer from '../pages/rutinas_mujer/Pag_de_Rutina_principiante_mujer';
 
 import Contacto from '../componente/Contacto/Contacto';
+
+import Rutas_privadas from '../componente/ruta_privadas/Rutas_privadas';
+
+import Pag_De_administracion from '../pages/Pag_De_administracion';
+import PagError from '../pages/Error';
 const Rutas = () => { 
   return (
     <>
@@ -36,6 +41,13 @@ const Rutas = () => {
         <Route path="/Rutinas_Experto_mujer" element={<Pag_de_Rutina_experto_mujer/>} />
 
         <Route path="/Contacto" element={<Contacto/>} />
+
+        <Route element={<Rutas_privadas />}>
+          <Route path="/Administracion" element={<Pag_De_administracion />} />
+        </Route>
+
+        <Route path="/Error" element={<PagError/>} />
+
 
       </Routes>
     </>
