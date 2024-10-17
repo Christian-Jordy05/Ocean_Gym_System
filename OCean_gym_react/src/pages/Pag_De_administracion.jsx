@@ -3,8 +3,8 @@ import Estadistica_de_ganancia from '../componente/Administracion/estadistica/Es
 
 function Pag_De_administracion() {
   return (
-    <div>
-      <Estadistica_de_ganancia/>
+    <div className="admin-page">
+      <Estadistica_de_ganancia />
     </div>
   )
 }

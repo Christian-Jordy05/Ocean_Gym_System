@@ -5,7 +5,7 @@ import ocean_gym_transparent from '../img/ocean_gym.png';
 import { useAuth } from './AuthContext';
 
 function Navegar() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userRole } = useAuth();
 
   return (
     <div className='Conteiner_del_nav'>

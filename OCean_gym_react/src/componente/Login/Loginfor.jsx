@@ -1,23 +1,16 @@
 import './stylelogin.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ocean_gym_transparent from '../img/ocean_gym.png';
-import { useAuth } from '../navegacion/AuthContext';
+import Cookies from 'js-cookie';
+import { useAuth } from '../navegacion/AuthContext'; 
 
 function Loginfor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
-
-  const parseJwt = (token) => {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(escape(window.atob(base64)));
-    return JSON.parse(jsonPayload);
-  };
-
+  const { login } = useAuth(); 
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -41,21 +34,15 @@ function Loginfor() {
       const data = await response.json();
 
       if (response.ok) {
-        
-        const decodedToken = parseJwt(data.access);
-        const userRole = decodedToken.role;
-        const NombreUser = decodedToken.name;
-
-
         Swal.fire({
           title: 'Correcto!',
           text: 'Inicio de sesión exitoso',
           icon: 'success',
         });
-
-        login(data.access, userRole,NombreUser); 
-
-        navigate("/home");
+      
+        Cookies.set('user_token', data.access, { path: '/' });
+        login(data.access);
+        navigate("/home"); 
       } else {
         Swal.fire({
           title: 'Error!',
