@@ -4,7 +4,6 @@ function PagHome() {
   return (
     <div>
       <Home/>
-
     </div>
   )
 }
