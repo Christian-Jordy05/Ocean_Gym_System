@@ -20,6 +20,7 @@ import Rutas_privadas from '../componente/ruta_privadas/Rutas_privadas';
 
 import Pag_De_administracion from '../pages/Pag_De_administracion';
 import PagError from '../pages/Error';
+
 const Rutas = () => { 
   return (
     <>
@@ -32,13 +33,20 @@ const Rutas = () => {
 
         <Route path="/Seleccion_de_Rutinas" element={<Pag_de_seleccion_Rutinas/>} />
 
-        <Route path="/Rutinas_Principiante" element={<Pag_de_Rutina_principiante/>} />
-        <Route path="/Rutinas_Intermedio" element={<Pag_de_Rutina_intermedio/>} />
-        <Route path="/Rutinas_Experto" element={<Pag_de_Rutina_experto/>} />
+        <Route path="/Rutinas">
+           <Route path="Principiante_hombre" element={<Pag_de_Rutina_principiante />} />
+           <Route path="Intermedio_hombre" element={<Pag_de_Rutina_intermedio />} />
+          <Route path="Experto_hombre" element={<Pag_de_Rutina_experto />} />
+        </Route>
 
-        <Route path="/Rutinas_Principiante_mujer" element={<Pag_de_Rutina_principiante_mujer/>} />
-        <Route path="/Rutinas_Intermedio_mujer" element={<Pag_de_Rutina_intermedio_mujer/>} />
-        <Route path="/Rutinas_Experto_mujer" element={<Pag_de_Rutina_experto_mujer/>} />
+
+        <Route path="/Rutinas">
+         <Route path="Principiante_mujer" element={<Pag_de_Rutina_principiante_mujer/>} />
+         <Route path="Intermedio_mujer" element={<Pag_de_Rutina_intermedio_mujer/>} />
+         <Route path="Experto_mujer" element={<Pag_de_Rutina_experto_mujer/>} />
+        </Route>
+
+        
 
         <Route path="/Contacto" element={<Contacto/>} />
 
@@ -47,6 +55,7 @@ const Rutas = () => {
         </Route>
 
         <Route path="/Error" element={<PagError/>} />
+        <Route path="*" element={<PagError />} />
 
 
       </Routes>

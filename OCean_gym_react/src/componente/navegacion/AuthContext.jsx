@@ -1,58 +1,60 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null);
-  const [User, SetName] = useState(null);
+  const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+
+  const parseJwt = (token) => {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(escape(window.atob(base64)));
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      console.error("Error parsing JWT:", e);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    const checkAuth = () => {
-      const token = document.cookie.split(';').find(c => c.trim().startsWith('token='));
-      if (token) {
+    const token = Cookies.get('user_token');
+    if (token) {
+      const decodedToken = parseJwt(token);
+      if (decodedToken) {
         setIsAuthenticated(true);
-        setRole(localStorage.getItem('role'));
-        SetName(localStorage.getItem('UserName'));
-      } else {
-        setIsAuthenticated(false);
-        setRole(null);
-        SetName(null);
+        setUser(decodedToken.name);
+        setUserRole(decodedToken.role);
       }
-    };
-
-    checkAuth();
-    window.addEventListener('storage', checkAuth);
-
-    return () => {
-      window.removeEventListener('storage', checkAuth);
-    };
+    }
   }, []);
 
-  const login = (token, userRole, NombreUser) => {
-    document.cookie = `token=${token}; path=/;`;
-    localStorage.setItem('role', userRole);
-    localStorage.setItem('UserName', NombreUser);
-    setIsAuthenticated(true);
-    setRole(userRole);
-    SetName(NombreUser); 
+  const login = (token) => {
+    Cookies.set('user_token', token, { path: '/' });
+    const decodedToken = parseJwt(token);
+    
+    if (decodedToken) {
+      setIsAuthenticated(true);
+      setUser(decodedToken.name);
+      setUserRole(decodedToken.role);
+    }
   };
 
   const logout = () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    localStorage.removeItem('role');
-    localStorage.removeItem('UserName');
+    Cookies.remove('user_token', { path: '/' });
     setIsAuthenticated(false);
-    setRole(null);
-    SetName(null);
+    setUser(null);
+    setUserRole(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, role, login, logout, User }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, user, userRole }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
-export default AuthContext;

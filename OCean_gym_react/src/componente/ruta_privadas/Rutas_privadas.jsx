@@ -1,18 +1,30 @@
+import React from 'react';
+import Cookies from 'js-cookie';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const Rutas_privadas = () => {
-  const role = localStorage.getItem('role');
-  const tokenExists = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('token=')); 
+function RutasPrivadas() {
+  const token = Cookies.get('user_token');
+  
+  const parseJwt = (token) => {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(escape(window.atob(base64)));
+    return JSON.parse(jsonPayload);
+  };
 
-  console.log('Rol en Rutas_privadas:', role); 
-  console.log('Token existe:', tokenExists); 
-
- 
-  if (tokenExists && role === 'admin') {
-    return <Outlet />;
-  } else {
+  if (!token) {
     return <Navigate to="/Error" />;
   }
-};
 
-export default Rutas_privadas;
+  const decoded = parseJwt(token);
+  const role = decoded.role;
+  console.log("Rol:", role);
+
+  if (role !== "admin") {
+    return <Navigate to="/Error" />;
+  }
+
+  return <Outlet />;
+}
+
+export default RutasPrivadas;
