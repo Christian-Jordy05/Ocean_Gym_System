@@ -1,4 +1,4 @@
-import Rutinas_experto from "../../componente/Rutinas_hombre/Rutinas_experto_hombre";
+import Rutinas_experto from '../../componente/Rutinas_hombre/Experto/Rutinas_experto_hombre'
 
 import React from 'react'
 

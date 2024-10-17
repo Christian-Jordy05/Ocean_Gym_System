@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
     'corsheaders',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    "rest_framework_simplejwt.token_blacklist",
+    
     
 ]
 
@@ -86,7 +88,7 @@ WSGI_APPLICATION = 'OCean_gym_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = { #Se tiene ue crear una db con el nombre de 'default' antes de hacer el debugin
+DATABASES = { 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Ocean_Gym',
@@ -141,5 +143,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
      "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
     ]
+}
+
+AUTH_USER_MODEL = "api.Client"  
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Types of authorization headers accepted
+    'USER_ID_FIELD': 'email',  # Field to use for user identification
+    'USER_ID_CLAIM': 'id_cliente',  # Claim to use for user identification in the token
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',  # Claim to indicate the type of token
 }

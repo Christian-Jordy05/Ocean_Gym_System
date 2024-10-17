@@ -1,5 +1,5 @@
 import React from 'react'
-import Rutina_Principiante_mujer from '../../componente/Rutinas_mujer/Rutina_Principiante_mujer'
+import Rutina_Principiante_mujer from '../../componente/Rutinas_mujer/Principiante/Rutina_Principiante_mujer'
 function Pag_de_Rutina_principiante_mujer() {
   return (
     <div>
