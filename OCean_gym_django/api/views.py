@@ -1,9 +1,19 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+<<<<<<< HEAD
 from .models import Client, Venta, Producto
 from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
 from rest_framework import viewsets, status
+=======
+from .models import Client, Administrador, Venta, Producto
+from .serializers import ClientSerializer, AdministradorSerializer, VentaSerializer, ProductoSerializer
+from django.http import JsonResponse
+import requests
+from django.conf import settings
+from .key import clientId
+import requests
+>>>>>>> da08906eec901f447ff271e1b2c80d45b020f7dd
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 # Clientes
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
@@ -143,7 +153,7 @@ def producto_detail(request, pk=None):
     elif request.method == 'PUT':
         if pk:
             try:
-                producto = Producto.objects.get(pk=pk)
+                producto = Producto.objects.get(pk=pk)               
                 serializer = ProductoSerializer(producto, data=request.data)
                 if serializer.is_valid():
                     serializer.save()
@@ -161,6 +171,7 @@ def producto_detail(request, pk=None):
                 return Response({"mensaje": "Producto eliminado exitosamente"}, status=status.HTTP_204_NO_CONTENT)
             except Producto.DoesNotExist:
                 return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+<<<<<<< HEAD
 #////////////////////////////////////////////////
 
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -171,3 +182,33 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
     
+=======
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#view_imgur
+@api_view(['POST'])
+def subir_imagen_a_imgur(request):
+    file = request.FILES.get('image')
+    if not file:
+        return JsonResponse({'error': 'Por favor selecciona una imagen.'}, status=400)
+
+    try:
+        # Subir imagen a Imgur
+        headers = {
+            'Authorization': f'Client-ID {clientId}',
+        }
+        url = 'https://api.imgur.com/3/image'
+        files = {'image': file.read()}  # Leer el archivo en binario para enviarlo
+        response = requests.post(url, headers=headers, files=files)
+            
+        if response.status_code != 200:
+            return JsonResponse({'error': 'Error al subir la imagen a Imgur'}, status=response.status_code)
+        
+        data = response.json()
+        image_url = data['data']['link']  # Obtener la URL de la imagen subida
+
+        return JsonResponse({'image_url': image_url}, status=200)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+>>>>>>> da08906eec901f447ff271e1b2c80d45b020f7dd

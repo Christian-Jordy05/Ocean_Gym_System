@@ -84,6 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'OCean_gym_django.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
