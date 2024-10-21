@@ -14,7 +14,7 @@ const GetDataUsers = async () => {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
-  const url = 'http://localhost:8000/clients/';
+  const url = 'http://localhost:8000/register_clientes/';
   try {
     const response = await fetch(url, {
       method: 'POST',

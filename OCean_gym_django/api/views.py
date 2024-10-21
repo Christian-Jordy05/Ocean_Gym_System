@@ -1,22 +1,51 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-<<<<<<< HEAD
 from .models import Client, Venta, Producto
 from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
-from rest_framework import viewsets, status
-=======
-from .models import Client, Administrador, Venta, Producto
-from .serializers import ClientSerializer, AdministradorSerializer, VentaSerializer, ProductoSerializer
+from rest_framework import  status
 from django.http import JsonResponse
 import requests
 from django.conf import settings
 from .key import clientId
-import requests
->>>>>>> da08906eec901f447ff271e1b2c80d45b020f7dd
+from rest_framework.permissions import AllowAny 
+
+from rest_framework import permissions, status
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+
+from .permissions import Acceso_View_privada
+
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])  
+def register_client(request):
+    if request.method == 'POST':
+        # Verificar si ya existe un usuario con el mismo email
+        email = request.data.get('email')
+        if Client.objects.filter(email=email).exists():
+            return Response({"error": "A user with this email already exists"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Crear nuevo usuario
+        serializer = ClientSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+
+
 # Clientes
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+
+        
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([Acceso_View_privada])
 def client_detail(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -31,13 +60,6 @@ def client_detail(request, pk=None):
             serializer = ClientSerializer(clients, many=True)
             return Response(serializer.data)
 
-    elif request.method == 'POST':
-        serializer = ClientSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     elif request.method == 'PUT':
         if pk:
             try:
@@ -49,8 +71,6 @@ def client_detail(request, pk=None):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
-            
-            
 
     elif request.method == 'DELETE':
         if pk:
@@ -60,27 +80,14 @@ def client_detail(request, pk=None):
                 return Response({"message": "Client deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
-# class RegisterView(viewsets.ModelViewSet):
-#     queryset = Client.objects.all()
-#     serializer_class = ClientSerializer
-    
-
-#     def update(self, request, pk=None):
-#             try:
-#                 cliente = Client.objects.get(pk=pk)
-#             except Client.DoesNotExist:
-#                 return Response({"error": "cliente not found"}, status=status.HTTP_404_NOT_FOUND)
-#             serializer = self.get_serializer(cliente, data=request.data)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 return Response(serializer.data, status=status.HTTP_200_OK)
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 # Ventas
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([Acceso_View_privada])
+
 def ventas_detail(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -126,6 +133,8 @@ def ventas_detail(request, pk=None):
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////           
 #producto
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([Acceso_View_privada])
+
 def producto_detail(request, pk=None):
     # GET - Obtener una lista de productos o un producto por ID
     if request.method == 'GET':
@@ -171,22 +180,26 @@ def producto_detail(request, pk=None):
                 return Response({"mensaje": "Producto eliminado exitosamente"}, status=status.HTTP_204_NO_CONTENT)
             except Producto.DoesNotExist:
                 return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-<<<<<<< HEAD
+
 #////////////////////////////////////////////////
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
     
-    
-=======
+
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #view_imgur
 @api_view(['POST'])
+@permission_classes([Acceso_View_privada]) 
+
 def subir_imagen_a_imgur(request):
     file = request.FILES.get('image')
     if not file:
@@ -211,4 +224,8 @@ def subir_imagen_a_imgur(request):
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
->>>>>>> da08906eec901f447ff271e1b2c80d45b020f7dd
+
+
+
+
+

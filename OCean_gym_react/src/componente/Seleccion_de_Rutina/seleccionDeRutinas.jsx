@@ -41,7 +41,7 @@ function SeleccionDeRutinas() {
     if (sexoSeleccionado && nivelSeleccionado) {
       let ruta = '';
       if (sexoSeleccionado === "hombre") {
-        ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante' : nivelSeleccionado === "intermedio" ? '/Rutinas_Intermedio' : '/Rutinas_Experto';
+        ruta = nivelSeleccionado === "principiante" ? '/Principiante_hombre' : nivelSeleccionado === "intermedio" ? '/internedio' : '/Experto';
       } else {
         ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante_mujer' : nivelSeleccionado === "intermedio" ? '/Rutinas_Intermedio_mujer' : '/Rutinas_Experto_mujer';
       }

@@ -1,34 +1,43 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 from .models import Client, Venta, Producto, Inscripcion, MetodoDePago
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate
 
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import serializers
-from .models import Client
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        # Override the validate method to check for email instead of username
-        try:
-            user = Client.objects.get(email=attrs['email'])
-        except Client.DoesNotExist:
-            raise serializers.ValidationError('No user with this email found.')
-        
-        # Add the email to the attributes, as authenticate() will expect a username field
-        attrs['username'] = user.username
-        return super().validate(attrs)
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if email and password:
+            user = authenticate(request=self.context.get('request'), email=email, password=password)
+            if not user:
+                msg = 'No se puede iniciar sesión con las credenciales proporcionadas.'
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = 'Debe incluir "email" y "password".'
+            raise serializers.ValidationError(msg, code='authorization')
+
+        data = super().validate(attrs)
+        refresh = self.get_token(user)
+
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+
+        self.user = user
+        return data
 
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
         token['role'] = user.role
         token['name'] = user.name
-
         return token
+
 
 
 

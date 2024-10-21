@@ -9,6 +9,8 @@ export const AuthProvider = ({ children }) => {
   const [userRole, setUserRole] = useState(null);
 
   const parseJwt = (token) => {
+    if (!token) return null;
+
     try {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -50,8 +52,36 @@ export const AuthProvider = ({ children }) => {
     setUserRole(null);
   };
 
+  // Función para refrescar el token
+  const refreshAccessToken = async () => {
+    const refreshToken = Cookies.get('refresh_token');
+    if (!refreshToken) return null;
+
+    try {
+      const response = await fetch('http://localhost:8000/token/refresh/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo refrescar el token');
+      }
+
+      const data = await response.json();
+      Cookies.set('user_token', data.access, { path: '/' }); 
+      return data.access;
+    } catch (error) {
+      console.error('Error al refrescar el token:', error);
+      logout(); 
+      return null;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user, userRole }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, refreshAccessToken, user, userRole, }}>
       {children}
     </AuthContext.Provider>
   );
