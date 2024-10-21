@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './sign_style.css';
 import ocean_gym_transparent from '../img/ocean_gym.png';
 import { PostUsers } from '../../services/server';
-import { GetDataUsers } from '../../services/server';
 import Swal from 'sweetalert2';
 
 function Registrofor() {
@@ -23,25 +22,23 @@ function Registrofor() {
       return;
     }
 
-    const datos = await GetDataUsers();
-    const usuarioExiste = datos.find(e => e.name === inputUser || e.email === inputGmail);
-    if (usuarioExiste) {
+    try {
+      
+      await PostUsers(inputUser, inputPass, inputGmail);
+      Swal.fire({
+        title: 'Correcto!',
+        text: 'Se registró correctamente',
+        icon: 'success',
+      });
+      navigate('/login');
+    } catch (error) {
+      
       Swal.fire({
         title: 'Error!',
-        text: 'El usuario ya existe',
+        text: error.response?.data?.error || 'Hubo un problema al registrar el usuario',
         icon: 'error',
       });
-      return;
     }
-
-    await PostUsers(inputUser, inputPass, inputGmail);
-    Swal.fire({
-      title: 'Correcto!',
-      text: 'Se registró correctamente',
-      icon: 'success',
-    });
-
-    navigate('/login');
   };
 
   return (

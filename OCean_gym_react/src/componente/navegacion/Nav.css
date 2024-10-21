@@ -147,8 +147,8 @@
 
 #logout-btn:hover {
     background-color: rgba(255, 64, 129, 0.1);
-    border-color: #f50057;
-    color: #f50057;
+    border-color: #00f5ed;
+    color: #fffcfd;
 }
 
 #home-btn:active, #signup-btn:active, #login-btn:active, #logout-btn:active {

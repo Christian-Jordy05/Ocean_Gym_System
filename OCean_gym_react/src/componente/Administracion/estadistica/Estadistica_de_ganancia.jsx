@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Estadistica_de_ganancia() {
+const Estadistica_de_ganancia = () => {
   return (
-    <div className="estadistica-container">
-      <h2>pag_de_estadistica</h2>
+    <div>
+      <h1>holaaa</h1>
     </div>
   )
 }
