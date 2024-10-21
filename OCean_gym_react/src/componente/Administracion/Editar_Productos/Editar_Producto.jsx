@@ -1,36 +1,59 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../../navegacion/AuthContext';
 import './administracion.css';
-import Swal from 'sweetalert2'; // Importa SweetAlert2
-import { Updateproductos } from '../../services/productos'; 
+import Swal from 'sweetalert2';
+import { Updateproductos } from '../../../services/productos'; 
 
-const Administracion = () => {
+const Editar_producto = () => {
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', descripcion: '', precio: '', img: '' });
-  const [file, setFile] = useState(null); // Estado para almacenar la imagen seleccionada
+  const [file, setFile] = useState(null); 
   const [error, setError] = useState('');
+  const { refreshAccessToken } = useAuth();
 
-  // Función para obtener productos desde la API
+  // Obtener el valor de la cookie
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`); 
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+
+  // Efecto para obtener los productos al montar el componente
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const respuesta = await fetch('http://localhost:8000/productos/'); // Reemplaza con la URL de tu API
+        const token = getCookie('user_token');
+        const respuesta = await fetch('http://localhost:8000/productos/', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          credentials:"include"
+        });
+
+        if (!respuesta.ok) {
+          const errorText = await respuesta.text(); // Obtener el texto del error
+          throw new Error(`Error ${respuesta.status}: ${errorText}`);
+        }
+
         const data = await respuesta.json();
-        setProductos(data);
+        setProductos(data); // Establecer los productos obtenidos en el estado
       } catch (error) {
-        console.error('Error al obtener los productos:', error);
+        console.error('Error al obtener productos:', error);
       }
     };
-    obtenerProductos();
-  }, []);
 
-  // Función para agregar un nuevo producto
+    obtenerProductos(); // Llamada a la función para obtener productos
+  }, [refreshAccessToken]);
+
+  // Manejar la adición de un nuevo producto
   const manejarAgregar = async (imagen_url) => {
     if (!nuevoProducto.nombre || !nuevoProducto.descripcion || !nuevoProducto.precio || !imagen_url || isNaN(nuevoProducto.precio)) {
       setError('Por favor, completa todos los campos correctamente.');
       return;
     }
   
-    const nuevoId = productos.length ? productos[productos.length - 1].id + 1 : 1;
+    const nuevoId = productos.length ? productos[productos.length - 1].id + 1 : 1; // Obtener un nuevo ID
     const producto = {
       id: nuevoId,
       nombre: nuevoProducto.nombre,
@@ -40,10 +63,12 @@ const Administracion = () => {
     };
   
     try {
+      const token = getCookie('user_token'); // Obtener el token desde la cookie 'user_token'
       const response = await fetch('http://localhost:8000/productos/', {  // Reemplaza con la URL de tu API para crear un producto
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Agregar el token en el encabezado
         },
         body: JSON.stringify(producto),
       });
@@ -213,5 +238,4 @@ const Administracion = () => {
   );
 };
 
-export default Administracion;
-
+export default Editar_producto;

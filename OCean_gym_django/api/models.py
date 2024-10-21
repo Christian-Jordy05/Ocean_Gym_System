@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, BaseUserManager, Group, Permission
 from django.contrib.auth.hashers import make_password
 from django.db import models
+
 
 class MetodoDePago(models.Model):
     TIPO_PAGO_CHOICES = [
@@ -12,6 +13,27 @@ class MetodoDePago(models.Model):
     descripcion = models.CharField(max_length=100, choices=TIPO_PAGO_CHOICES)
     def __str__(self):
         return self.get_nombre_display()
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('El usuario debe tener un correo electrónico')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('El superusuario debe tener is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('El superusuario debe tener is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
 
 class Client(AbstractUser):
     ROLE_CHOICES = [
@@ -26,11 +48,13 @@ class Client(AbstractUser):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     is_active = models.BooleanField(default=True)
-    username = models.CharField(max_length=150, blank=True, null=True, unique=False)
-    email = models.EmailField(unique=True)  
-    REQUIRED_FIELDS = []
+    username = None  # Deshabilita el campo 'username'
+    email = models.EmailField(unique=True)
 
-    USERNAME_FIELD = 'email'  
+    USERNAME_FIELD = 'email'  # Usa 'email' como identificador
+    REQUIRED_FIELDS = []  # No se requieren otros campos
+
+    objects = UserManager()  # Usamos el nuevo UserManager
 
     groups = models.ManyToManyField(
         Group,
