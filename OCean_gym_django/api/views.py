@@ -2,22 +2,18 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Client, Venta, Producto
-from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
+from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer, ContactSerializer
 from rest_framework import  status
 from django.http import JsonResponse
 import requests
 from django.conf import settings
 from .key import clientId
 from rest_framework.permissions import AllowAny 
-
 from rest_framework import permissions, status
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-
 from .permissions import Acceso_View_privada
-
 
 
 
@@ -225,7 +221,57 @@ def subir_imagen_a_imgur(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+#view_correo
 
 
 
+# from rest_framework.decorators import api_view, permission_classes
+# from rest_framework.permissions import AllowAny
+# from rest_framework.response import Response
+# from rest_framework import status
+# import requests  # Importamos requests para hacer solicitudes a la API de Email
+
+# @api_view(["POST"])
+# @permission_classes([AllowAny])
+# def enviar_correo(request):
+#     # Serializar los datos del request
+#     serializer = ContactSerializer(data=request.data)
+    
+#     if serializer.is_valid():
+#         # Obtener los datos del request
+#         nombre = serializer.validated_data.get('name')
+#         email_destino = serializer.validated_data.get('email')
+#         mensaje = serializer.validated_data.get('message')
+        
+#         # Configurar el contenido del correo
+#         contenido_html = f"""
+#         <h1>Mensaje de {nombre}</h1>
+#         <p>{mensaje}</p>
+#         """
+
+#         # URL de la API de Email
+#         url = "https://api.email.com/send"  # Cambia esto por la URL real de la API de Email
+#         headers = {
+#             "Authorization": "Bearer TU_API_KEY",  # Cambia por tu clave de API
+#             "Content-Type": "application/json"
+#         }
+#         data = {
+#             "to": email_destino,
+#             "subject": "Nuevo mensaje desde la web",
+#             "html": contenido_html
+#         }
+
+#         # Enviar la solicitud a la API de Email
+#         try:
+#             response = requests.post(url, headers=headers, json=data)
+#             response.raise_for_status()  # Lanza un error si la respuesta no es 200
+
+#             return Response({"message": "Correo enviado con éxito"}, status=status.HTTP_200_OK)
+#         except requests.exceptions.HTTPError as e:
+#             print(f"Error al enviar correo: {e}")
+#             return Response({"error": f"Error al enviar correo: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#     else:
+#         # Si los datos no son válidos, devolver errores de validación
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

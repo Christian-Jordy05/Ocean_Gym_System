@@ -1,116 +1,84 @@
-:root {
-  --primary-color: #6200ea;
-  --secondary-color: #03dac6;
-  --background-dark: #121212;
-  --background-light: #1e1e1e;
-  --text-primary: #ffffff;
-  --text-secondary: #b3b3b3;
-}
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-}
-
-.admin-page {
-  display: flex;
-  height: 100vh;
+/* Estilo general de la página */
+.contenedor {
+  padding: 20px;
   background-color: var(--background-dark);
   color: var(--text-primary);
 }
 
-.admin-sidebar {
-  width: 250px;
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: dodgerblue;
+}
+
+/* Formulario para agregar productos */
+.formulario {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin: 0 auto 30px auto;
+  margin-right: 900px;
+}
+
+.formulario input {
+  padding: 10px;
+  border-radius: 5px;
   background-color: var(--background-light);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
 }
 
-.sidebar-title {
-  font-size: 24px;
-  color: var(--secondary-color);
-  margin-bottom: 30px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--secondary-color);
-}
-
-.sidebar-button {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  padding: 12px 15px;
-  background-color: transparent;
-  color: var(--text-secondary);
+.formulario button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  font-size: 16px;
+  width: 80px;
 }
 
-.sidebar-button:hover {
-  background-color: rgba(98, 0, 234, 0.1);
-  color: var(--primary-color);
+.formulario button:hover {
+  background-color: var(--secondary-color);
 }
 
-.sidebar-button.active {
+/* Tabla de productos */
+.tabla-productos {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.tabla-productos th,
+.tabla-productos td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-productos th {
   background-color: var(--primary-color);
   color: var(--text-primary);
 }
 
-.sidebar-button svg {
-  margin-right: 15px;
+.tabla-productos td {
+  background-color: var(--background-light);
 }
 
-.chevron-icon {
-  margin-left: auto;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.sidebar-button:hover .chevron-icon,
-.sidebar-button.active .chevron-icon {
-  opacity: 1;
-}
-
-.admin-content {
-  flex-grow: 1;
-  padding: 30px;
-  background-color: var(--background-dark);
-  overflow-y: auto;
-}
-
-.page-title {
-  font-size: 32px;
-  margin-bottom: 30px;
-  color: var(--secondary-color);
-  border-bottom: 2px solid var(--secondary-color);
-  padding-bottom: 10px;
-}
-
-
-button, input, select, textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background-light);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
+.tabla-productos td img {
+  width: 80px;
+  height: auto;
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-color);
+/* Botones de acciones */
+.tabla-productos button {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabla-productos button:hover {
+  background-color: var(--secondary-color);
 }
