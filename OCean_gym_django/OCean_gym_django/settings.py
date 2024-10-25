@@ -62,6 +62,16 @@ INSTALLED_APPS = [
     
 ]
 
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Cambia esto según tu proveedor SMTP
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ydelgado@fwdcostarica.com'  
+EMAIL_HOST_PASSWORD = 'wlct fkiq htyl kndr'  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

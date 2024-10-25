@@ -69,6 +69,10 @@ class MetodoDePagoSerializer(serializers.ModelSerializer):
         model = MetodoDePago
         fields = ['id_inscripcion', 'descripcion']
 
+class ContactSerializer(serializers.Serializer):
+    nombre = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    message = serializers.CharField(max_length=1000)
 
 
 

@@ -35,5 +35,8 @@ urlpatterns = [
 #    path('test/', TestAdminAccess.as_view(), name='test-admin-access'), 
    
 #    path('check-role/', CheckUserRole.as_view(), name='check-user-role'),
+
+    path('enviar-correo/', enviar_correo, name='enviar_correo'),
+
 ]
 
