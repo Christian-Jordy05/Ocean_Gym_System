@@ -1,48 +1,59 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+
+from rest_framework import status, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from rest_framework import status
 from .models import Client, Venta, Producto
 from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
 from rest_framework import  status
+
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
 import requests
-from django.conf import settings
-from .key import clientId
-from rest_framework.permissions import AllowAny 
-from rest_framework import permissions, status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
+import logging
+
+from .models import Client, Venta, Producto, Inscripcion, RegistroDePagos, MetodoDePago
+from .serializers import (
+    ClientSerializer, 
+    VentaSerializer, 
+    ProductoSerializer,
+    ContactSerializer,
+    CustomTokenObtainPairSerializer,
+    InscripcionSerializer,
+    RegistroDePagosSerializer,
+    MetodoDePagoSerializer
+)
 from .permissions import Acceso_View_privada
+
+from .key import clientId
+
+logger = logging.getLogger(__name__)
+
 from django.core.mail import send_mail
 from rest_framework.permissions import IsAuthenticated
 from django.core.mail import EmailMessage
 import logging
 
+
 @api_view(['POST'])
-@permission_classes([AllowAny])  
+@permission_classes([AllowAny])
 def register_client(request):
     if request.method == 'POST':
-        # Verificar si ya existe un usuario con el mismo email
         email = request.data.get('email')
         if Client.objects.filter(email=email).exists():
             return Response({"error": "A user with this email already exists"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Crear nuevo usuario
         serializer = ClientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
-
-
-# Clientes
-
-        
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([Acceso_View_privada])
 def client_detail(request, pk=None):
     if request.method == 'GET':
@@ -58,11 +69,11 @@ def client_detail(request, pk=None):
             serializer = ClientSerializer(clients, many=True)
             return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    if request.method == 'PATCH':
         if pk:
             try:
                 client = Client.objects.get(pk=pk)
-                serializer = ClientSerializer(client, data=request.data)
+                serializer = ClientSerializer(client, data=request.data, partial=True)
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -70,7 +81,7 @@ def client_detail(request, pk=None):
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         if pk:
             try:
                 client = Client.objects.get(pk=pk)
@@ -79,13 +90,8 @@ def client_detail(request, pk=None):
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
 
-
-
-# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
-# Ventas
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @permission_classes([Acceso_View_privada])
-
 def ventas_detail(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -106,7 +112,6 @@ def ventas_detail(request, pk=None):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
     elif request.method == 'PUT':
         if pk:
@@ -128,13 +133,10 @@ def ventas_detail(request, pk=None):
                 return Response({"message": "Venta deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
             except Venta.DoesNotExist:
                 return Response({"error": "Venta not found"}, status=status.HTTP_404_NOT_FOUND)
-# //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////           
-#producto
+
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @permission_classes([Acceso_View_privada])
-
 def producto_detail(request, pk=None):
-    # GET - Obtener una lista de productos o un producto por ID
     if request.method == 'GET':
         if pk:
             try:
@@ -148,7 +150,6 @@ def producto_detail(request, pk=None):
             serializer = ProductoSerializer(productos, many=True)
             return Response(serializer.data)
 
-    # POST - Crear un nuevo producto
     elif request.method == 'POST':
         serializer = ProductoSerializer(data=request.data)
         if serializer.is_valid():
@@ -156,11 +157,10 @@ def producto_detail(request, pk=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # PUT - Actualizar un producto por ID
     elif request.method == 'PUT':
         if pk:
             try:
-                producto = Producto.objects.get(pk=pk)               
+                producto = Producto.objects.get(pk=pk)
                 serializer = ProductoSerializer(producto, data=request.data)
                 if serializer.is_valid():
                     serializer.save()
@@ -169,7 +169,6 @@ def producto_detail(request, pk=None):
             except Producto.DoesNotExist:
                 return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-    # DELETE - Eliminar un producto por ID
     elif request.method == 'DELETE':
         if pk:
             try:
@@ -179,22 +178,9 @@ def producto_detail(request, pk=None):
             except Producto.DoesNotExist:
                 return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-#////////////////////////////////////////////////
-
-from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import CustomTokenObtainPairSerializer
-from rest_framework.response import Response
-from rest_framework import status
-
-
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
-    
-
-
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#view_imgur
 @api_view(['POST'])
 @permission_classes([Acceso_View_privada])
 def subir_imagen_a_imgur(request):
@@ -207,14 +193,17 @@ def subir_imagen_a_imgur(request):
             'Authorization': f'Client-ID {clientId}',
         }
         url = 'https://api.imgur.com/3/image'
-        files = {'image': file.read()}  
+
+        files = {'image': file.read()}
+
         response = requests.post(url, headers=headers, files=files)
 
         if response.status_code != 200:
             return JsonResponse({'error': 'Error al subir la imagen a Imgur'}, status=response.status_code)
 
         data = response.json()
-        image_url = data['data']['link']  
+
+        image_url = data['data']['link']
 
         return JsonResponse({'image_url': image_url}, status=200)
 
@@ -244,6 +233,7 @@ def send_contact_email(request):
                 message=f'Nombre: {nombre}\nMensaje: {mensaje}',
                 from_email='ydelgado@fwdcostarica.com',  # Cambia esto por tu correo electrónico
                 recipient_list=['ydelgado@fwdcostarica.com'],  # Cambia esto al correo del destinatario
+
             )
 
             return JsonResponse({'message': 'Email enviado con éxito.'})
@@ -306,3 +296,112 @@ def generar_qr_imgur(request):
 
 
 
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([AllowAny])
+def Inscripcion_detail(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                inscripcion = Inscripcion.objects.get(pk=pk)
+                serializer = InscripcionSerializer(inscripcion)
+                return Response(serializer.data)
+            except Inscripcion.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            inscripciones = Inscripcion.objects.all()
+            serializer = InscripcionSerializer(inscripciones, many=True)
+            return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = InscripcionSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        if pk:
+            try:
+                inscripcion = Inscripcion.objects.get(pk=pk)
+                serializer = InscripcionSerializer(inscripcion, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            except Inscripcion.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([AllowAny])
+def registro_de_pago_list(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                registro = RegistroDePagos.objects.get(pk=pk)
+                serializer = RegistroDePagosSerializer(registro)
+                return Response(serializer.data)
+            except RegistroDePagos.DoesNotExist:
+                return Response({"error": "Registro not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            registros = RegistroDePagos.objects.all()
+            serializer = RegistroDePagosSerializer(registros, many=True)
+            return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = RegistroDePagosSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def Metodo_de_pago(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                metodo = MetodoDePago.objects.get(pk=pk)
+                serializer = MetodoDePagoSerializer(metodo)
+                return Response(serializer.data)
+            except MetodoDePago.DoesNotExist:
+                return Response({"error": "Metodo not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            metodos = MetodoDePago.objects.all()
+            serializer = MetodoDePagoSerializer(metodos, many=True)
+            return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = MetodoDePagoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cambiar_contrasena(request):
+    email = request.data.get('email')
+    nueva_contrasena = request.data.get('nueva_contrasena')
+
+    if not email or not nueva_contrasena:
+        logger.warning("Faltan datos necesarios")
+        return Response({'error': 'Todos los campos son obligatorios'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = Client.objects.get(email=email)
+        user.password = make_password(nueva_contrasena)
+        user.save()
+        logger.info("Contraseña cambiada exitosamente")
+        return Response({'message': 'Contraseña cambiada exitosamente'}, status=status.HTTP_200_OK)
+
+    except Client.DoesNotExist:
+        logger.error(f"Correo electrónico no encontrado: {email}")
+        return Response({'error': f'Correo electrónico no encontrado: {email}'}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        logger.error(f"Error al cambiar la contraseña: {str(e)}")
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
