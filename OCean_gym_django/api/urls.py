@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import subir_imagen_a_imgur, enviar_correo
+from .views import subir_imagen_a_imgur
 
 
 
@@ -36,7 +36,10 @@ urlpatterns = [
    
 #    path('check-role/', CheckUserRole.as_view(), name='check-user-role'),
 
-    path('enviar-correo/', enviar_correo, name='enviar_correo'),
+    # path('enviar-correo/', enviar_correo, name='enviar_correo'),
+    
+    path('generar_qr_imgur/', views.generar_qr_imgur, name='generar_qr_imgur'),
 
+    path('api/send-contact-email/', views.send_contact_email, name='send_contact_email'),
 ]
 

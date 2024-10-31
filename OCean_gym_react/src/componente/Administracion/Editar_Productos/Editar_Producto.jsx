@@ -142,6 +142,7 @@ const Editar_producto = () => {
     }
     try {
       const token = getCookie('user_token'); // Obtén el token de la cookie
+      console.log(getCookie);
       const formData = new FormData();
       formData.append('image', file);
       const response = await fetch('http://localhost:8000/api/subir-imagen/', {

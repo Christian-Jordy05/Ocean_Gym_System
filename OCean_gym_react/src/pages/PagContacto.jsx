@@ -1,10 +1,9 @@
-import React from 'react'
-import Contacto from '../componente/Contacto/Contacto'
+import Contacto from "../componente/contacto/Contacto"
 
 function PagContacto() {
   return (
     <div>
-      <Contacto/>
+     <Contacto/>
     </div>
   )
 }
