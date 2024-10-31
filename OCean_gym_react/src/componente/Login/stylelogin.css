@@ -4,108 +4,152 @@
     box-sizing: border-box;
 }
 
+.loginbody{
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
 }
 
 .login-box {
-    background-color: #fff;
-    padding: 60px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 450px;
-    height: 500px;
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
 }
 
-.logo_Ocean_gym{
-    width: 130px;
-    height: 132px;
-}
-
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-form {
+.logo-wrapper {
+    background-color: #f8fafc;
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: transform 0.3s ease;
 }
 
-input {
+.logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.logo_Ocean_gym {
+    width: 70px;
+    height: auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+h2 {
+    color: #0351a4;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.Input_de_correo,
+.Input_de_contraseña {
+    width: 100%;
+    padding: 12px 0;
     border: none;
-    border-bottom: 1.5px solid black;
-    padding: 10px;
-    border-radius: 0px;
-    margin-bottom: 20px;
-    outline: none;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: transparent;
 }
 
-/* .Input_de_correo{
-aun nose usa
-} */
+.Input_de_correo::placeholder,
+.Input_de_contraseña::placeholder {
+    color: #94a3b8;
+    font-size: 15px;
+}
 
-.Input_de_contraseña{
-    margin-top: 10px;
+.Input_de_correo:focus,
+.Input_de_contraseña:focus {
+    outline: none;
+    border-bottom-color: #0351a4;
+}
+
+.Input_de_correo:focus::placeholder,
+.Input_de_contraseña:focus::placeholder {
+    color: #cbd5e1;
+}
+
+.letra_de_olvidar_contraseña {
+    display: block;
+    text-align: right;
+    margin: -15px 0 30px;
+    text-decoration: none;
+    color: #0351a4;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.letra_de_olvidar_contraseña:hover {
+    color: #004494;
 }
 
 .btnsession {
-    background-color: rgb(3, 81, 164);
+    width: 100%;
+    background-color: #0351a4;
     color: #ffffff;
-    padding: 10px;
+    padding: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 13px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
 }
 
 .btnsession:hover {
     background-color: #004494;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 81, 164, 0.2);
 }
 
-
-#titulogym{
-color: blue;
-
+.btnsession:active {
+    transform: translateY(0);
 }
 
-#titulocorreo{
-margin-left: -160px;
-font-size: 15px; 
-color: #000000; 
-font-family: Arial, Helvetica, sans-serif;
-}
-#titulocontra{
-margin-left: -196px;
-font-size: 15px; 
-
+.btnsession:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
-
-
-.input_y_boton{
-height: 250px
-}
-
-.letra_de_olvidar_contraseña{
-    margin-bottom: 15px;
-    text-align: right;
-}
-.letra_de_olvidar_contraseña a {
-    text-decoration: none;
-    font-size: 14px;
-    color: rgb(2, 63, 128);
-}
-
-.letra_de_olvidar_contraseña{
-    text-decoration: none;
-    color: rgb(2, 63, 128);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 20px;
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .login-box {
+        padding: 30px;
+    }
 }

@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework import status
-from .models import Client, Venta, Producto
-from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
+from rest_framework import status , viewsets
+from .models import Client, Venta, Producto , Inscripcion  ,RegistroDePagos,MetodoDePago
+from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer , InscripcionSerializer,RegistroDePagosSerializer,MetodoDePagoSerializer
 from rest_framework import  status
 from django.http import JsonResponse
 import requests
@@ -15,27 +15,29 @@ from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-
+import logging
 from .permissions import Acceso_View_privada
 
 
 
 
+
 @api_view(['POST'])
-@permission_classes([AllowAny])  
+@permission_classes([AllowAny])
 def register_client(request):
     if request.method == 'POST':
-        # Verificar si ya existe un usuario con el mismo email
         email = request.data.get('email')
         if Client.objects.filter(email=email).exists():
             return Response({"error": "A user with this email already exists"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Crear nuevo usuario
         serializer = ClientSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()  
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        print(serializer.errors)  
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
@@ -44,7 +46,7 @@ def register_client(request):
 # Clientes
 
         
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([Acceso_View_privada])
 def client_detail(request, pk=None):
     if request.method == 'GET':
@@ -60,11 +62,11 @@ def client_detail(request, pk=None):
             serializer = ClientSerializer(clients, many=True)
             return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    if request.method == 'PATCH':  # Cambiado de 'elif' a 'if'
         if pk:
             try:
                 client = Client.objects.get(pk=pk)
-                serializer = ClientSerializer(client, data=request.data)
+                serializer = ClientSerializer(client, data=request.data, partial=True)  # Permite actualizaciones parciales
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -72,7 +74,7 @@ def client_detail(request, pk=None):
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         if pk:
             try:
                 client = Client.objects.get(pk=pk)
@@ -80,6 +82,7 @@ def client_detail(request, pk=None):
                 return Response({"message": "Client deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 
@@ -226,6 +229,138 @@ def subir_imagen_a_imgur(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([AllowAny])
+def Inscripcion_detail(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                inscripcion = Inscripcion.objects.get(pk=pk)
+                serializer = InscripcionSerializer(inscripcion)
+                return Response(serializer.data)
+            except Inscripcion.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            inscripciones = Inscripcion.objects.all()
+            serializer = InscripcionSerializer(inscripciones, many=True)
+            return Response(serializer.data)
 
+    elif request.method == 'POST':
+        serializer = InscripcionSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        if pk:
+            try:
+                inscripcion = Inscripcion.objects.get(pk=pk)
+                serializer = InscripcionSerializer(inscripcion, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            except Inscripcion.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([AllowAny])
+def registro_de_pago_list(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                inscripcion = RegistroDePagos.objects.get(pk=pk)
+                serializer = RegistroDePagosSerializer(inscripcion)
+                return Response(serializer.data)
+            except RegistroDePagos.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            inscripciones = RegistroDePagos.objects.all()
+            serializer = RegistroDePagosSerializer(inscripciones, many=True)
+            return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = RegistroDePagosSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+
+@api_view(['GET', 'POST',])
+@permission_classes([AllowAny])
+def Metodo_de_pago(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                inscripcion = MetodoDePago.objects.get(pk=pk)
+                serializer = MetodoDePagoSerializer(inscripcion)
+                return Response(serializer.data)
+            except MetodoDePago.DoesNotExist:
+                return Response({"error": "Inscripcion not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            inscripciones = MetodoDePago.objects.all()
+            serializer = MetodoDePagoSerializer(inscripciones, many=True)
+            return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = MetodoDePagoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+    
+    
+   
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.hashers import make_password
+from .models import Client  
+from rest_framework.permissions import AllowAny
+import logging
+
+logger = logging.getLogger(__name__)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cambiar_contrasena(request):
+
+    email = request.data.get('email')
+    nueva_contrasena = request.data.get('nueva_contrasena')
+
+
+  
+    if not email or not nueva_contrasena:
+        logger.warning("Faltan datos necesarios")
+        return Response({'error': 'Todos los campos son obligatorios'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    try:
+        user = Client.objects.get(email=email)
+        user.password = make_password(nueva_contrasena)  
+        user.save()
+
+        logger.info("Contraseña cambiada exitosamente")
+
+        return Response({'message': 'Contraseña cambiada exitosamente'}, status=status.HTTP_200_OK)
+
+    except Client.DoesNotExist:
+        logger.error(f"Correo electrónico no encontrado: {email}")
+        return Response({'error': f'Correo electrónico no encontrado: {email}'}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        logger.error(f"Error al cambiar la contraseña: {str(e)}")
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

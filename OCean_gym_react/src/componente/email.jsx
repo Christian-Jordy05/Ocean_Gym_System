@@ -22,12 +22,11 @@ const EmailForm = () => {
       return;
     }
 
-    // Parámetros para enviar el correo
+
     const templateParams = {
-      to_email: 'info@tudominio.com',  // Puedes usar una dirección genérica o cualquier correo válido
-      bcc: emails.split(',').map(email => email.trim()).join(','), // Correos para Bcc
+      to_email: 'info@tudominio.com',  
+      bcc: emails.split(',').map(email => email.trim()).join(','), 
       message: message,
-      image_url: 'https://media.vandalsports.com/i/1706x960/5-2024/202459164425_1.jpg.webp', // Aquí reemplaza con la URL de la imagen
     };
 
     emailjs.send('service_lqeq9ft', 'template_lk6v826', templateParams, 'nQBqBPTyVgkmpVvW2')
@@ -40,7 +39,7 @@ const EmailForm = () => {
       });
   };
 
-  // Asegúrate de que el 'return' esté dentro del cuerpo de la función EmailForm
+  
   return (
     <form onSubmit={handleSubmit}>
       <h2>Enviar un Correo</h2>
@@ -56,10 +55,6 @@ const EmailForm = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         required
-      />
-      <input
-        type="file"
-        onChange={(e) => setImage(e.target.files[0])}
       />
       <button type="submit">Enviar</button>
     </form>

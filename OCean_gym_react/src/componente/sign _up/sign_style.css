@@ -3,87 +3,136 @@
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    /* background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    width: 100vw;
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
-    font-family: 'Lato', sans-serif; */
-}
 
-.Input_Nombre,.Input_Contraseña,.Input_Gmail{
-    border: none;
-    border-bottom: 1.5px solid black;
-    padding: 10px;
-    border-radius: 0px;
-    margin-bottom: 20px;
-    outline: none;
+.bodyregis{
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
 }
 
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #E1E6F8;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
 }
-.login-box {
-    background-color: #ffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 350px;
+
+.register-box {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
 }
-.logo {
+
+.logo-wrapper {
+    background-color: #f8fafc;
     width: 100px;
-    margin-bottom: 20px;
+    height: 100px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: transform 0.3s ease;
 }
+
+.logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+#logo1 {
+    width: 70px;
+    height: auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
 h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #333;
-}
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.input-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.input-container label {
+    color: #0351a4;
+    font-size: 28px;
+    font-weight: 700;
     margin-bottom: 10px;
+    letter-spacing: -0.5px;
 }
 
-.input-container input {
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+.subtitle {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.Input_Nombre,
+.Input_Gmail,
+.Input_Contraseña {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.Input_Nombre::placeholder,
+.Input_Gmail::placeholder,
+.Input_Contraseña::placeholder {
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+.Input_Nombre:focus,
+.Input_Gmail:focus,
+.Input_Contraseña:focus {
+    outline: none;
+    border-bottom-color: #0351a4;
+}
+
+.Input_Nombre:focus::placeholder,
+.Input_Gmail:focus::placeholder,
+.Input_Contraseña:focus::placeholder {
+    color: #cbd5e1;
 }
 
 .btn {
-    background-color: rgb(3, 81, 164);
-    color: #fff;
-    padding: 10px;
+    width: 100%;
+    background-color: #0351a4;
+    color: #ffffff;
+    padding: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    margin-top: 15px;
 }
+
 .btn:hover {
     background-color: #004494;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 81, 164, 0.2);
 }
-#logo1{
-width: 130px;
+
+.btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .register-box {
+        padding: 30px;
+    }
 }

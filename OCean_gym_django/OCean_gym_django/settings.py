@@ -53,13 +53,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
+    'api.apps.ApiConfig', 
     'rest_framework',
     'corsheaders',
-    # 'rest_framework  |k.authtoken',
+    # 'rest_framework.authtoken',
     "rest_framework_simplejwt.token_blacklist",
-    
-    
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Este es el backend por defecto
+    # Agrega cualquier backend personalizado aquí, si es necesario
 ]
 
 MIDDLEWARE = [
@@ -200,3 +203,6 @@ LOGGING = {
         },
     },
 }
+
+
+ 

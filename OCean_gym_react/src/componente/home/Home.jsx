@@ -5,6 +5,11 @@ import facebooklogo from '../img/facebooklogo.png'
 import Whatsapp from '../img/Whatsapp.png'
 import Cards from '../Card/Cards'
 import videofit from '../video/videofit.mp4'
+import Navegar from '../navegacion/navegar'
+import { Link } from 'react-router-dom'
+
+
+
 
 const MainSection = () => (
   <section className="main-section">
@@ -53,45 +58,103 @@ const TestimonialsSection = () => (
 
 const ContactSection = () => { 
   const direccion = "300mts al Norte de la entrada del Boli,Puntarenas,Costa Rica"
+  
   const url = `https://www.google.com/maps/place/Ocean+Gym/@9.9802644,-84.7577344,18.3z/data=!4m6!3m5!1s0x8fa0316cd1bda3f9:0xb6112bf209eefd7b!8m2!3d9.9802966!4d-84.7574158!16s%2Fg%2F11t0rlkxnn?entry=ttu&g_ep=EgoyMDI0MDkyNC4wIKXMDSoASAFQAw%3D%3D${encodeURIComponent(direccion)}`
-
   return (
-    <section className="contact-section">
-      <div className="contact-info">
-        <h3>Contáctanos</h3>
-        <p>
-          <a href={url} target="_blank" rel="noopener noreferrer" className='direccionOceangym'>
-            {direccion}
-          </a>
-        </p>
-        <p>Teléfono: (506) 8456-7890</p>
-        <a href="mailto:oceangympuntarenas@gmail.com" className='subrayado'>
-          <p id='editcorreo'>Correo: oceangympuntarenas@gmail.com</p>
-        </a>
+    <footer className="footer">
+      <div className="footer__decoration"></div>
+      <div className="footer__wrapper">
+        <div className="footer__content">
+          <div className="footer__section">
+            <div className="footer__brand">
+              <div className="footer__logo">
+                <div className="footer__logo-wave"></div>
+              </div>
+              <h3 className="footer__title">Ocean Gym</h3>
+            </div>
+            <div className="footer__contact">
+              <Link to="#" className="footer__link">
+                <span className="footer__icon footer__icon--location"></span>
+                <span className="footer__text">Puntarenas, Costa Rica</span>
+              </Link>
+              <Link to="tel:+50684567890" className="footer__link">
+                <span className="footer__icon footer__icon--phone"></span>
+                <span className="footer__text">(506) 8456-7890</span>
+              </Link>
+              <Link to="mailto:oceangympuntarenas@gmail.com" className="footer__link">
+                <span className="footer__icon footer__icon--email"></span>
+                <span className="footer__text">oceangympuntarenas@gmail.com</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="footer__section">
+            <h3 className="footer__title">Horario</h3>
+            <div className="footer__schedule">
+              <div className="footer__schedule-item">
+                <span className="footer__schedule-day">Lunes - Viernes</span>
+                <span className="footer__schedule-hours">6:00 AM - 9:00 PM</span>
+              </div>
+              <div className="footer__schedule-item">
+                <span className="footer__schedule-day">Sábado</span>
+                <span className="footer__schedule-hours">8:00 AM - 6:00 PM</span>
+              </div>
+              <div className="footer__schedule-item footer__schedule-item--closed">
+                <span className="footer__schedule-day">Domingo</span>
+                <span className="footer__schedule-hours">Cerrado</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer__section">
+            <h3 className="footer__title">Síguenos</h3>
+            <div className="footer__social">
+              <a
+                href="https://www.facebook.com/profile.php?id=100083259674848"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__social-link"
+                aria-label="Síguenos en Facebook"
+              >
+                <img src={facebooklogo} alt="" className='footer__social-icon' />
+                <span className="footer__social-tooltip">Facebook</span>
+              </a>
+              <a
+                href="https://www.instagram.com/ocean_gym0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__social-link"
+                aria-label="Síguenos en Instagram"
+              >
+                <img src={instalogo} alt="" className='footer__social-icon' />
+                <span className="footer__social-tooltip">Instagram</span>
+              </a>
+              <a
+                href="https://wa.me/50686647624"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__social-link"
+                aria-label="Contáctanos por WhatsApp"
+              >
+                <img src={Whatsapp} alt="" className='footer__social-icon' />
+                <span className="footer__social-tooltip">WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="social-links">
-        <h3>Síguenos</h3>
-        <ul>
-          <li>
-            <a href="https://www.facebook.com/profile.php?id=100083259674848&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
-              <img id='logofacebook' src={facebooklogo} alt="Facebook" />
-            </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/ocean_gym0?igsh=MTFyeDlxZGxkZGRhaA==" target="_blank" rel="noopener noreferrer">
-              <img id='logoinsta' src={instalogo} alt="Instagram" />
-            </a>
-          </li>
-          <li>
-            <a href="https://wa.me/50686647624" target="_blank" rel="noopener noreferrer">
-              <img id='logowhatsApp' src={Whatsapp} alt="WhatsApp" />
-            </a>
-          </li>
-        </ul>
-      </div>    
-    </section>
+
+      <div className="footer__bottom">
+        <p className="footer__copyright">
+          &copy; {new Date().getFullYear()} Ocean Gym - Todos los derechos reservados
+        </p>
+      </div>
+    </footer>
   )
 }
+  
+  
+  
 
 function Home() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -105,12 +168,15 @@ function Home() {
   }, [])
 
   return (
+    <div className='Homebody'>
+    <Navegar/>
     <div className="App">
       <MainSection />
       <FeaturesSection />
       <Cards />
       <TestimonialsSection />
       <ContactSection />
+    </div>
     </div>
   )
 }

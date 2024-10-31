@@ -6,6 +6,8 @@ import Img_mujer from "../img/img_de_mujer_gym.png";
 import img_principiante from "../img/img_principiante.jpg";
 import img_intermedio from "../img/intermedio.webp";
 import img_experto from "../img/img_experto.webp";
+import Navegar from "../navegacion/navegar";
+
 
 function SeleccionDeRutinas() {
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
@@ -41,15 +43,17 @@ function SeleccionDeRutinas() {
     if (sexoSeleccionado && nivelSeleccionado) {
       let ruta = '';
       if (sexoSeleccionado === "hombre") {
-        ruta = nivelSeleccionado === "principiante" ? '/Principiante_hombre' : nivelSeleccionado === "intermedio" ? '/internedio' : '/Experto';
+        ruta = nivelSeleccionado === "principiante" ? '/Principiante_hombre' : nivelSeleccionado === "intermedio" ? '/Intermedio_hombre' : '/Experto_hombre';
       } else {
-        ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante_mujer' : nivelSeleccionado === "intermedio" ? '/Rutinas_Intermedio_mujer' : '/Rutinas_Experto_mujer';
+        ruta = nivelSeleccionado === "principiante" ? '/Rutinas_Principiante_mujer' : nivelSeleccionado === "intermedio" ? '/Intermedio_mujer' : '/Experto_mujer';
       }
       navigate(ruta);
     }
   };
 
   return (
+    <div className="Seleccionbody">
+    <Navegar/>
     <div className="contenedor">
       <h1 className="nombre_del_titulo">Elige tu Camino</h1>
 
@@ -120,6 +124,7 @@ function SeleccionDeRutinas() {
           Confirmar
         </button>
       )}
+    </div>
     </div>
   );
 }

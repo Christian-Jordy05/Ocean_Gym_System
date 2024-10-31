@@ -140,6 +140,8 @@ function Rutina_Intermedio_mujer() {
   };
 
   return (
+    <>
+    <Navegar/>
     <div className="contenedor-rutina">
       <div className="encabezado-rutina">
         <h1>RUTINA PARA INTERMEDIO</h1>
@@ -220,6 +222,7 @@ function Rutina_Intermedio_mujer() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

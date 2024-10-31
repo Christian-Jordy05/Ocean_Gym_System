@@ -10,6 +10,7 @@ import remoMaquinaMujer from '../../img/remoMaquinaMujer.png'
 import sentadillaBarraMujer from '../../img/sentadillaBarraMujer.png'
 import PrensaDePiernasMujer from '../../img/PrensaDePiernasMujer.png'
 import pesoMuertoRumanoMujer from '../../img/pesoMuertoRumanoMujer.png'
+import Navegar from '../../navegacion/navegar'
 
 
 function Rutina_Experto_mujer() {
@@ -141,6 +142,8 @@ function Rutina_Experto_mujer() {
 
 
   return (
+    <>
+    <Navegar/>
     <div className="contenedor-rutina">
       <div className="encabezado-rutina">
         <h1>RUTINA PARA INTERMEDIO</h1>
@@ -221,6 +224,7 @@ function Rutina_Experto_mujer() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

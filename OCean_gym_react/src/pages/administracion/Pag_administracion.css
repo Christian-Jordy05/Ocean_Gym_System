@@ -1,42 +1,27 @@
-:root {
-  --primary-color: #3a86ff;
-  --primary-light: #8ecae6;
-  --primary-dark: #023e8a;
-  --secondary-color: #ff006e;
-  --background-light: #ffffff;
-  --background-dark: #f8f9fa;
-  --text-primary: #2b2d42;
-  --text-secondary: #8d99ae;
-  --accent-color: #ffbe0b;
-  --border-color: #e9ecef;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --card-background: #ffffff;
-  --success-color: #06d6a0;
-  --error-color: #ef476f;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-body {
+.Admibody {
   margin: 0;
   font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-dark);
-  color: var(--text-primary);
+  background-color: #f8f9fa;
+  color: #2b2d42;
 }
 
 .admin-page {
   display: flex;
   height: 100vh;
-  background-color: var(--background-dark);
+  background-color: #f8f9fa;
 }
 
 .admin-sidebar {
   width: 280px;
-  background-color: var(--card-background);
+  background-color: #ffffff;
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 10px var(--shadow-color);
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   z-index: 10;
   position: relative;
@@ -50,15 +35,15 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(to right, #3a86ff, #ff006e);
 }
 
 .sidebar-title {
   font-size: 1.75rem;
-  color: var(--primary-color);
+  color: #3a86ff;
   margin-bottom: 2rem;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid #e9ecef;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
@@ -72,7 +57,7 @@ body {
   left: 0;
   width: 50px;
   height: 2px;
-  background-color: var(--primary-color);
+  background-color: #3a86ff;
 }
 
 .sidebar-nav {
@@ -86,7 +71,7 @@ body {
   align-items: center;
   padding: 0.75rem 1rem;
   background-color: transparent;
-  color: var(--text-secondary);
+  color: #8d99ae;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -104,7 +89,7 @@ body {
   top: 0;
   height: 100%;
   width: 3px;
-  background-color: var(--primary-color);
+  background-color: #3a86ff;
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
@@ -115,13 +100,13 @@ body {
 }
 
 .sidebar-button:hover {
-  background-color: var(--background-dark);
-  color: var(--primary-color);
+  background-color: #f8f9fa;
+  color: #3a86ff;
 }
 
 .sidebar-button.active {
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
+  background-color: #8ecae6;
+  color: #023e8a;
   font-weight: 600;
 }
 
@@ -135,7 +120,7 @@ body {
 .sidebar-button:hover svg,
 .sidebar-button.active svg {
   transform: scale(1.1);
-  color: var(--primary-color);
+  color: #3a86ff;
 }
 
 .chevron-icon {
@@ -153,16 +138,16 @@ body {
 .admin-main {
   flex-grow: 1;
   padding: 2rem;
-  background-color: var(--background-dark);
+  background-color: #f8f9fa;
   overflow-y: auto;
 }
 
 .admin-content {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: var(--card-background);
+  background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 8px 16px var(--shadow-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   transition: all 0.3s ease;
 }
@@ -170,8 +155,8 @@ body {
 .page-title {
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--border-color);
+  color: #3a86ff;
+  border-bottom: 2px solid #e9ecef;
   padding-bottom: 0.5rem;
   position: relative;
   font-weight: 700;
@@ -184,7 +169,7 @@ body {
   left: 0;
   width: 50px;
   height: 2px;
-  background-color: var(--primary-color);
+  background-color: #3a86ff;
   transition: width 0.3s ease;
 }
 
@@ -237,12 +222,6 @@ body {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Estilos adicionales para mejorar la apariencia general */
-
-.admin-content {
-  position: relative;
-}
-
 .admin-content::before {
   content: '';
   position: absolute;
@@ -250,23 +229,19 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(to right, #3a86ff, #ff006e);
   border-radius: 12px 12px 0 0;
 }
-
-/* Estilo para los componentes internos (asumiendo que tienen clases específicas) */
 
 .estadisticas-container,
 .editar-productos-container,
 .usuarios-container {
-  background-color: var(--background-light);
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 1.5rem;
   margin-top: 1.5rem;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-/* Estilos para botones genéricos dentro del contenido */
 
 .btn {
   padding: 0.5rem 1rem;
@@ -278,30 +253,28 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: var(--background-light);
+  background-color: #3a86ff;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark);
+  background-color: #023e8a;
 }
 
 .btn-secondary {
-  background-color: var(--secondary-color);
-  color: var(--background-light);
+  background-color: #ff006e;
+  color: #ffffff;
 }
 
 .btn-secondary:hover {
-  background-color: var(--accent-color);
-  color: var(--text-primary);
+  background-color: #ffbe0b;
+  color: #2b2d42;
 }
-
-/* Estilos para inputs genéricos */
 
 .input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e9ecef;
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
@@ -309,11 +282,9 @@ body {
 
 .input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px var(--primary-light);
+  border-color: #3a86ff;
+  box-shadow: 0 0 0 2px #8ecae6;
 }
-
-
 
 .table {
   width: 100%;
@@ -325,13 +296,13 @@ body {
 .table td {
   padding: 0.75rem;
   text-align: left;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #e9ecef;
 }
 
 .table th {
-  background-color: var(--background-dark);
+  background-color: #f8f9fa;
   font-weight: 600;
-  color: var(--primary-color);
+  color: #3a86ff;
 }
 
 .table tr:last-child td {
@@ -339,5 +310,5 @@ body {
 }
 
 .table tr:hover {
-  background-color: var(--background-dark);
+  background-color: #f8f9fa;
 }
