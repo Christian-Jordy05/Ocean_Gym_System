@@ -13,6 +13,7 @@ import hacer_sentadillas from '../../img/hacer-sentadillas.webp'
 import prensa_de_piernas from '../../img/prensa-de-piernas.jpg'
 import Extensión_de_piernas from '../../img/Extensión_de_piernas.webp'
 import Curl_de_piernas from '../../img/Curl_de_piernas.avif'
+import Navegar from '../../navegacion/navegar'
 
 function Rutinas_experto() {
   const [rutinaActiva, setRutinaActiva] = useState(null);
@@ -173,6 +174,8 @@ function Rutinas_experto() {
     ],
 };
   return (
+    <>
+    <Navegar/>
     <div className="contenedor-rutina">
     <div className="encabezado-rutina">
       <h1>RUTINA PARA EXPEPERTO</h1>
@@ -253,6 +256,7 @@ function Rutinas_experto() {
       </div>
     )}
   </div>
+  </>
 );
 }
 

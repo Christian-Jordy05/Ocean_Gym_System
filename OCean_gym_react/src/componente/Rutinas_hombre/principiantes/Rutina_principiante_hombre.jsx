@@ -19,6 +19,7 @@ import Predicador from '../../img/Predicador.webp'
 import Martillo from '../../img/Martillo.webp'
 import curl_con_mancuernas from '../../img/curl_con_mancuernas.jpg'
 import veinte_uno from '../../img/veinte_uno.avif'
+import Navegar from '../../navegacion/navegar';
 
 
 
@@ -229,6 +230,8 @@ function RutinaPrincipiante() {
   };
   
   return (
+    <div className='rutinaPrinBody'>
+    <Navegar/>
     <div className="contenedor-rutina">
       <div className="encabezado-rutina">
         <h1>RUTINA PARA PRINCIPIANTES</h1>
@@ -308,6 +311,7 @@ function RutinaPrincipiante() {
           <button className="boton-cerrar" onClick={() => setRutinaActiva(null)}>Cerrar</button>
         </div>
       )}
+    </div>
     </div>
   );
 }

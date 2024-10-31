@@ -28,7 +28,7 @@
     100% { background-position: 0% 50%; }
 }
 
-#home-btn, #signup-btn, #login-btn, #logout-btn {
+#home-btn, #signup-btn, #login-btn, #logout-btn,#contact-btn, #admin-btn{
     text-decoration: none;
     background-color: transparent;
     border: none;

@@ -10,6 +10,7 @@ import RemoConBandaMujer from '../../img/RemoConBandaMujer.png'
 import SentadillasMujer from '../../img/SentadillasMujer.jpg'
 import PrensaDePiernasMujer from '../../img/PrensaDePiernasMujer.png'
 import ElevacionTalonesMujer from '../../img/ElevacionTalonesMujer.png'
+import Navegar from '../../navegacion/navegar'
 
 
 function Rutina_Principiante_mujer() {
@@ -137,6 +138,8 @@ function Rutina_Principiante_mujer() {
     ],
   };
   return (
+    <>
+    <Navegar/>
     <div className="contenedor-rutina">
       <div className="encabezado-rutina">
         <h1>RUTINA PARA INTERMEDIO</h1>
@@ -217,6 +220,7 @@ function Rutina_Principiante_mujer() {
         </div>
       )}
     </div>
+    </>
   );
 }
 export default Rutina_Principiante_mujer

@@ -3,9 +3,6 @@ import { useAuth } from '../../navegacion/AuthContext';
 import './administracion.css';
 import Swal from 'sweetalert2';
 import { Updateproductos } from '../../../services/productos';
-
-
-
 const Editar_producto = () => {
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', descripcion: '', precio: '', img: '' });
@@ -24,7 +21,6 @@ const Editar_producto = () => {
       try {
         const token = getCookie('user_token');
         console.log(token);
-        
         const respuesta = await fetch('http://localhost:8000/productos/', {
           method: 'GET',
           headers: {
@@ -60,7 +56,7 @@ const Editar_producto = () => {
     };
     try {
       const token = getCookie('user_token'); // Obtener el token desde la cookie 'user_token'
-      console.log(token);   
+      console.log(token);
       const response = await fetch('http://localhost:8000/productos/', {  // Reemplaza con la URL de tu API para crear un producto
         method: 'POST',
         headers: {
@@ -142,6 +138,7 @@ const Editar_producto = () => {
     }
     try {
       const token = getCookie('user_token'); // Obtén el token de la cookie
+      console.log(getCookie);
       const formData = new FormData();
       formData.append('image', file);
       const response = await fetch('http://localhost:8000/api/subir-imagen/', {

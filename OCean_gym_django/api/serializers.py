@@ -1,7 +1,6 @@
 from rest_framework import serializers, permissions
 from .models import Client, Venta, Producto, Inscripcion, MetodoDePago
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate
 
 
@@ -40,10 +39,15 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    
     class Meta:
         model = Client
-        fields = ['id_cliente', 'email', 'name', 'password', 'fecha_creacion', 'role']  
-        read_only_fields = ['fecha_creacion']
+        fields = ['id_cliente', 'email', 'name', 'password', 'fecha_creacion', 'role', 'is_active']
+        read_only_fields = ['fecha_creacion', 'is_active'] 
+
+
+
 
 class VentaSerializer(serializers.ModelSerializer):
     cliente = ClientSerializer(read_only=True)
@@ -57,17 +61,19 @@ class ProductoSerializer(serializers.ModelSerializer):
         model = Producto
         fields = ['id_producto', 'nombre', 'descripcion', 'precio', 'img']
 
-class InscripcionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Inscripcion
-        fields = ['id_inscripcion', 'id_cliente', 'id_administrador', 'fecha_inscripcion', 'tipo_inscripcion', 'costo']
+
+
+    
+
+
+
 
 class MetodoDePagoSerializer(serializers.ModelSerializer):
     descripcion = serializers.CharField(source='get_descripcion_display', read_only=True)
 
     class Meta:
         model = MetodoDePago
-        fields = ['id_inscripcion', 'descripcion']
+        fields = ['id_metododepago', 'descripcion']
 
 class ContactSerializer(serializers.Serializer):
     nombre = serializers.CharField(max_length=100)
@@ -77,3 +83,66 @@ class ContactSerializer(serializers.Serializer):
 
 
 
+from rest_framework import serializers
+from .models import RegistroDePagos, Client, Inscripcion 
+
+class RegistroDePagosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegistroDePagos
+        fields = ['id_pago', 'fecha_pago', 'email', 'monto', 'id_inscripcion']
+        read_only_fields = ['id_pago', 'fecha_pago']
+
+
+
+
+from rest_framework import serializers
+from .models import Inscripcion, Client
+from django.utils import timezone
+
+class InscripcionSerializer(serializers.ModelSerializer):
+    dias_restantes = serializers.IntegerField(read_only=True)
+    fecha_inscripcion = serializers.DateTimeField(read_only=True)
+    fecha_expiracion = serializers.DateTimeField(read_only=True)
+    pagos = RegistroDePagosSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Inscripcion
+        fields = '__all__'
+
+    def create(self, validated_data):
+        inscripcion = Inscripcion.objects.create(**validated_data)
+        return inscripcion 
+
+    def update(self, instance, validated_data):
+        if 'tipo_inscripcion' in validated_data:
+            instance.extender_inscripcion(validated_data['tipo_inscripcion'])
+
+        for attr, value in validated_data.items():
+            if attr not in ['fecha_inscripcion', 'fecha_expiracion']:
+                setattr(instance, attr, value)
+
+        instance.save()  
+        return instance
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        
+        # Formateo de fechas
+        if instance.fecha_inscripcion:
+            data['fecha_inscripcion'] = instance.fecha_inscripcion.strftime('%d/%m/%Y')
+        else:
+            data['fecha_inscripcion'] = None 
+
+        if instance.fecha_expiracion:
+            data['fecha_expiracion'] = instance.fecha_expiracion.strftime('%d/%m/%Y')
+            dias_restantes = (instance.fecha_expiracion - timezone.now()).days
+            data['dias_restantes'] = dias_restantes
+            data['is_active'] = dias_restantes > 0 
+        else:
+            data['fecha_expiracion'] = None 
+            data['dias_restantes'] = 0 
+            data['is_active'] = False  
+
+        return data
+
+    

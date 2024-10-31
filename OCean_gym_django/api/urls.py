@@ -32,11 +32,19 @@ urlpatterns = [
    #IMGUR
    path('api/subir-imagen/', subir_imagen_a_imgur, name='subir_imagen_a_imgur'),
    
-#    path('test/', TestAdminAccess.as_view(), name='test-admin-access'), 
    
-#    path('check-role/', CheckUserRole.as_view(), name='check-user-role'),
-
-    path('enviar-correo/', enviar_correo, name='enviar_correo'),
-
+   path('Inscripcion/', views.Inscripcion_detail, name='Inscripcion'),
+   path('Inscripcion/<int:pk>/', views.Inscripcion_detail,name='Inscripcion'),
+   
+   path('Registro_de_pago/', views.registro_de_pago_list, name='Registro_de_pago'),
+   path('Registro_de_pago/<int:pk>/', views.registro_de_pago_list,name='Registro_de_pago'),
+   
+   path('Metodo_de_pago/', views.Metodo_de_pago, name='Metodo_de_pago'),
+   path('Metodo_de_pago/<int:pk>/', views.Metodo_de_pago,name='Metodo_de_pago'),
+   
+   
+    path('cambiar-contrasena/', views.cambiar_contrasena, name='cambiar_contrasena'),
+   
+   
 ]
 

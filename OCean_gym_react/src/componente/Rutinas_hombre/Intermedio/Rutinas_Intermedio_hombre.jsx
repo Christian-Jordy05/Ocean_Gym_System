@@ -19,6 +19,7 @@ import Predicador from '../../img/Predicador.webp';
 import Martillo from '../../img/Martillo.webp';
 import curl_con_mancuernas from '../../img/curl_con_mancuernas.jpg';
 import veinte_uno from '../../img/veinte_uno.avif';
+import Navegar from '../../navegacion/navegar';
 
 function RutinaIntermedia() {
   const [rutinaActiva, setRutinaActiva] = useState(null);
@@ -227,6 +228,8 @@ function RutinaIntermedia() {
 
 
  return (
+  <div className='RutinaBody'>
+    <Navegar/>
     <div className="contenedor-rutina">
       <div className="encabezado-rutina">
         <h1>RUTINA PARA INTERMEDIO</h1>
@@ -306,6 +309,7 @@ function RutinaIntermedia() {
           <button className="boton-cerrar" onClick={() => setRutinaActiva(null)}>Cerrar</button>
         </div>
       )}
+    </div>
     </div>
   );
 }

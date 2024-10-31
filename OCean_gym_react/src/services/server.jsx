@@ -1,41 +1,57 @@
 
 const url = 'http://localhost:8000/clients/';
 
+import Cookies from 'js-cookie';
+
 const GetDataUsers = async () => {
   try {
-    const response = await fetch(url);
+    const token = Cookies.get('user_token');
+    const response = await fetch('http://localhost:8000/clients/', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: 'include'
+    });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
   }
 };
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const PostUsers = async (inpunUser, inpuntPass, inputGmail) => {
-  const url = 'http://localhost:8000/register_clientes/';
+const PostUsers = async (name, password, email) => {
+  const url2 = 'http://localhost:8000/register_clientes/';
+  console.log(name,password,email);
+  
   try {
-    const response = await fetch(url, {
+    const response = await fetch(url2, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 
-        email: inputGmail,    
-        name: inpunUser,    
-        password: inpuntPass,
-      }),
+        email, 
+        name, 
+        password }),
     });
+
     if (!response.ok) {
-      throw new Error(`Error en la solicitud POST: ${response.status} ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Error al registrar el usuario');
     }
+
     const data = await response.json();
     console.log('Usuario registrado correctamente:', data);
   } catch (error) {
     console.error('ERROR POST:', error.message);
+    throw error; // Para manejar el error en el componente
   }
 };
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const UpdateUsers = async (userId, email, name, newPassword) => {
@@ -82,4 +98,4 @@ const deleteUsers = async (id) => {
 };
 
 
-export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers };
+export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers};

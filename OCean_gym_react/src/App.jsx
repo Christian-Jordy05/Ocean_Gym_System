@@ -5,9 +5,7 @@ import Rutas from './Routes/Rutas'
 function App() {
   return (
     <>
-    <Navegar/>
     <Rutas/>
-    
     </>
   )
 }
