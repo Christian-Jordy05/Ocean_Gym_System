@@ -38,8 +38,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-
-
 class ClientSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     
@@ -47,8 +45,6 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = ['id_cliente', 'email', 'name', 'password', 'fecha_creacion', 'role', 'is_active']
         read_only_fields = ['fecha_creacion', 'is_active'] 
-
-
 
 
 
@@ -78,6 +74,12 @@ class MetodoDePagoSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetodoDePago
         fields = ['id_metododepago', 'descripcion']
+
+class ContactSerializer(serializers.Serializer):
+    nombre = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    message = serializers.CharField(max_length=1000)
+
 
 
 

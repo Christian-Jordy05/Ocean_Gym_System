@@ -2,24 +2,22 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status , viewsets
 from .models import Client, Venta, Producto , Inscripcion  ,RegistroDePagos,MetodoDePago
-from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer , InscripcionSerializer,RegistroDePagosSerializer,MetodoDePagoSerializer
+from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer, ContactSerializer , InscripcionSerializer,RegistroDePagosSerializer,MetodoDePagoSerializer
 from rest_framework import  status
 from django.http import JsonResponse
 import requests
 from django.conf import settings
 from .key import clientId
 from rest_framework.permissions import AllowAny 
-
 from rest_framework import permissions, status
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 import logging
 from .permissions import Acceso_View_privada
 
-
-
+from django.core.mail import send_mail
+from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['POST'])
@@ -363,4 +361,35 @@ def cambiar_contrasena(request):
         logger.error(f"Error al cambiar la contraseña: {str(e)}")
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+#view_correo
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])  # Solo usuarios autenticados pueden enviar correos
+def enviar_correo(request):
+    serializer = ContactSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        nombre = serializer.validated_data.get('nombre')
+        mensaje = serializer.validated_data.get('message')
+        usuario_email = request.user.email  # Obtener el correo del usuario autenticado
+
+        subject = f"Nuevo mensaje de contacto de {nombre}"
+        message_content = f"Nombre: {nombre}\nMensaje: {mensaje}\nCorreo remitente: {usuario_email}"
+
+        try:
+            # Enviar correo
+            send_mail(
+                subject,
+                message_content,
+                usuario_email,  # Remitente es el correo del usuario autenticado
+                ['ydelgado@fwdcostarica.com'],  # Cambia esto a tu email fijo de destino
+                fail_silently=False,
+            )
+            return Response({"message": "Correo enviado exitosamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(f"Error al enviar correo: {e}")
+            return Response({"error": "No se pudo enviar el correo"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

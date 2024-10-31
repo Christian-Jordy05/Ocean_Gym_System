@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import subir_imagen_a_imgur 
+from .views import subir_imagen_a_imgur, enviar_correo
 
 
 

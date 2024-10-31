@@ -1,5 +1,37 @@
+/* Estilo general de la página */
+.contenedor {
+  padding: 20px;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: dodgerblue;
+}
+
+/* Formulario para agregar productos */
+.formulario {
 .editar-producto-container {
   display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin: 0 auto 30px auto;
+  margin-right: 900px;
+}
+
+.formulario input {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--background-light);
+  color: var(--text-primary);
+}
+
+.formulario button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
   flex-direction: column;
   gap: 2rem;
 }
@@ -32,9 +64,22 @@
   background-color: #4CAF50;
   color: white;
   border: none;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+  width: 80px;
+}
+
+.formulario button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Tabla de productos */
+.tabla-productos {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
   transition: background-color 0.3s;
 }
 
@@ -73,6 +118,15 @@
   transition: transform 0.3s ease;
 }
 
+.tabla-productos th,
+.tabla-productos td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-productos th {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
 .producto-card:hover {
   transform: translateY(-5px);
 }
@@ -83,6 +137,14 @@
   object-fit: cover;
 }
 
+.tabla-productos td {
+  background-color: var(--background-light);
+}
+
+.tabla-productos td img {
+  width: 80px;
+  height: auto;
+  border-radius: 5px;
 .producto-info {
   padding: 1rem;
 }
@@ -120,6 +182,18 @@
   transition: background-color 0.3s;
 }
 
+/* Botones de acciones */
+.tabla-productos button {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabla-productos button:hover {
+  background-color: var(--secondary-color);
 .btn-editar {
   background-color: #2196F3;
   color: white;
