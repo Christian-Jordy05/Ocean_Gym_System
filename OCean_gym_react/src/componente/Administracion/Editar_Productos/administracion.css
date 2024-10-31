@@ -13,7 +13,6 @@ h2 {
 
 /* Formulario para agregar productos */
 .formulario {
-.editar-producto-container {
   display: flex;
   flex-wrap: nowrap;
   gap: 15px;
@@ -32,41 +31,8 @@ h2 {
   padding: 10px 20px;
   background-color: var(--primary-color);
   color: var(--text-primary);
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.nuevo-producto-form {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.nuevo-producto-form h3 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.nuevo-producto-form input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.btn-agregar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: #4CAF50;
-  color: white;
   border: none;
   border-radius: 5px;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
   cursor: pointer;
   width: 80px;
 }
@@ -80,42 +46,6 @@ h2 {
   width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
-  transition: background-color 0.3s;
-}
-
-.btn-agregar:hover {
-  background-color: #45a049;
-}
-
-.error-message {
-  color: #ff0000;
-  margin-top: 1rem;
-}
-
-.productos-list {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.productos-list h3 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.productos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.producto-card {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
 }
 
 .tabla-productos th,
@@ -127,14 +57,6 @@ h2 {
 .tabla-productos th {
   background-color: var(--primary-color);
   color: var(--text-primary);
-.producto-card:hover {
-  transform: translateY(-5px);
-}
-
-.producto-imagen {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
 }
 
 .tabla-productos td {
@@ -145,41 +67,6 @@ h2 {
   width: 80px;
   height: auto;
   border-radius: 5px;
-.producto-info {
-  padding: 1rem;
-}
-
-.producto-info h4 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
-}
-
-.producto-info p {
-  margin: 0 0 0.5rem 0;
-  color: #666;
-}
-
-.producto-precio {
-  font-weight: bold;
-  color: #4CAF50;
-}
-
-.producto-actions {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  background-color: #f1f1f1;
-}
-
-.btn-editar, .btn-eliminar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 /* Botones de acciones */
@@ -194,32 +81,4 @@ h2 {
 
 .tabla-productos button:hover {
   background-color: var(--secondary-color);
-.btn-editar {
-  background-color: #2196F3;
-  color: white;
-}
-
-.btn-editar:hover {
-  background-color: #0b7dda;
-}
-
-.btn-eliminar {
-  background-color: #f44336;
-  color: white;
-}
-
-.btn-eliminar:hover {
-  background-color: #da190b;
-}
-
-@media (max-width: 768px) {
-  .productos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .productos-grid {
-    grid-template-columns: 1fr;
-  }
 }

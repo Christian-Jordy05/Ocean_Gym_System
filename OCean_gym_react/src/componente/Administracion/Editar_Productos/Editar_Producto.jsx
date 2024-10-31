@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../navegacion/AuthContext';
 import './administracion.css';
 import Swal from 'sweetalert2';
 import { Updateproductos } from '../../../services/productos';
-
-
-import { Updateproductos } from '../../../services/productos';
-import { Edit, Trash2, Plus } from 'lucide-react';
-
-const EditarProducto = () => {
+const Editar_producto = () => {
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', descripcion: '', precio: '', img: '' });
-  const [file, setFile] = useState(null);
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
   const { refreshAccessToken } = useAuth();
@@ -19,37 +13,32 @@ const EditarProducto = () => {
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   };
   // Efecto para obtener los productos al montar el componente
-
-  // Obtener productos al montar el componente
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
         const token = getCookie('user_token');
         console.log(token);
-        
         const respuesta = await fetch('http://localhost:8000/productos/', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
           },
-          credentials: "include"
+          credentials:"include"
         });
         if (!respuesta.ok) {
-          const errorText = await respuesta.text();
+          const errorText = await respuesta.text(); // Obtener el texto del error
           throw new Error(`Error ${respuesta.status}: ${errorText}`);
         }
         const data = await respuesta.json();
-        setProductos(data);
+        setProductos(data); // Establecer los productos obtenidos en el estado
       } catch (error) {
         console.error('Error al obtener productos:', error);
       }
     };
     obtenerProductos(); // Llamada a la función para obtener productos
-    obtenerProductos();
   }, [refreshAccessToken]);
   // Manejar la adición de un nuevo producto
   const manejarAgregar = async (imagen_url) => {
@@ -58,55 +47,54 @@ const EditarProducto = () => {
       return;
     }
     const nuevoId = productos.length ? productos[productos.length - 1].id + 1 : 1; // Obtener un nuevo ID
-
     const producto = {
+      id: nuevoId,
       nombre: nuevoProducto.nombre,
       descripcion: nuevoProducto.descripcion,
-      precio: parseFloat(nuevoProducto.precio),
+      precio: parseFloat(nuevoProducto.precio), // Convertir el precio a número flotante
       img: imagen_url
     };
-
     try {
       const token = getCookie('user_token'); // Obtener el token desde la cookie 'user_token'
-      console.log(token);   
+      console.log(token);
       const response = await fetch('http://localhost:8000/productos/', {  // Reemplaza con la URL de tu API para crear un producto
-      const token = getCookie('user_token');
-      const response = await fetch('http://localhost:8000/productos/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}` // Agregar el token en el encabezado
         },
-        credentials: "include",
         body: JSON.stringify(producto),
         credentials:"include"
       });
-
       if (!response.ok) {
         throw new Error('Error en la creación del producto');
       }
-
       const data = await response.json();
-      setProductos([...productos, data]);
+      setProductos([...productos, data]);  // Agregar el nuevo producto a la lista local
       setNuevoProducto({ nombre: '', descripcion: '', precio: '', img: '' });
-      setError('');
-      Swal.fire('Éxito', 'Producto agregado correctamente', 'success');
+      setError(''); // Limpiar el error si todo es correcto
     } catch (error) {
       console.error('Error al agregar producto:', error);
       setError('Error al agregar producto. Inténtalo de nuevo.');
     }
   };
   // Función para abrir el modal de edición
-  const manejarEditar = (producto) => {
+  const manejarEditar = (product) => {
     Swal.fire({
       title: 'Editar Producto',
       html: `
-        <input id="nombre" class="swal2-input" placeholder="Nombre" value="${producto.nombre}">
-        <input id="descripcion" class="swal2-input" placeholder="Descripción" value="${producto.descripcion}">
-        <input id="precio" class="swal2-input" placeholder="Precio" value="${producto.precio}">
-        <input id="img" class="swal2-input" placeholder="URL de la imagen" value="${producto.img}">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" class="swal2-input" value="${product.nombre}">
+        <label>Descripción:</label>
+        <input type="text" id="descripcion" class="swal2-input" value="${product.descripcion}">
+        <label>Precio:</label>
+        <input type="text" id="precio" class="swal2-input" value="${product.precio}">
+        <label>Imagen URL:</label>
+        <input type="text" id="img" class="swal2-input" value="${product.img}">
       `,
-      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
       preConfirm: () => {
         const nombre = document.getElementById('nombre').value;
         const descripcion = document.getElementById('descripcion').value;
@@ -117,22 +105,18 @@ const EditarProducto = () => {
           return false;
         }
         return { nombre, descripcion, precio, img };
-        return {
-          nombre: document.getElementById('nombre').value,
-          descripcion: document.getElementById('descripcion').value,
-          precio: document.getElementById('precio').value,
-          img: document.getElementById('img').value
-        }
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        updateProduct(producto.id, result.value);
+        const { nombre, descripcion, precio, img } = result.value;
+        updateProduct(product.id_producto, { nombre, descripcion, precio: parseFloat(precio), img });
       }
     });
   };
   // Función para actualizar el producto
   const updateProduct = async (id, updatedData) => {
     try {
+      // Llamada a la API para actualizar el producto
       await Updateproductos(id, updatedData);
       // Actualizar solo el producto con el id seleccionado
        setProductos((prevProducts) =>
@@ -140,7 +124,6 @@ const EditarProducto = () => {
           prod.id_producto === id ? { ...prod, ...updatedData } : prod
         )
       );
-      setProductos(productos.map(prod => prod.id === id ? {...prod, ...updatedData} : prod));
       Swal.fire('Actualizado', 'El producto ha sido actualizado correctamente', 'success');
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
@@ -148,20 +131,16 @@ const EditarProducto = () => {
     }
   };
   // Función para enviar la imagen seleccionada
-
-  // Función para subir imagen y agregar el producto
   const send_data = async () => {
     if (!file) {
-      Swal.fire('Error', 'Por favor selecciona una imagen.', 'error');
+      alert("Por favor selecciona una imagen.");
       return;
     }
     try {
       const token = getCookie('user_token'); // Obtén el token de la cookie
-      const token = getCookie('user_token');
+      console.log(getCookie);
       const formData = new FormData();
       formData.append('image', file);
-      formData.append('image', file);
-    
       const response = await fetch('http://localhost:8000/api/subir-imagen/', {
         method: 'POST',
         body: formData,
@@ -169,34 +148,20 @@ const EditarProducto = () => {
           'Authorization': `Bearer ${token}`,
         },
         credentials: 'include'
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        credentials: 'include'
       });
-    
       const data = await response.json();
       if (response.ok) {
         manejarAgregar(data.image_url);
-        manejarAgregar(data.image_url);
       } else {
         console.error('Error al subir la imagen:', data);
-        Swal.fire('Error', 'Hubo un problema al subir la imagen', 'error');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }}
-      Swal.fire('Error', 'Hubo un problema al procesar la solicitud', 'error');
-    }
-  };
-
   return (
     <div className="contenedor">
       <h2>Administración de Productos</h2>
       <div className="formulario">
-    <div className="editar-producto-container">
-      <div className="nuevo-producto-form">
-        <h3>Agregar Nuevo Producto</h3>
         <input
           type="text"
           placeholder="Nombre del producto"
@@ -219,13 +184,9 @@ const EditarProducto = () => {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={(e) => setFile(e.target.files[0])} // Guardar archivo seleccionado
         />
         <button onClick={send_data}>Agregar</button>
-        <button onClick={send_data} className="btn-agregar">
-          <Plus size={16} />
-          Agregar Producto
-        </button>
       </div>
       {error && <p className="error">{error}</p>}
       <table className="tabla-productos">
@@ -239,35 +200,20 @@ const EditarProducto = () => {
           </tr>
         </thead>
         <tbody>
-      {error && <p className="error-message">{error}</p>}
-      <div className="productos-list">
-        <h3>Lista de Productos</h3>
-        <div className="productos-grid">
           {productos.map((producto) => (
-            <div key={producto.id} className="producto-card">
-              <img src={producto.img} alt={producto.nombre} className="producto-imagen" />
-              <div className="producto-info">
-                <h4>{producto.nombre}</h4>
-                <p>{producto.descripcion}</p>
-                <p className="producto-precio">${Number(producto.precio).toFixed(2)}</p>
-              </div>
-              <div className="producto-actions">
-                <button onClick={() => manejarEditar(producto)} className="btn-editar">
-                  <Edit size={16} />
-                  Editar
-                </button>
-                <button className="btn-eliminar">
-                  <Trash2 size={16} />
-                  Eliminar
-                </button>
-              </div>
-            </div>
+            <tr key={producto.id}>
+              <td>{producto.nombre}</td>
+              <td>{producto.descripcion}</td>
+              <td>${Number(producto.precio).toFixed(2)}</td>
+              <td><img src={producto.img} alt={producto.nombre} className="img-producto" /></td>
+              <td>
+                <button onClick={() => manejarEditar(producto)}>Editar</button>
+              </td>
+            </tr>
           ))}
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 };
 export default Editar_producto;
-
-export default EditarProducto;

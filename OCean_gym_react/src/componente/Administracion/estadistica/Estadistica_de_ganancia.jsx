@@ -155,7 +155,7 @@ const EstadisticaDeGanancia = () => {
         </button>
       </div>
       <div className="estadistica-chart">
-        <Column key={vista} {...configuracion} /> {/* Forzar re-renderización al cambiar vista */}
+        <Column key={vista} {...configuracion} />
       </div>
     </div>
   );
