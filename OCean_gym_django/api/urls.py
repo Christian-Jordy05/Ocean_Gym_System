@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import subir_imagen_a_imgur, enviar_correo
+from .views import subir_imagen_a_imgur
 
 
 
@@ -33,6 +33,7 @@ urlpatterns = [
    path('api/subir-imagen/', subir_imagen_a_imgur, name='subir_imagen_a_imgur'),
    
    
+
    path('Inscripcion/', views.Inscripcion_detail, name='Inscripcion'),
    path('Inscripcion/<int:pk>/', views.Inscripcion_detail,name='Inscripcion'),
    
@@ -46,5 +47,11 @@ urlpatterns = [
     path('cambiar-contrasena/', views.cambiar_contrasena, name='cambiar_contrasena'),
    
    
+
+    
+    path('generar_qr_imgur/', views.generar_qr_imgur, name='generar_qr_imgur'),
+
+    path('api/send-contact-email/', views.send_contact_email, name='send_contact_email'),
+
 ]
 

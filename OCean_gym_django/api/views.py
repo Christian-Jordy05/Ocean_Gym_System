@@ -1,8 +1,15 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+
 from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+from rest_framework import status
+from .models import Client, Venta, Producto
+from .serializers import ClientSerializer, VentaSerializer, ProductoSerializer
+from rest_framework import  status
+
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
@@ -21,9 +28,16 @@ from .serializers import (
     MetodoDePagoSerializer
 )
 from .permissions import Acceso_View_privada
+
 from .key import clientId
 
 logger = logging.getLogger(__name__)
+
+from django.core.mail import send_mail
+from rest_framework.permissions import IsAuthenticated
+from django.core.mail import EmailMessage
+import logging
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -179,46 +193,108 @@ def subir_imagen_a_imgur(request):
             'Authorization': f'Client-ID {clientId}',
         }
         url = 'https://api.imgur.com/3/image'
+
         files = {'image': file.read()}
+
         response = requests.post(url, headers=headers, files=files)
-            
+
         if response.status_code != 200:
             return JsonResponse({'error': 'Error al subir la imagen a Imgur'}, status=response.status_code)
-        
+
         data = response.json()
+
         image_url = data['data']['link']
+
         return JsonResponse({'image_url': image_url}, status=200)
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def enviar_correo(request):
-    serializer = ContactSerializer(data=request.data)
-    
-    if serializer.is_valid():
-        nombre = serializer.validated_data.get('nombre')
-        mensaje = serializer.validated_data.get('message')
-        usuario_email = request.user.email
 
-        subject = f"Nuevo mensaje de contacto de {nombre}"
-        message_content = f"Nombre: {nombre}\nMensaje: {mensaje}\nCorreo remitente: {usuario_email}"
 
+#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+
+# views.py
+from django.core.mail import send_mail
+from django.http import JsonResponse
+import json
+
+@api_view(['POST'])
+def send_contact_email(request):
+    if request.method == 'POST':
         try:
-            send_mail(
-                subject,
-                message_content,
-                usuario_email,
-                ['ydelgado@fwdcostarica.com'],
-                fail_silently=False,
-            )
-            return Response({"message": "Correo enviado exitosamente"}, status=status.HTTP_200_OK)
-        except Exception as e:
-            print(f"Error al enviar correo: {e}")
-            return Response({"error": "No se pudo enviar el correo"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            data = json.loads(request.body)
+            nombre = data.get('nombre')
+            mensaje = data.get('mensaje')
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            # Enviar correo
+            send_mail(
+                subject='Nuevo mensaje de contacto',
+                message=f'Nombre: {nombre}\nMensaje: {mensaje}',
+                from_email='ydelgado@fwdcostarica.com',  # Cambia esto por tu correo electrónico
+                recipient_list=['ydelgado@fwdcostarica.com'],  # Cambia esto al correo del destinatario
+
+            )
+
+            return JsonResponse({'message': 'Email enviado con éxito.'})
+        except Exception as e:
+            return JsonResponse({'error': f'Ocurrió un error: {str(e)}'}, status=500)
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+import json
+import requests
+from django.http import JsonResponse
+clientId = 'fcd86062a529556'
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def generar_qr_imgur(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            print(f"Datos recibidos: {data}")  # Imprime los datos recibidos
+            
+            nombre = data.get("nombre")
+            email = data.get("email")
+            mensaje = data.get("message")
+            qr_base64 = data.get("qr_base64")
+            
+            if not nombre or not email or not mensaje or not qr_base64:
+                return JsonResponse({"error": "Todos los campos son obligatorios"}, status=400)
+
+            headers = {                                 
+                "Authorization": f"Client-ID {clientId}",
+                "Content-Type": "application/json"
+            }
+
+            response = requests.post("https://api.imgur.com/3/image", headers=headers, json={"image": qr_base64})
+            print(f"Respuesta de Imgur: {response.text}")  # Imprime la respuesta de Imgur
+            
+            if response.status_code != 200:
+                return JsonResponse({"error": "Error al subir la imagen a Imgur"}, status=response.status_code)
+
+            response_data = response.json()
+            if "data" not in response_data or "link" not in response_data["data"]:
+                return JsonResponse({"error": "Error al recibir la URL desde Imgur"}, status=500)
+
+            imgur_link = response_data["data"]["link"]
+            return JsonResponse({"imgur_link": imgur_link}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Formato JSON inválido"}, status=400)
+        except Exception as e:
+            print(f"Error inesperado: {str(e)}")  # Imprimir el error inesperado
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+
+
 
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
