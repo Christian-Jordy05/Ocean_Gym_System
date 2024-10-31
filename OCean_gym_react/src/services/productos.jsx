@@ -37,16 +37,35 @@ const Postproductos = async (inputnombre, inputprecio, inpuntdescripcion, inputi
 };
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+// Función para obtener una cookie por su nombre
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 const Updateproductos = async (id, updatedData) => {
   const url = `http://localhost:8000/productos/${id}/`; // Actualiza con tu URL
+
+  // Obtén el token desde la cookie
+  const token = getCookie('user_token'); // Reemplaza 'nombre_de_la_cookie_del_token' con el nombre real de la cookie que contiene el token
+
+  if (!token) {
+    console.error('No hay token disponible en las cookies');
+    return;
+  }
+
   try {
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Usa el token desde la cookie
       },
       body: JSON.stringify(updatedData),
+      credentials: 'include', // Incluye las credenciales (cookies) en la solicitud
     });
+
     if (!response.ok) {
       throw new Error('Error al actualizar el producto');
     }
