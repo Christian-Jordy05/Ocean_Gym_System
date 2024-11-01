@@ -3,7 +3,7 @@ import PagSignUp from '../pages/pag_sign_up';
 import PagLogin from '../pages/PagLogin';
 import PagHome from '../pages/PagHome';
 import EmailForm from '../componente/email';
-
+import PagContacto from '../pages/PagContacto';
 
 import Pag_de_seleccion_Rutinas from '../pages/Pag_de_seleccion_Rutinas';
 
@@ -15,7 +15,8 @@ import Pag_de_Rutina_experto_mujer from '../pages/rutinas_mujer/Pag_de_Rutina_ex
 import Pag_de_Rutina_intermedio_mujer from '../pages/rutinas_mujer/Pag_de_Rutina_intermedio_mujer';
 import Pag_de_Rutina_principiante_mujer from '../pages/rutinas_mujer/Pag_de_Rutina_principiante_mujer';
 
-import Contacto from '../componente/Contacto/Contacto';
+
+// import ValiQr from '../componente/validacionqr/ValiQr';
 
 import Rutas_privadas from '../componente/ruta_privadas/Rutas_privadas';
 
@@ -49,11 +50,11 @@ const Rutas = () => {
          <Route path="Experto_mujer" element={<Pag_de_Rutina_experto_mujer/>} />
        
         
-
+         <Route path="/contacto" element={<PagContacto/>} /> 
 
         
 
-        <Route path="/Contacto" element={<Contacto/>} />
+        {/* <Route path="/valiQr" element={<ValiQr/>} /> */}
 
         <Route element={<Rutas_privadas />}>
            <Route path="/Administracion" element={<Pag_De_administracion />} />

@@ -78,7 +78,9 @@ class MetodoDePagoSerializer(serializers.ModelSerializer):
 class ContactSerializer(serializers.Serializer):
     nombre = serializers.CharField(max_length=100)
     email = serializers.EmailField()
-    message = serializers.CharField(max_length=1000)
+    message = serializers.CharField()
+    qrCode = serializers.ImageField(required=False)  
+
 
 
 

@@ -62,8 +62,8 @@ const Updateproductos = async (id, updatedData) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` // Usa el token desde la cookie
       },
-      body: JSON.stringify(updatedData),
-      credentials: 'include', // Incluye las credenciales (cookies) en la solicitud
+      body: JSON.stringify(updatedData),  credentials: 'include', // Incluye las credenciales (cookies) en la solicitud
+    
     });
 
     if (!response.ok) {
