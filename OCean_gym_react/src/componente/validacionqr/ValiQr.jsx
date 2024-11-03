@@ -53,7 +53,7 @@ function ValiQr() {
       // Enviar correo utilizando emailjs
       const response = await emailjs.send(
         'service_5cr9zh8', // ID del servicio
-        'template_fohos1d', // ID de la plantilla
+        'template_4p4w5pd', // ID de la plantilla
         templateParams,
         'O39cVd9-32WxHY5S3' // ID del usuario
       );

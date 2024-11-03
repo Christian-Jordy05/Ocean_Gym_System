@@ -135,7 +135,7 @@ def ventas_detail(request, pk=None):
                 return Response({"error": "Venta not found"}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-@permission_classes([Acceso_View_privada])
+@permission_classes([AllowAny])
 def producto_detail(request, pk=None):
     if request.method == 'GET':
         if pk:

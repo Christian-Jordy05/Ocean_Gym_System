@@ -4,7 +4,7 @@ import PagLogin from '../pages/PagLogin';
 import PagHome from '../pages/PagHome';
 import EmailForm from '../componente/email';
 import PagContacto from '../pages/PagContacto';
-
+import Pagproducto from '../pages/Pagproducto';
 import Pag_de_seleccion_Rutinas from '../pages/Pag_de_seleccion_Rutinas';
 
 import Pag_de_Rutina_principiante from '../pages/rutinas_hombre/Pag_de_Rutina_principiante_hombre';
@@ -17,11 +17,12 @@ import Pag_de_Rutina_principiante_mujer from '../pages/rutinas_mujer/Pag_de_Ruti
 
 
 // import ValiQr from '../componente/validacionqr/ValiQr';
-
+import ValiQr from '../componente/validacionqr/ValiQr';
 import Rutas_privadas from '../componente/ruta_privadas/Rutas_privadas';
 
 import Pag_De_administracion from '../pages/administracion/Pag_De_administracion';
 import PagError from '../pages/Error';
+import Pag_producto from '../pages/Pagproducto';
 
 const Rutas = () => { 
   return (
@@ -32,7 +33,7 @@ const Rutas = () => {
         <Route path="/Home" element={<PagHome />} />
         <Route path="/" element={<PagHome />} />
 
-        <Route path="/email" element={<EmailForm />} /> 
+        <Route path="/email" element={<ValiQr />} /> 
 
 
         <Route path="/Seleccion_de_Rutinas" element={<Pag_de_seleccion_Rutinas/>} />
@@ -52,7 +53,7 @@ const Rutas = () => {
         
          <Route path="/contacto" element={<PagContacto/>} /> 
 
-        
+         <Route path="/productos" element={<Pagproducto/>} /> 
 
         {/* <Route path="/valiQr" element={<ValiQr/>} /> */}
 
