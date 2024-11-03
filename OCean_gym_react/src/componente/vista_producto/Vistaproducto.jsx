@@ -9,14 +9,11 @@ const ProductCard = ({ product }) => {
         <div className="highlight-icon">⚡</div>
       </div>
       <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
+        <h3 className="product-name">{product.nombre}</h3>
         <div className="product-rating">
           <span className="stars">★★★★☆</span>
         </div>
         <p className="product-description">{product.descripcion}</p>
-        <ul className="product-features">
-
-        </ul>
         <div className="product-price">${product.precio}</div>
         <button className="add-button">
           <span className="cart-icon">🛒</span> Comprar
@@ -26,7 +23,10 @@ const ProductCard = ({ product }) => {
   );
 };
 
-const ProductList = () => {
+
+
+
+const Vistaproducto = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,20 +49,13 @@ const ProductList = () => {
       });
   }, []);
 
-  if (loading) {
-    return <p>Cargando productos...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  if (loading) return <p>Cargando productos...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="product-list">
       {products.length > 0 ? (
-        products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))
+        products.map((product) => <ProductCard key={product.id} product={product} />)
       ) : (
         <p>No hay productos disponibles.</p>
       )}
@@ -70,4 +63,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default Vistaproducto;
