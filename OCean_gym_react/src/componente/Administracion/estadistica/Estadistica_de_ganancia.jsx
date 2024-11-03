@@ -100,7 +100,7 @@ const EstadisticaDeGanancia = () => {
         opacity: 0.6,
         fontSize: 12,
       },
-      formatter: (datum) => `$${datum.total.toFixed(2)}`,
+      formatter: (datum) => `₡${datum.total.toFixed(2)}`,
     },
     xAxis: {
       label: {
@@ -114,7 +114,7 @@ const EstadisticaDeGanancia = () => {
     },
     yAxis: {
       label: {
-        formatter: (v) => `$${v}`,
+        formatter: (v) => `₡${v}`,
       },
     },
     legend: {

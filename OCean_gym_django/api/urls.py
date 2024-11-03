@@ -52,6 +52,8 @@ urlpatterns = [
     path('generar_qr_imgur/', views.generar_qr_imgur, name='generar_qr_imgur'),
 
     path('api/send-contact-email/', views.send_contact_email, name='send_contact_email'),
+    
+     path('enviar_qr_email/', views.enviar_qr_email, name='enviar_qr_email'),
 
 ]
 
