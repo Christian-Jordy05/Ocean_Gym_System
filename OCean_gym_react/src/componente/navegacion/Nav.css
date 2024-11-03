@@ -58,7 +58,7 @@
     opacity: 0;
 }
 
-#home-btn:hover::before, #signup-btn:hover::before, #login-btn:hover::before, #logout-btn:hover::before {
+#home-btn:hover::before, #signup-btn:hover::before, #login-btn:hover::before, #logout-btn:hover::before,#product_btn:hover::before {
     opacity: 1;
 }
 
@@ -151,16 +151,16 @@
     color: #fffcfd;
 }
 
-#home-btn:active, #signup-btn:active, #login-btn:active, #logout-btn:active {
+#home-btn:active, #signup-btn:active, #login-btn:active, #logout-btn:active,#product-btn:active {
     transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-#home-btn:focus, #signup-btn:focus, #login-btn:focus, #logout-btn:focus {
+#home-btn:focus, #signup-btn:focus, #login-btn:focus, #logout-btn:focus,#product-btn:focus {
     outline: none;
 }
 
-#home-btn:focus-visible, #signup-btn:focus-visible, #login-btn:focus-visible, #logout-btn:focus-visible {
+#home-btn:focus-visible, #signup-btn:focus-visible, #login-btn:focus-visible, #logout-btn:focus-visible, #product-btn:focus-visible {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
@@ -183,3 +183,4 @@
 #signup-btn {
     animation: pulse 2s infinite;
 }
+
