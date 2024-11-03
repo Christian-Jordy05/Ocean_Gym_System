@@ -52,6 +52,11 @@ function Navegar() {
           <button id='contact-btn' type="button">Contacto</button>
         </Link>
 
+       {/* BOTON PARA DIRIGIR Producto */}
+        <Link to="/productos">
+          <button id='product-btn' type="button">Productos</button>
+        </Link>
+
         {/* Botón visible solo para admins */}
         {VerificacionAdmin && (
           <Link to="/Administracion">
