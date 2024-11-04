@@ -21,6 +21,53 @@ const GetDataUsers = async () => {
 };
 
 
+
+const GetBuscarUser = async (id_cliente) => {
+  const token = Cookies.get('user_token'); 
+  console.log(token);
+  
+  const response = await fetch(`http://localhost:8000/clients/${id_cliente}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    },
+    credentials: 'include'
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status}: ${await response.text()}`);
+  }
+
+  return await response.json();
+};
+
+
+const actualizarDatosUsuario = async (id_cliente, userData) => {
+  const token = Cookies.get('user_token');
+  const response = await fetch(`http://localhost:8000/clients/${id_cliente}/`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(userData), // Usar el objeto userData recibido
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al actualizar los datos');
+  }
+
+  return await response.json(); // Devolver el usuario actualizado
+};
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const PostUsers = async (name, password, email) => {
@@ -98,4 +145,4 @@ const deleteUsers = async (id) => {
 };
 
 
-export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers};
+export { GetDataUsers, PostUsers, UpdateUsers, deleteUsers,GetBuscarUser,actualizarDatosUsuario};

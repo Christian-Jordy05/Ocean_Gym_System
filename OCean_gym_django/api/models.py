@@ -40,7 +40,7 @@ class Client(AbstractUser):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     is_active = models.BooleanField(default=True)
-    username = None  # Deshabilita el campo 'username'
+    username = None  
     email = models.EmailField(unique=True)
 
     USERNAME_FIELD = 'email'

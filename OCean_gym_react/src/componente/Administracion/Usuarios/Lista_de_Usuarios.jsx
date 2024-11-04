@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Lista_de_Usuarios.css';
 import { GetDataUsers } from '../../../services/server';
 import { GetInscripcion } from '../../../services/Incripsion';
-import { X, Calendar, Clock, CheckCircle, XCircle } from 'lucide-react';
-
+import { Search, X, Calendar, Clock, CheckCircle, XCircle } from 'lucide-react';
 function Lista_de_Usuarios() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,7 +19,6 @@ function Lista_de_Usuarios() {
         console.log("Usuarios:", dato);  
         console.log("Inscripciones:", dato2);  
 
-        
         const inscripcionesPorEmail = {};
         dato2.forEach(inscripcion => {
           inscripcionesPorEmail[inscripcion.email] = {
@@ -33,11 +33,11 @@ function Lista_de_Usuarios() {
 
         const DatosUsers = dato.map(user => ({
           ...user,
-          
           inscripcion: inscripcionesPorEmail[user.email] || null,
         }));
 
         setUsers(DatosUsers);
+        setFilteredUsers(DatosUsers); 
       } catch (error) {
         console.error("Error al obtener datos:", error);
       }
@@ -45,6 +45,18 @@ function Lista_de_Usuarios() {
 
     fetchUsers();
   }, []);
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    
+    // Filtrar los usuarios segun de lo que ponga
+    const filtered = users.filter(user => 
+      user.name.toLowerCase().includes(value) || 
+      user.email.toLowerCase().includes(value)
+    );
+    setFilteredUsers(filtered);
+  };
 
   const openModal = (user) => {
     setSelectedUser(user.inscripcion || null);
@@ -59,6 +71,26 @@ function Lista_de_Usuarios() {
   return (
     <div className='ListaUsuariobody'>
       <div className="user-list-container">
+      <div className="search-container">
+
+            <Search className="search-icon" />
+            <input 
+              type="text" 
+              placeholder="Buscar por nombre o email..." 
+              value={searchTerm}
+              onChange={handleSearch}
+              className="search-input"
+            />
+            {searchTerm && (
+              <button className="clear-search" onClick={() => {
+                setSearchTerm('');
+                setFilteredUsers(users);
+              }}>
+                <X size={18} />
+              </button>
+            )}
+          </div>
+          
         <div className="table-container">
           <table className="user-table">
             <thead>
@@ -71,7 +103,7 @@ function Lista_de_Usuarios() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {filteredUsers.map((user) => (
                 <tr key={user.id_cliente}>
                   <td>{user.id_cliente}</td>
                   <td>{user.name}</td>

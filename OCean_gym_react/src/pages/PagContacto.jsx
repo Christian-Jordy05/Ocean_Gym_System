@@ -1,4 +1,4 @@
-import Contacto from "../componente/contacto/Contacto"
+import Contacto from "../componente/Contacto/Contacto"
 
 function PagContacto() {
   return (

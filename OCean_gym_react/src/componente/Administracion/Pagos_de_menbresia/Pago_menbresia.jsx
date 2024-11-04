@@ -1,4 +1,3 @@
-// Pago_membresia.jsx
 import React, { useState } from 'react';
 import { Search, CreditCard, Banknote, Send } from 'lucide-react';
 import QRCode from 'qrcode';
@@ -27,11 +26,16 @@ function Pago_menbresia() {
 
   const generarYEnviarQR = async (userId, email) => {
     try {
+  
+      if (!userId) {
+        throw new Error('ID de inscripción no disponible');
+      }
+
       const qrLink = `http://localhost:5173/Qrs_de_Usuarios?id=${userId}`;
-      console.log('Generando QR para el link:', qrLink);
+      // console.log('Generando QR para el link:', qrLink);
       
       const qrBase64 = await QRCode.toDataURL(qrLink);
-      console.log('QR generado exitosamente');
+      // console.log('QR generado exitosamente');
 
       const response = await fetch('http://localhost:8000/generar_qr_imgur/', {
         method: 'POST',
@@ -49,7 +53,7 @@ function Pago_menbresia() {
       }
 
       const data = await response.json();
-      console.log('QR enviado exitosamente al correo:', email);
+      // console.log('QR enviado exitosamente al correo:', email);
       return data.imgur_link;
     } catch (error) {
       console.error('Error al generar/enviar QR:', error);
@@ -127,25 +131,47 @@ function Pago_menbresia() {
       let inscripcionId;
 
       if (usuario.id_inscripcion) {
-        await UpdateInscripcion(usuario.id_inscripcion, {
+        // manda los datos para actualizar una inscripcion
+        const actualizacion = await UpdateInscripcion(usuario.id_inscripcion, {
           email: email,
           tipo_inscripcion: tipoMembresia,
           id_metododepago: metodoPagoId,
           costo: costo,
         });
-        inscripcionId = usuario.id_inscripcion;
+        inscripcionId = actualizacion.inscripcionActualizada.id_inscripcion;
       } else {
-        const nuevaInscripcion = await PostInscripcion(email, tipoMembresia, metodoPagoId, costo);
-        inscripcionId = nuevaInscripcion.id_inscripcion;
+
+        // manda los datos para crear una nueva inscripcion
+        const resultado = await PostInscripcion(email, tipoMembresia, metodoPagoId, costo);
+        // console.log('Respuesta de nueva inscripción:', resultado);
+        
+        // Acceder al ID de la inscripción correctamente
+        if (!resultado.inscripcion || !resultado.inscripcion.id_inscripcion) {
+          throw new Error('No se recibió el ID de la nueva inscripción');
+        }
+        
+        inscripcionId = resultado.inscripcion.id_inscripcion;
       }
 
-      // Generar y enviar QR después de procesar la inscripción
+      // Verifica que tengamos un id valido antes de generar el qr
+      if (!inscripcionId) {
+        throw new Error('ID de inscripción no disponible');
+      }
+
+      console.log('ID de inscripción para QR:', inscripcionId);
+
+      // Genera y enviar qr después de procesar la inscripcion
       try {
         await generarYEnviarQR(inscripcionId, email);
         console.log('QR generado y enviado exitosamente');
       } catch (qrError) {
         console.error('Error al generar/enviar QR:', qrError);
-        // Continuar con el flujo aunque falle el QR
+        Swal.fire({
+          icon: 'warning',
+          title: 'Inscripción procesada',
+          text: 'La inscripción se completó, pero hubo un problema al generar el QR. Por favor, contacte al administrador.',
+        });
+        return;
       }
 
       Swal.fire({
@@ -154,6 +180,7 @@ function Pago_menbresia() {
         text: `La inscripción de ${email} ha sido procesada correctamente y se ha enviado un QR al correo.`,
       });
 
+      // Limpiar el formulario
       setEmail('');
       setTipoMembresia('');
       setMetodoPago('');
@@ -163,7 +190,7 @@ function Pago_menbresia() {
       Swal.fire({
         icon: 'error',
         title: 'Error al procesar',
-        text: 'Hubo un error durante el proceso.',
+        text: 'Hubo un error durante el proceso: ' + error.message,
       });
     } finally {
       setIsSubmitting(false);

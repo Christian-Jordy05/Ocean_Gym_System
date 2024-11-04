@@ -177,7 +177,7 @@ rutinaPrinBody{
 }
 
 .titulo-rutina-activa {
-  font-size: 36px;
+  font-size: 46px;
   color: #333;
   margin-bottom: 30px;
   text-align: center;
@@ -262,7 +262,7 @@ rutinaPrinBody{
   transform: scale(1.05);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .encabezado-rutina h1 {
     font-size: 2.8rem;
   }
@@ -294,6 +294,7 @@ rutinaPrinBody{
 
   .titulo-rutina-activa {
     font-size: 28px;
+    margin-top: 45px;
   }
 
   .ejercicios-lista {
@@ -314,5 +315,12 @@ rutinaPrinBody{
 
   .ejercicio-item-info p {
     font-size: 0.8rem;
+  }
+  .boton-cerrar {
+    transition: color 0.3s ease;
+
+  }
+  .boton-cerrar:hover{
+    color: #ff0000;
   }
 }

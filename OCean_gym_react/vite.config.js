@@ -5,8 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0', // Permite el acceso desde otras máquinas en la red
-    port: 5173, // Asegúrate de que el puerto sea el correcto
+    host: '0.0.0.0',
+    port: 5173, 
     watch: {
       usePolling: true,
     },

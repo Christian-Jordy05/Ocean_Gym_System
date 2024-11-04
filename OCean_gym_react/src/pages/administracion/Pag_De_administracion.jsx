@@ -50,7 +50,7 @@ function Pag_De_administracion() {
     <Navegar/>
     <div className="admin-page">
       <div className="admin-sidebar">
-        <h2 className="sidebar-title">Dashboard</h2>
+        <h2 className="sidebar-title">Administracion</h2>
         <nav className="sidebar-nav">
           <button
             onClick={() => setCurrentPage('estadisticas')}

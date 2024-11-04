@@ -54,33 +54,55 @@ def register_client(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
 @api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([Acceso_View_privada])
 def client_detail(request, pk=None):
+    token = request.COOKIES.get('user_token')
+    user_id = Acceso_View_privada().get_user_id_from_token(token)
+    role = Acceso_View_privada().get_role_from_token(token)
+
+    # Filtra datos según el rol y el usuario
     if request.method == 'GET':
-        if pk:
+        if role == 'admin':
+            # Admin puede ver cualquier cliente
+            if pk:
+                try:
+                    client = Client.objects.get(pk=pk)
+                    serializer = ClientSerializer(client)
+                    return Response(serializer.data)
+                except Client.DoesNotExist:
+                    return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                clients = Client.objects.all()
+                serializer = ClientSerializer(clients, many=True)
+                return Response(serializer.data)
+        else:
+            # Usuario regular, mostrar solo sus propios datos
             try:
-                client = Client.objects.get(pk=pk)
+                client = Client.objects.get(pk=user_id)
                 serializer = ClientSerializer(client)
                 return Response(serializer.data)
             except Client.DoesNotExist:
                 return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            clients = Client.objects.all()
-            serializer = ClientSerializer(clients, many=True)
-            return Response(serializer.data)
 
     if request.method == 'PATCH':
         if pk:
-            try:
-                client = Client.objects.get(pk=pk)
-                serializer = ClientSerializer(client, data=request.data, partial=True)
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(serializer.data, status=status.HTTP_200_OK)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            except Client.DoesNotExist:
-                return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
+            # Verifica si el usuario está tratando de actualizar su propio perfil
+            if str(pk) == str(user_id) or role == 'admin':
+                try:
+                    client = Client.objects.get(pk=pk)
+                    serializer = ClientSerializer(client, data=request.data, partial=True)
+                    if serializer.is_valid():
+                        serializer.save()
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                except Client.DoesNotExist:
+                    return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                return Response({"error": "No tiene permiso para actualizar este usuario."}, status=status.HTTP_403_FORBIDDEN)
+
 
     if request.method == 'DELETE':
         if pk:
@@ -357,7 +379,7 @@ def enviar_qr_email(request):
 
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-@permission_classes([AllowAny])
+@permission_classes([Acceso_View_privada])
 def Inscripcion_detail(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -396,7 +418,7 @@ def Inscripcion_detail(request, pk=None):
 
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-@permission_classes([AllowAny])
+@permission_classes([Acceso_View_privada])
 def registro_de_pago_list(request, pk=None):
     if request.method == 'GET':
         if pk:

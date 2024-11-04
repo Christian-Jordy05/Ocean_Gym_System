@@ -3,16 +3,14 @@
 .PagoMenbrebody {
   font-family: 'Inter', sans-serif;
   color: #1e293b;
-  line-height: 1.5;
+
   background-color: #ffffff;
 }
 
 .pagos-container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
 }
 
 .pagos-card {
@@ -235,13 +233,7 @@
 }
 
 @media (max-width: 640px) {
-  .pagos-container {
-    padding: 1rem;
-  }
 
-  .pagos-card {
-    border-radius: 1rem;
-  }
 
   .pagos-header {
     padding: 2rem 1.5rem;
@@ -252,6 +244,6 @@
   }
 
   .pagos-content {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.2rem;
   }
 }

@@ -35,6 +35,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['role'] = user.role
         token['name'] = user.name
+        token['idCliente'] = user.id_cliente
         return token
 
 
@@ -43,8 +44,8 @@ class ClientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Client
-        fields = ['id_cliente', 'email', 'name', 'password', 'fecha_creacion', 'role', 'is_active']
-        read_only_fields = ['fecha_creacion', 'is_active'] 
+        fields = ['id_cliente', 'email', 'name', 'password','apellido','telefono', 'fecha_creacion', 'role']
+        read_only_fields = ['fecha_creacion'] 
 
 
 

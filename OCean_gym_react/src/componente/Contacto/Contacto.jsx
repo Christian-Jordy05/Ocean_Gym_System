@@ -27,7 +27,7 @@ function Contacto() {
     }
 
     try {
-      const token = getCookie('user_token'); // Obtén el token de la cookie
+      const token = getCookie('user_token'); 
       const response = await fetch('http://localhost:8000/api/send-contact-email/', {
         method: 'POST',
         headers: {
@@ -40,7 +40,7 @@ function Contacto() {
 
       if (response.ok) {
         setSuccess("¡Mensaje enviado con éxito!");
-        setFormData({ nombre: '', mensaje: '' }); // Eliminado el campo 'email'
+        setFormData({ nombre: '', mensaje: '' });
         setError('');
       } else {
         const result = await response.json();

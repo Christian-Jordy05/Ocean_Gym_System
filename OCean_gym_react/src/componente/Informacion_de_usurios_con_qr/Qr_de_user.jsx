@@ -11,11 +11,11 @@ const Qr_de_user = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Obtener el ID del usuario de la URL
+        // Obtener el id del usuario de la url
         const queryParams = new URLSearchParams(window.location.search);
         const userId = queryParams.get('id');
 
-        // Verificar si se obtuvo el ID
+        // Verificar si se obtuvo el id
         if (!userId) {
           throw new Error('No se proporcionó un ID de usuario');
         }
