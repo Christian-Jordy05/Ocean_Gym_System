@@ -1,0 +1,77 @@
+/* ventaproducto.css */
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px;
+}
+
+.product-card {
+  background-color: #f7f7f7; /* Color de fondo del contenedor */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Ancho del contenedor */
+  padding: 15px;
+  text-align: center; /* Centrar el contenido */
+  font-family: Arial, sans-serif;
+  border: 2px solid #dde1e7;
+  position: relative;
+}
+
+.product-card img {
+  width: 100%; /* Imagen se ajusta al 100% del contenedor */
+  height: 180px; /* Altura de la imagen */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-card h3 {
+  font-size: 1.3em; /* Tamaño del título */
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+.product-card p {
+  color: #666;
+  font-size: 0.9em; /* Ajustamos el tamaño de la descripción */
+  margin-bottom: 15px;
+}
+
+.product-card .inpts {
+  padding: 5px;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  width: 100%; /* Aseguramos que los inputs ocupen todo el ancho */
+}
+
+.product-card .price {
+  font-size: 1.2em; /* Ajustamos el tamaño del precio */
+  color: #2a2a2a;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.save-button,
+.edit-button {
+  background-color: #002060;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100%; /* Botones ajustados al 100% */
+  font-size: 0.9em;
+}
+
+.save-button:hover,
+.edit-button:hover {
+  background-color: #0040b0;
+}
+
+.save-button:active,
+.edit-button:active {
+  background-color: #001640;
+}

@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.Seleccionbody {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.contenedor {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.nombre_del_titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.conte_de_imagenes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.contenedor_imagen_hombre,
+.contenedor_imagen_mujer {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  height: 350px;
+  flex-shrink: 0;
+}
+
+.imagen_hombre,
+.imagen_mujer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.contenedor_imagen_hombre:hover,
+.contenedor_imagen_mujer:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.contenedor_imagen_hombre::after,
+.contenedor_imagen_mujer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(44, 62, 80, 0.1) 0%, rgba(44, 62, 80, 0.8) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contenedor_imagen_hombre:hover::after,
+.contenedor_imagen_mujer:hover::after {
+  opacity: 1;
+}
+
+.imagen_label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.contenedor_imagen_hombre:hover .imagen_label,
+.contenedor_imagen_mujer:hover .imagen_label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.seleccionado {
+  border: 4px solid #5468FF;
+  box-shadow: 0 0 20px rgba(84, 104, 255, 0.5);
+}
+
+.contenedor_central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2rem;
+  flex-grow: 1;
+  
+}
+
+.envoltorio_imagen_seleccionada {
+  width: 400px;
+  height: 400px;
+  animation: aparecer 1s ease forwards;
+}
+
+.imagen_seleccionada {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes aparecer {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.boton_de_confirmar {
+  height: 50px;
+  width: 180px;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  background: linear-gradient(90deg, #89E5FF, #5468FF);
+  border-radius: 25px;
+  color: #fff;
+  padding: 0 1.5em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.boton_de_confirmar:hover {
+  box-shadow: 0px 6px 12px rgba(84, 104, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+.boton_de_confirmar:active {
+  box-shadow: 0px 2px 6px rgba(84, 104, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.contenedor_niveles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
+}
+
+.nivel_contenedor {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  height: 300px;
+}
+
+.nivel_contenedor:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.imagen_nivel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.nivel_contenedor:hover .imagen_nivel {
+  transform: scale(1.1);
+}
+
+.texto_sobre_imagen {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(44, 62, 80, 0.9) 0%, rgba(44, 62, 80, 0) 100%);
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.nivel_contenedor:hover .texto_sobre_imagen {
+  transform: translateY(0);
+}
+
+.titulo_nivel {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detalles_nivel {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .conte_de_imagenes {
+    flex-direction: row;
+    gap: 0rem;
+  }
+
+  .contenedor_imagen_hombre,
+  .contenedor_imagen_mujer {
+    display: flex;
+    flex-direction: column;
+    width: 200%;
+    max-width: 120px;
+    height: 140px;
+  }
+  .envoltorio_imagen_seleccionada{
+    height: 100px;
+    max-width: 150px;
+    height: 180px;
+    padding: 0;
+    
+  }
+
+  .contenedor_niveles {
+    grid-template-columns: 1fr 1fr;
+  }
+}

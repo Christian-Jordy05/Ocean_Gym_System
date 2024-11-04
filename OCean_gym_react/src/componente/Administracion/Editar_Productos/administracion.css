@@ -1,0 +1,105 @@
+/* Estilo general de la página */
+.contenedor {
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: dodgerblue;
+}
+
+/* Formulario para agregar productos */
+.formulario {
+  display: flex;
+  flex-direction: column; /* Cambiar a columna para móviles */
+  gap: 15px;
+  margin: 0 auto 30px auto;
+  max-width: 600px; /* Limitar ancho del formulario */
+}
+
+.formulario input,
+.formulario button {
+  width: 100%; /* Hacer que los elementos ocupen el 100% del contenedor */
+}
+
+.formulario input {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--background-light);
+  color: var(--text-primary);
+}
+
+.formulario button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formulario button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Tabla de productos */
+.tabla-productos {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.tabla-productos th,
+.tabla-productos td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-productos th {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+}
+
+.tabla-productos td {
+  background-color: var(--background-light);
+}
+
+.tabla-productos td img {
+  width: 80px;
+  height: auto;
+  border-radius: 5px;
+}
+
+
+.tabla-productos button {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabla-productos button:hover {
+  background-color: var(--secondary-color);
+}
+
+
+@media (max-width: 768px) {
+  .formulario {
+    flex-direction: column; 
+  }
+
+  .tabla-productos th,
+  .tabla-productos td {
+    font-size: 10px; 
+
+  }
+  .contenedor{
+   padding: 0px;
+  }
+}
