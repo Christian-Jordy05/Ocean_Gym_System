@@ -23,5 +23,5 @@ COPY . .
 # Expone el puerto 8000 para el servidor Django
 EXPOSE 8000
 
-# Comando por defecto para ejecutar el servidor
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Comando por defecto para ejecutar Gunicorn
+CMD ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"]
