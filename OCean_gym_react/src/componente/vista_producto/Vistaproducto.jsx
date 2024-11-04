@@ -12,20 +12,13 @@ const ProductCard = ({ product }) => {
       <div className="product-info">
         <h3 className="product-name">{product.nombre}</h3>
         <div className="product-rating">
-          <span className="stars">★★★★☆</span>
         </div>
         <p className="product-description">{product.descripcion}</p>
-        <div className="product-price">${product.precio}</div>
-        <button className="add-button">
-          <span className="cart-icon">🛒</span> Comprar
-        </button>
+        <div className="product-price">  ₡{product.precio}</div>
       </div>
     </div>
   );
 };
-
-
-
 
 const Vistaproducto = () => {
   const [products, setProducts] = useState([]);
@@ -57,6 +50,7 @@ const Vistaproducto = () => {
     <>
     <Navegar/>
     <div className="product-list">
+      <Navegar/>
       {products.length > 0 ? (
         products.map((product) => <ProductCard key={product.id} product={product} />)
       ) : (
