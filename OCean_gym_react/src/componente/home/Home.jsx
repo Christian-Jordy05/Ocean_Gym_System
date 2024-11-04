@@ -42,6 +42,7 @@ const FeaturesSection = () => (
 const ContactSection = () => { 
   const direccion = "300mts al Norte de la entrada del Boli,Puntarenas,Costa Rica"
   
+  
   const url = `https://www.google.com/maps/place/Ocean+Gym/@9.9802644,-84.7577344,18.3z/data=!4m6!3m5!1s0x8fa0316cd1bda3f9:0xb6112bf209eefd7b!8m2!3d9.9802966!4d-84.7574158!16s%2Fg%2F11t0rlkxnn?entry=ttu&g_ep=EgoyMDI0MDkyNC4wIKXMDSoASAFQAw%3D%3D${encodeURIComponent(direccion)}`
   return (
     <footer className="footer">

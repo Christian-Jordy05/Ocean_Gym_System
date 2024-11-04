@@ -40,7 +40,7 @@ function Loginfor() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/token/', {
+      const response = await fetch(`${window.location.origin}:8000/token/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -17,6 +17,8 @@ function Navegar() {
     setMenuAbierto(!menuAbierto);
   };
 
+
+
   return (
     <div className='Conteiner_del_nav'>
       <div className='nav-content'>

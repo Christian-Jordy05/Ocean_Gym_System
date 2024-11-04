@@ -1,24 +1,26 @@
 
 const url = 'http://localhost:8000/clients/';
 
+
 import Cookies from 'js-cookie';
 
 const GetDataUsers = async () => {
   try {
-    const token = Cookies.get('user_token');
-    const response = await fetch('http://localhost:8000/clients/', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-      credentials: 'include'
-    });
-    const data = await response.json();
-    return data;
+      const token = Cookies.get('user_token');
+      const response = await fetch(`htpp://${window.location.origin}/clients/`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${token}`
+          },
+          credentials: 'include'
+      });
+      const data = await response.json();
+      return data;
   } catch (error) {
-    console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
   }
 };
+
 
 
 
@@ -26,7 +28,9 @@ const GetBuscarUser = async (id_cliente) => {
   const token = Cookies.get('user_token'); 
   console.log(token);
   
-  const response = await fetch(`http://localhost:8000/clients/${id_cliente}/`, {
+  
+  
+  const response = await fetch(`${window.location.origin}/clients/${id_cliente}/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -71,7 +75,7 @@ const actualizarDatosUsuario = async (id_cliente, userData) => {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const PostUsers = async (name, password, email) => {
-  const url2 = 'http://localhost:8000/register_clientes/';
+  const url2 = `${window.location.origin}/register_clientes/`;
   console.log(name,password,email);
   
   try {
