@@ -1,16 +1,16 @@
 services:
-  react:
+  app:
     container_name: ocean_gym_react-production
-    image: ocean_gym_react:prod
+    image: ocean_gym_react-production:prod
     build:
-      context: ./Ocean_gym_react
+      context: ./OCean_gym_react
       target: production
       args:
         - NODE_ENV=production
       dockerfile: Dockerfile.prod
     ports:
-      - "80:80"
-
+      - 80:80
+    
   ocean_gym_django:  
     image: ocean_gym_django 
     container_name: ocean_gym_django
@@ -20,7 +20,7 @@ services:
       - "8000:8000"
     volumes:
       - ./OCean_gym_django:/app
-    command: ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "gunicorn", "--bind", "0.0.0.0:8000", "myproject.wsgi:application"]
+    command: ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
     depends_on:
       - mysql
 

@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview --port $PORT"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/plots": "^1.2.6",
