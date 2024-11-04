@@ -1,8 +1,9 @@
 /* Estilo general de la página */
 .contenedor {
-  padding: 20px;
   background-color: var(--background-dark);
   color: var(--text-primary);
+  margin: 0;
+  padding: 0;
 }
 
 h2 {
@@ -14,10 +15,15 @@ h2 {
 /* Formulario para agregar productos */
 .formulario {
   display: flex;
-  flex-wrap: nowrap;
+  flex-direction: column; /* Cambiar a columna para móviles */
   gap: 15px;
   margin: 0 auto 30px auto;
-  margin-right: 900px;
+  max-width: 600px; /* Limitar ancho del formulario */
+}
+
+.formulario input,
+.formulario button {
+  width: 100%; /* Hacer que los elementos ocupen el 100% del contenedor */
 }
 
 .formulario input {
@@ -34,7 +40,6 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 80px;
 }
 
 .formulario button:hover {
@@ -69,7 +74,7 @@ h2 {
   border-radius: 5px;
 }
 
-/* Botones de acciones */
+
 .tabla-productos button {
   padding: 8px 12px;
   background-color: var(--primary-color);
@@ -81,4 +86,20 @@ h2 {
 
 .tabla-productos button:hover {
   background-color: var(--secondary-color);
+}
+
+
+@media (max-width: 768px) {
+  .formulario {
+    flex-direction: column; 
+  }
+
+  .tabla-productos th,
+  .tabla-productos td {
+    font-size: 10px; 
+
+  }
+  .contenedor{
+   padding: 0px;
+  }
 }

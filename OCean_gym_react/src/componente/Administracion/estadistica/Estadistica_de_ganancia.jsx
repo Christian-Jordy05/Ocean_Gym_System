@@ -7,7 +7,7 @@ const EstadisticaDeGanancia = () => {
   const [datos, setDatos] = useState([]);
   const [vista, setVista] = useState("meses");
 
-  // Función para obtener datos
+
   const obtenerDatos = async () => {
     try {
       const data = await GetRegistro_de_Pago();
@@ -100,7 +100,7 @@ const EstadisticaDeGanancia = () => {
         opacity: 0.6,
         fontSize: 12,
       },
-      formatter: (datum) => `$${datum.total.toFixed(2)}`,
+      formatter: (datum) => `₡${datum.total.toFixed(2)}`,
     },
     xAxis: {
       label: {
@@ -114,7 +114,7 @@ const EstadisticaDeGanancia = () => {
     },
     yAxis: {
       label: {
-        formatter: (v) => `$${v}`,
+        formatter: (v) => `₡${v}`,
       },
     },
     legend: {

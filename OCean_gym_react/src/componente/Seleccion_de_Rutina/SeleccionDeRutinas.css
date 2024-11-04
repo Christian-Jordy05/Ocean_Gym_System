@@ -235,19 +235,27 @@
 
 @media (max-width: 768px) {
   .conte_de_imagenes {
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: row;
+    gap: 0rem;
   }
 
   .contenedor_imagen_hombre,
-  .contenedor_imagen_mujer,
-  .envoltorio_imagen_seleccionada {
-    width: 100%;
-    max-width: 250px;
-    height: 350px;
+  .contenedor_imagen_mujer {
+    display: flex;
+    flex-direction: column;
+    width: 200%;
+    max-width: 120px;
+    height: 140px;
+  }
+  .envoltorio_imagen_seleccionada{
+    height: 100px;
+    max-width: 150px;
+    height: 180px;
+    padding: 0;
+    
   }
 
   .contenedor_niveles {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './Home.css'
 import instalogo from '../img/instalogo.png'
 import facebooklogo from '../img/facebooklogo.png'
-import Whatsapp from '../img/Whatsapp.png'
+import Whatsapp from '../img/whatsapp.png'
 import Cards from '../Card/Cards'
 import videofit from '../video/videofit.mp4'
 import Navegar from '../navegacion/navegar'
@@ -29,11 +29,6 @@ const FeaturesSection = () => (
       <h3>Equipamiento de última generación</h3>
       <p>Entrena con lo mejor en tecnología fitness</p>
     </div>
-    {/* <div className="feature">
-      <i className="fas fa-users"></i>
-      <h3>Clases grupales dinámicas</h3>
-      <p>Únete a nuestras emocionantes sesiones en grupo</p>
-    </div> */}
     <div className="feature">
       <i className="fas fa-heart"></i>
       <h3>Entrenadores expertos</h3>
@@ -42,19 +37,7 @@ const FeaturesSection = () => (
   </section>
 )
 
-const TestimonialsSection = () => (
-  <section className="testimonials-section">
-    <h2>Lo que dicen nuestros miembros</h2>
-    <div className="testimonial">
-      <p>"Ocean Gym cambió mi vida. ¡Nunca me había sentido tan en forma!"</p>
-      <span>- María G.</span>
-    </div>
-    <div className="testimonial">
-      <p>"Los entrenadores son increíbles. Siempre me motivan a dar lo mejor."</p>
-      <span>- Carlos R.</span>
-    </div>
-  </section>
-)
+
 
 const ContactSection = () => { 
   const direccion = "300mts al Norte de la entrada del Boli,Puntarenas,Costa Rica"
@@ -174,7 +157,6 @@ function Home() {
       <MainSection />
       <FeaturesSection />
       <Cards />
-      <TestimonialsSection />
       <ContactSection />
     </div>
     </div>

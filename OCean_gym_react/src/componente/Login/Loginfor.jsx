@@ -56,7 +56,7 @@ function Loginfor() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || data.error || 'Error en la autenticación');
+        throw new Error(data.detail || data.error || 'Estas ingresando tu contraseña mal o el correo que estas ingresando no existe');
       }
 
       if (!data.access) {
@@ -112,9 +112,9 @@ function Loginfor() {
     }
   };
 
-  // Manejar el proceso de restablecimiento de contraseña
+  //manejacion de cambiar la contraseña
   const olvidarContraseña = async () => {
-    // Paso 1: Obtener el email del usuario
+    // paso 1: obtener el email del usuario
     const result = await Swal.fire({
         title: '¿Olvidaste la contraseña?',
         text: 'Ingresa tu correo electrónico para restablecer la contraseña',
@@ -124,22 +124,22 @@ function Loginfor() {
         cancelButtonText: 'Cancelar',
     });
 
-    // Paso 2: Verificar si se ha ingresado un correo
+    // paso 2: verifica si ingreso un correo valido
     if (result.isConfirmed && result.value) {
         try {
             const email = result.value;
             console.log("Correo electrónico ingresado:", email);
 
-            // Generar el código de verificación
+            // generar el codigo de verificacion
             const code = generateVerificationCode();
             verificationCodeRef.current = code;
             console.log("Código de verificación generado:", code);
 
-            // Enviar correo de verificación
+            // enviar correo de verificacion
             await sendVerificationEmail(email, code);
             console.log("Correo de verificación enviado a:", email);
 
-            // Paso 3: Solicitar el código de verificación al usuario
+            // Paso 3: pedir el código de verificacion al usuario
             const result2 = await Swal.fire({
                 title: 'Código de verificación',
                 text: 'Se ha enviado un código de 5 dígitos a su correo electrónico para confirmar el cambio de contraseña',
@@ -153,7 +153,7 @@ function Loginfor() {
                 cancelButtonText: 'Cancelar',
             });
 
-            // Paso 4: Comparar el código ingresado con el generado
+            // Paso 4: Compara el codigo ingresado con el generado
             if (result2.isConfirmed && result2.value) {
                 if (result2.value === verificationCodeRef.current) {
                     console.log("Código de verificación correcto.");

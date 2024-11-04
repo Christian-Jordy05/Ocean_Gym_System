@@ -20,7 +20,6 @@ const Editar_producto = () => {
     const obtenerProductos = async () => {
       try {
         const token = getCookie('user_token');
-        console.log(token);
         const respuesta = await fetch('http://localhost:8000/productos/', {
           method: 'GET',
           headers: {
@@ -56,7 +55,7 @@ const Editar_producto = () => {
     };
     try {
       const token = getCookie('user_token'); // Obtener el token desde la cookie 'user_token'
-      console.log(token);
+
       const response = await fetch('http://localhost:8000/productos/', {  // Reemplaza con la URL de tu API para crear un producto
         method: 'POST',
         headers: {
@@ -138,7 +137,7 @@ const Editar_producto = () => {
     }
     try {
       const token = getCookie('user_token'); // Obtén el token de la cookie
-      console.log(getCookie);
+
       const formData = new FormData();
       formData.append('image', file);
       const response = await fetch('http://localhost:8000/api/subir-imagen/', {
@@ -162,32 +161,31 @@ const Editar_producto = () => {
     <div className="contenedor">
       <h2>Administración de Productos</h2>
       <div className="formulario">
-        <input
-          type="text"
-          placeholder="Nombre del producto"
-          value={nuevoProducto.nombre}
-          onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombre: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Descripción"
-          value={nuevoProducto.descripcion}
-          onChange={(e) => setNuevoProducto({ ...nuevoProducto, descripcion: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Precio"
-          value={nuevoProducto.precio}
-          onChange={(e) => setNuevoProducto({ ...nuevoProducto, precio: e.target.value })}
-        />
-        {/* Input de archivo para seleccionar imagen */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])} // Guardar archivo seleccionado
-        />
-        <button onClick={send_data}>Agregar</button>
-      </div>
+          <input
+            type="text"
+            placeholder="Nombre del producto"
+            value={nuevoProducto.nombre}
+            onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombre: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Descripción"
+            value={nuevoProducto.descripcion}
+            onChange={(e) => setNuevoProducto({ ...nuevoProducto, descripcion: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Precio"
+            value={nuevoProducto.precio}
+            onChange={(e) => setNuevoProducto({ ...nuevoProducto, precio: e.target.value })}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files[0])} // Guardar archivo seleccionado
+          />
+          <button onClick={send_data}>Agregar</button>
+        </div>
       {error && <p className="error">{error}</p>}
       <table className="tabla-productos">
         <thead>
@@ -217,3 +215,8 @@ const Editar_producto = () => {
   );
 };
 export default Editar_producto;
+
+
+
+
+

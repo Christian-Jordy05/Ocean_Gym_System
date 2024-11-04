@@ -12,6 +12,7 @@ import sentadillaBarraMujer from "../../img/sentadillaBarraMujer.png"
 import pesoMuertoRumanoMujer from '../../img/pesoMuertoRumanoMujer.png'
 import Desplantes from '../../img/Desplantes.jpg'
 import ElevacionTalonesMujer from '../../img/ElevacionTalonesMujer.png'
+import Navegar from '../../navegacion/navegar'
 
 
 function Rutina_Intermedio_mujer() {

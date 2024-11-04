@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './vistaproducto.css';
+import Navegar from '../navegacion/navegar';
 
 const ProductCard = ({ product }) => {
   return (
@@ -53,6 +54,8 @@ const Vistaproducto = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    <>
+    <Navegar/>
     <div className="product-list">
       {products.length > 0 ? (
         products.map((product) => <ProductCard key={product.id} product={product} />)
@@ -60,6 +63,7 @@ const Vistaproducto = () => {
         <p>No hay productos disponibles.</p>
       )}
     </div>
+    </>
   );
 };
 

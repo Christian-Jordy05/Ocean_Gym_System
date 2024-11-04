@@ -1,0 +1,106 @@
+.contenedor-detalles-usuario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7fafc;
+  padding: 20px;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.tarjeta-usuario {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-usuario:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-usuario {
+  color: #2d3748;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  text-align: center;
+  letter-spacing: -0.5px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.titulo-usuario::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #4299e1;
+  border-radius: 2px;
+}
+
+.info-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.campo-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.etiqueta {
+  font-weight: 500;
+  color: #718096;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.valor {
+  color: #2d3748;
+  font-size: 18px;
+  padding: 12px 16px;
+  background-color: #edf2f7;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.valor:hover {
+  background-color: #e2e8f0;
+  transform: translateX(5px);
+}
+
+.email {
+  color: #4299e1;
+  text-decoration: none;
+}
+
+.email:hover {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .tarjeta-usuario {
+    padding: 30px;
+  }
+
+  .titulo-usuario {
+    font-size: 24px;
+  }
+
+  .valor {
+    font-size: 16px;
+    padding: 10px 14px;
+  }
+}

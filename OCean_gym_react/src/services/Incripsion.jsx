@@ -1,8 +1,18 @@
 const url = 'http://localhost:8000/Inscripcion/';
+import Cookies from "js-cookie";
+const token = Cookies.get('user_token');
 
+// Obtener inscripciones
 const GetInscripcion = async () => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      credentials: 'include', // Envía cookies junto con la solicitud
+    });
     if (!response.ok) {
       throw new Error(`Error al obtener inscripciones: ${response.status}`);
     }
@@ -13,6 +23,7 @@ const GetInscripcion = async () => {
   }
 };
 
+// Registrar inscripción
 const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) => {
   const body1 = JSON.stringify({
     email,
@@ -21,12 +32,13 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
     costo,
   });
 
-  // Registrar Inscripción
   const response1 = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
+    credentials: 'include', // Envía cookies junto con la solicitud
     body: body1,
   });
 
@@ -37,7 +49,6 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
 
   const data1 = await response1.json();
 
-  // Verifica que la inscripción fue creada
   if (!data1.id_inscripcion) {
     throw new Error('ID de inscripción no encontrado en la respuesta.');
   }
@@ -48,12 +59,13 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
     id_inscripcion: data1.id_inscripcion,
   });
 
-  // Registrar Pago
   const response2 = await fetch('http://localhost:8000/Registro_de_pago/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
+    credentials: 'include', // Envía cookies junto con la solicitud
     body: body2,
   });
 
@@ -67,24 +79,20 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
   return { inscripcion: data1, registroDePago: data2 };
 };
 
+// Actualizar inscripción
 const UpdateInscripcion = async (id, datosActualizacion) => {
   console.log('Datos de actualización:', datosActualizacion);
-  
-  // Verifica que los datos de actualización tengan los campos esperados
-  if (!datosActualizacion.email || !datosActualizacion.costo) {
-    console.error('email o costo no están definidos en datosActualizacion:', datosActualizacion);
-    throw new Error('Faltan datos necesarios para el registro del pago.');
-  }
-  
+
   const { email, costo } = datosActualizacion;
 
   try {
-    // Actualizar la inscripción
     const response = await fetch(`${url}${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
+      credentials: 'include', // Envía cookies junto con la solicitud
       body: JSON.stringify(datosActualizacion),
     });
 
@@ -107,34 +115,17 @@ const UpdateInscripcion = async (id, datosActualizacion) => {
   }
 };
 
-const PostRegistroPago = async (email, monto, id_inscripcion) => {
-  console.log('Registrando pago con:', { email, monto, id_inscripcion });
-  
-  const body = JSON.stringify({
-    email,
-    monto,
-    id_inscripcion,
-  });
-
-  const response = await fetch('http://localhost:8000/Registro_de_pago/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-
-  if (!response.ok) {
-    const errorDetails = await response.text();
-    throw new Error('Error en la solicitud POST Registro de Pago: ' + response.status + ' - ' + errorDetails);
-  }
-
-  return await response.json();
-};
-
+// Obtener métodos de pago
 const GetMetodoPago = async () => {
   try {
-    const response = await fetch('http://localhost:8000/Metodo_de_pago/');
+    const response = await fetch('http://localhost:8000/Metodo_de_pago/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      credentials: 'include', // Envía cookies junto con la solicitud
+    });
     if (!response.ok) {
       throw new Error(`Error al obtener métodos de pago: ${response.status}`);
     }
@@ -145,9 +136,17 @@ const GetMetodoPago = async () => {
   }
 };
 
+// Obtener registros de pago
 const GetRegistro_de_Pago = async () => {
   try {
-    const response = await fetch('http://localhost:8000/Registro_de_pago/');
+    const response = await fetch('http://localhost:8000/Registro_de_pago/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      credentials: 'include', // Envía cookies junto con la solicitud
+    });
     if (!response.ok) {
       throw new Error(`Error al obtener registros de pago: ${response.status}`);
     }

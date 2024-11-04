@@ -27,11 +27,6 @@ const App = () => {
             image={imgfit}
           />
         </Link>
-        <Cards
-          title="INFORMACIÓN"
-          info="Aprende más sobre fitness y salud"
-          image={imginfo}
-        />
       </div>
     </div>
   );

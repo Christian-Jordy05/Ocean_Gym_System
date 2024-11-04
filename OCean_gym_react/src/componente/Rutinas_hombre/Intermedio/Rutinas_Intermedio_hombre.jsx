@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import './RutinaIntermedio.css';
 import pressBanca from '../../img/press-de-banca.png';
 import AperturaMancuerna from '../../img/aperturas-con-mancuernas.jpeg';
 import Flexiones from '../../img/flexiones.webp';
