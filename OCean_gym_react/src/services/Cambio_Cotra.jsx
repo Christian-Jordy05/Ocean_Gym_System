@@ -1,6 +1,6 @@
 const CambiarContraseña = async (email, nueva_contrasena) => {
     try {
-        const response = await fetch('http://localhost:8000/cambiar-contrasena/', {
+        const response = await fetch(`http://localhost:8000/cambiar-contrasena/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

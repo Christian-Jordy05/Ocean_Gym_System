@@ -44,8 +44,8 @@ function PerfilesUser() {
         apellido: user.apellido,
         telefono: user.telefono
       });
-      setEditMode(false); // Salir del modo de edición
-      buscarUser(); // Volver a buscar los datos del usuario para reflejar los cambios
+      setEditMode(false); 
+      buscarUser();
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
     }

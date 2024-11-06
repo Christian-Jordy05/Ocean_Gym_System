@@ -1,5 +1,5 @@
 
-const url = 'http://localhost:8000/clients/';
+const url = `http://localhost:8000/clients/`;
 
 import Cookies from 'js-cookie';
 
@@ -71,7 +71,7 @@ const actualizarDatosUsuario = async (id_cliente, userData) => {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 const PostUsers = async (name, password, email) => {
-  const url2 = 'http://localhost:8000/register_clientes/';
+  const url2 = `http://localhost:8000/register_clientes/`;
   console.log(name,password,email);
   
   try {

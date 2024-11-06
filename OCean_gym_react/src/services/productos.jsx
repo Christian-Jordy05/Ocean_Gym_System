@@ -1,4 +1,7 @@
-const url = 'http://localhost:8000/productos/';
+
+let domain = window.location.origin
+
+const url = `http://localhost:8000/productos/`;
 
 const Getproductos = async () => {
   try {

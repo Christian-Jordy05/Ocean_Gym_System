@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Contacto/Contacto.css';
 import Navegar from '../navegacion/navegar';
-
+let domain =window.location.origin
 function Contacto() {
   const [formData, setFormData] = useState({ nombre: '', mensaje: '' });
   const [error, setError] = useState('');
@@ -28,7 +28,7 @@ function Contacto() {
 
     try {
       const token = getCookie('user_token'); 
-      const response = await fetch('http://localhost:8000/api/send-contact-email/', {
+      const response = await fetch(`http://localhost:8000/api/send-contact-email/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

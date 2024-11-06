@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-
+let domain = window.location.origin
 
 const AuthContext = createContext();
 
@@ -73,18 +73,19 @@ export const AuthProvider = ({ children }) => {
     try {
       const decodedToken = parseJwt(newToken);
       console.log('Decoded token:', decodedToken);
+      console.log(newToken);
+      
 
       if (!decodedToken) {
         throw new Error('Token inválido');
       }
 
       // guardar el token en cookies y establecer el estado de autenticacion
-      Cookies.set('user_token', newToken, {
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
-        expires: 1 // Expira en 1 día
-      });
+      Cookies.set(
+        "user_token",newToken,
+        { expires: 1 },
+        { path: "/" }
+      );
 
       setToken(newToken);
       setIsAuthenticated(true);
@@ -125,7 +126,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // solicitud para refrescar el token
-      const response = await fetch('http://localhost:8000/token/refresh/', {
+      const response = await fetch(`http://localhost:8000/token/refresh/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

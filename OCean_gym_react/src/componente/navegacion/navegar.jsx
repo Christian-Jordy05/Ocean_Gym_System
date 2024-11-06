@@ -29,7 +29,7 @@ function Navegar() {
         </button>
 
         <div className={`conte_de_btn_register_iniciar ${menuAbierto ? 'menu-abierto' : ''}`}>
-          <div className="menu-botones"> {/* Nueva clase contenedora */}
+          <div className="menu-botones"> 
             {isAuthenticated ? (
               <>
                 <button id='logout-btn' type="button" onClick={logout}>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie'; // Importar Cookies
+import Cookies from 'js-cookie'; 
 import './Qr_de_user.css';
 
 const Qr_de_user = () => {
-  const token = Cookies.get('user_token'); // Obtener el token desde las cookies
+  const token = Cookies.get('user_token'); 
   const [userData, setUserData] = useState(null); 
   const [error, setError] = useState(null); 
   const [loading, setLoading] = useState(true); 
