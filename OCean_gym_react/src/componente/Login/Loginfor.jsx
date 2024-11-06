@@ -9,6 +9,9 @@ import Navegar from '../navegacion/navegar';
 import emailjs from 'emailjs-com';
 import CambiarContraseña from '../../services/Cambio_Cotra';
 
+
+let domain = window.location.origin
+
 function Loginfor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +43,7 @@ function Loginfor() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/token/', {
+      const response = await fetch(`http://localhost:8000/token/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,8 +55,12 @@ function Loginfor() {
           password: password
         }),
       });
-
+      
+      
       const data = await response.json();
+
+      console.log(data);
+      
 
       if (!response.ok) {
         throw new Error(data.detail || data.error || 'Estas ingresando tu contraseña mal o el correo que estas ingresando no existe');
@@ -70,7 +77,9 @@ function Loginfor() {
         timer: 1500,
         showConfirmButton: false
       });
-
+      
+      console.log(data.access);
+      
       login(data.access);
       navigate("/home");
 

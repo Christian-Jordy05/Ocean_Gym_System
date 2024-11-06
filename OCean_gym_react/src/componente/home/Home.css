@@ -132,7 +132,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 500px;
   background: radial-gradient(circle at 50% 0%, rgba(0, 160, 228, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
@@ -141,6 +141,7 @@
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+
 }
 
 .footer__content {
@@ -149,6 +150,7 @@
   flex-wrap: wrap;
   gap: 60px;
   margin-bottom: 40px;
+  
 }
 
 .footer__section {
@@ -160,6 +162,7 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
+ 
 }
 
 .footer__brand {
@@ -167,6 +170,7 @@
   align-items: center;
   gap: 15px;
   margin-bottom: 30px;
+
 }
 
 .footer__logo {
@@ -188,6 +192,7 @@
   background-size: 20px 40px;
   animation: wave 2s linear infinite;
   opacity: 0.3;
+  
 }
 
 .footer__title {
@@ -214,6 +219,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
 }
 
 .footer__link {
@@ -244,7 +250,7 @@
 }
 
 .footer__text {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .footer__schedule {
@@ -273,7 +279,7 @@
   color: #e0e0e0;
 }
 
-.footer__schedule-hours {
+.footer__schedule-hours{
   font-size: 1.1rem;
   color: #00a0e4;
   font-weight: 500;
@@ -381,12 +387,18 @@
   color: #a0a0a0;
 }
 
+@media (max-width: 868px) {
+  .bienvenidogym{
+    font-size: 50px;
+  }
+}
+
 @keyframes wave {
   0% { background-position-x: 0; }
   100% { background-position-x: 20px; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 200px) {
   .footer {
     padding: 60px 20px 30px;
   }
@@ -398,6 +410,7 @@
 
   .footer__section {
     text-align: center;
+    height: 90px;
   }
 
   .footer__brand {
@@ -417,6 +430,10 @@
 
   .footer__contact {
     align-items: center;
+  }
+
+  .footer__wrapper{
+    width: 100px;
   }
 
   .footer__link {
@@ -458,5 +475,19 @@
   }
 }
 
-
+@media (max-width: 868px) {
+  .feature {
+    flex: 1;
+    margin: 20px;
+  }
+  .feature h3{
+    font-size: 20px;
+  }
+  .feature p{
+    font-size: 15px;
+  }
+  .footer__schedule-hours{
+    font-size: 14px;
+  }
+}
 

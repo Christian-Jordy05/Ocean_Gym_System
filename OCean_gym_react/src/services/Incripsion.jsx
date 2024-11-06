@@ -1,4 +1,6 @@
-const url = 'http://localhost:8000/Inscripcion/';
+let domain = window.location.origin
+
+const url = `http://localhost:8000/Inscripcion/`;
 import Cookies from "js-cookie";
 const token = Cookies.get('user_token');
 
@@ -59,7 +61,7 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
     id_inscripcion: data1.id_inscripcion,
   });
 
-  const response2 = await fetch('http://localhost:8000/Registro_de_pago/', {
+  const response2 = await fetch(`http://localhost:8000/Registro_de_pago/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -118,7 +120,7 @@ const UpdateInscripcion = async (id, datosActualizacion) => {
 // Obtener métodos de pago
 const GetMetodoPago = async () => {
   try {
-    const response = await fetch('http://localhost:8000/Metodo_de_pago/', {
+    const response = await fetch(`http://localhost:8000/Metodo_de_pago/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -139,7 +141,7 @@ const GetMetodoPago = async () => {
 // Obtener registros de pago
 const GetRegistro_de_Pago = async () => {
   try {
-    const response = await fetch('http://localhost:8000/Registro_de_pago/', {
+    const response = await fetch(`http://localhost:8000/Registro_de_pago/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

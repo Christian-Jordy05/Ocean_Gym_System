@@ -2,11 +2,11 @@ import QRCode from 'qrcode';
 
 // Generar QR y enviarlo al backend
 const uploadQRToImgur = async (email) => {
-  const qrLink = `http://localhost:3000/saludo`; // URL a la que redirige el QR
+  const qrLink = `http://${domain}:3000/saludo`; // URL a la que redirige el QR
   const qrBase64 = await QRCode.toDataURL(qrLink); // Generar el QR
 
   try {
-    const response = await fetch('http://localhost:8000/generar_qr_imgur/', {
+    const response = await fetch(`http://localhost:8000/generar_qr_imgur/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,8 +36,8 @@ const uploadQRToImgur = async (email) => {
 };
 
 
-// Ejemplo de uso
+
 const handleSendQR = async () => {
-  const userEmail = 'yordy244@gmail.com'; // Cambia esto por el correo del usuario
+  const userEmail = 'yordy244@gmail.com'; 
   await uploadQRToImgur(userEmail);
 };

@@ -112,7 +112,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 2rem;
+  margin: 0rem;
   flex-grow: 1;
   
 }
@@ -233,24 +233,23 @@
   opacity: 0.9;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .conte_de_imagenes {
     flex-direction: row;
-    gap: 0rem;
+    gap: 0;
   }
 
   .contenedor_imagen_hombre,
   .contenedor_imagen_mujer {
     display: flex;
     flex-direction: column;
-    width: 200%;
-    max-width: 120px;
-    height: 140px;
+    width: 90%;
+    max-width: 130px;
+    height: 150px;
   }
   .envoltorio_imagen_seleccionada{
+    max-width: 90px;
     height: 100px;
-    max-width: 150px;
-    height: 180px;
     padding: 0;
     
   }
@@ -258,4 +257,14 @@
   .contenedor_niveles {
     grid-template-columns: 1fr 1fr;
   }
+  .nivel_contenedor{
+    height: 200px;
+  }
+  .titulo_nivel{
+    font-size: 18px;
+  }
+  .detalles_nivel{
+    font-size: 14px;
+  }
+  
 }

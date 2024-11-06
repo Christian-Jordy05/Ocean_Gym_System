@@ -25,13 +25,18 @@ SECRET_KEY = 'django-insecure-43!2^h9u_=9*wcx%mmxhapcjd=w(03pgcxl_ae3#$dzz2(bie+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'react_app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'react_app',"192.168.100.31","192.168.122.124"]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://react_app:5173",
-    "http://172.19.16.1:5173"
+    "http://172.19.16.1:5173",
+    
+    "http://192.168.100.31:8000",
+    "http://192.168.122.124:8000",
+    
 ]
+
 
 
 SESSION_COOKIE_SECURE = False  

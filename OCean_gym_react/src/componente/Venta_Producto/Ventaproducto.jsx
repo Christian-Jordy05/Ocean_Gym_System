@@ -27,7 +27,7 @@ function Ventaproducto() {
       const formData = new FormData();
       formData.append('image', file);
     
-      const response = await fetch('http://localhost:8000/api/subir-imagen/', {
+      const response = await fetch(`${domain}:8000/api/subir-imagen/`, {
         method: 'POST',
         body: formData,
       });

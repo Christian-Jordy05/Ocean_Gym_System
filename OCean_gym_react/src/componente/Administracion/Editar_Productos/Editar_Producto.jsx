@@ -3,6 +3,8 @@ import { useAuth } from '../../navegacion/AuthContext';
 import './administracion.css';
 import Swal from 'sweetalert2';
 import { Updateproductos } from '../../../services/productos';
+let domain =window.location.origin
+
 const Editar_producto = () => {
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({ nombre: '', descripcion: '', precio: '', img: '' });
@@ -20,7 +22,7 @@ const Editar_producto = () => {
     const obtenerProductos = async () => {
       try {
         const token = getCookie('user_token');
-        const respuesta = await fetch('http://localhost:8000/productos/', {
+        const respuesta = await fetch(`http://localhost:8000/productos/`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -56,7 +58,7 @@ const Editar_producto = () => {
     try {
       const token = getCookie('user_token'); // Obtener el token desde la cookie 'user_token'
 
-      const response = await fetch('http://localhost:8000/productos/', {  // Reemplaza con la URL de tu API para crear un producto
+      const response = await fetch(`http://localhost:8000/productos/`, {  // Reemplaza con la URL de tu API para crear un producto
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +142,7 @@ const Editar_producto = () => {
 
       const formData = new FormData();
       formData.append('image', file);
-      const response = await fetch('http://localhost:8000/api/subir-imagen/', {
+      const response = await fetch(`http://localhost:8000/api/subir-imagen/`, {
         method: 'POST',
         body: formData,
         headers: {
