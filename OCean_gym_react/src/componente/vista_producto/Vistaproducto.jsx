@@ -2,30 +2,31 @@ import { useState, useEffect } from 'react';
 import './vistaproducto.css';
 import Navegar from '../navegacion/navegar';
 
-let domain = window.location.origin
 const ProductCard = ({ product }) => {
   return (
     <div className="product-card">
       <div className="product-image-wrapper">
         <img src={product.img} alt={product.nombre} className="product-image" />
-        <div className="highlight-icon">:alto_voltaje:</div>
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.nombre}</h3>
         <div className="product-rating">
         </div>
         <p className="product-description">{product.descripcion}</p>
-        <div className="product-price">  ₡{product.precio}</div>
+        <div className="product-price">₡{product.precio}</div>
       </div>
     </div>
   );
 };
+
 const Vistaproducto = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
-    fetch(`${domain}:8000/productos/`)
+    // URL fija para los productos
+    fetch('http://localhost:8000/productos/')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al cargar los productos');
@@ -41,11 +42,13 @@ const Vistaproducto = () => {
         setLoading(false);
       });
   }, []);
+
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="product-list">
-      <Navegar/>
+      <Navegar />
       {products.length > 0 ? (
         products.map((product) => <ProductCard key={product.id} product={product} />)
       ) : (
@@ -54,4 +57,5 @@ const Vistaproducto = () => {
     </div>
   );
 };
+
 export default Vistaproducto;

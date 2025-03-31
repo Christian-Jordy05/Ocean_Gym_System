@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import './Pago_menbresia.css';
 import { GetInscripcion, PostInscripcion, UpdateInscripcion, GetMetodoPago } from '../../../services/Incripsion';
 import Swal from 'sweetalert2';
-let domain =window.location.origin
+//let domain =window.location.origin
 
 function Pago_menbresia() {
   const [email, setEmail] = useState('');
@@ -32,7 +32,7 @@ function Pago_menbresia() {
         throw new Error('ID de inscripción no disponible');
       }
 
-      const qrLink = `${domain}:80/Qrs_de_Usuarios?id=${userId}`;
+      const qrLink = `:80/Qrs_de_Usuarios?id=${userId}`;
       // console.log('Generando QR para el link:', qrLink);
       
       const qrBase64 = await QRCode.toDataURL(qrLink);
@@ -85,7 +85,7 @@ function Pago_menbresia() {
         });
         setUsuario(RevisionDeIncripcion);
       } else {
-        Swal.fire({
+        Swal.fire({     
           icon: 'success',
           title: 'Crear nueva inscripción',
           text: 'El usuario no está registrado. Proceda a crear una inscripción nueva.',
@@ -104,8 +104,9 @@ function Pago_menbresia() {
     }
   };
 
-  const obtenerIdMetodoPago = async (metodoPago) => {
+  const obtenerIdMetodoPago = async (metodoPago) => { 
     const metodosPago = await GetMetodoPago(); 
+     console.log(metodosPago);
     const metodo = metodosPago.find((m) => m.descripcion.toLowerCase() === metodoPago.toLowerCase());
     return metodo ? metodo.id_metododepago : null;
   };

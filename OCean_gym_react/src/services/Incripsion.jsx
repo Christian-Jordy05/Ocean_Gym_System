@@ -1,4 +1,4 @@
-let domain = window.location.origin
+//let domain = window.location.origin
 
 const url = `http://localhost:8000/Inscripcion/`;
 import Cookies from "js-cookie";
@@ -13,6 +13,7 @@ const GetInscripcion = async () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
+      
       credentials: 'include', // Envía cookies junto con la solicitud
     });
     if (!response.ok) {
@@ -33,6 +34,7 @@ const PostInscripcion = async (email, tipo_inscripcion, id_metododepago, costo) 
     id_metododepago,
     costo,
   });
+  console.log(body1); 
 
   const response1 = await fetch(url, {
     method: 'POST',

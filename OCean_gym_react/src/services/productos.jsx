@@ -1,11 +1,12 @@
-
-let domain = window.location.origin
-
-const url = `http://localhost:8000/productos/`;
+const domain = window.location.origin; 
+const url = `${domain}:8000/productos/`;
 
 const Getproductos = async () => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url); // Usamos la URL completa para hacer la petición
+    if (!response.ok) {
+      throw new Error('Error al obtener los productos');
+    }
     const data = await response.json();
     return data;
   } catch (error) {
