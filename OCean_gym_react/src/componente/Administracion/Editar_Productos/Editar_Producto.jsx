@@ -110,6 +110,8 @@ const Editar_producto = () => {
   
   // Función para abrir el modal de edición
   const manejarEditar = (product) => {
+    let nuevaImagenFile = null;
+
     Swal.fire({
       title: 'Editar Producto',
       html: `
@@ -127,30 +129,61 @@ const Editar_producto = () => {
             <input type="text" id="precio" class="swal2-input" value="${product.precio}">
           </div>
           <div class="swal-form-group">
-            <label for="img">Imagen URL:</label>
-            <input type="text" id="img" class="swal2-input" value="${product.img}">
+            <label for="imagen">Nueva Imagen (opcional):</label>
+            <input type="file" id="imagen" accept="image/*" class="swal2-file">
           </div>
           <div class="swal-image-preview">
-            <img src="${product.img}" alt="${product.nombre}" />
+            <img src="${product.img}" alt="${product.nombre}" style="max-width: 100px;" />
           </div>
         </div>
       `,
+      didOpen: () => {
+        const fileInput = Swal.getPopup().querySelector('#imagen');
+        fileInput.addEventListener('change', (e) => {
+          nuevaImagenFile = e.target.files[0];
+        });
+      },
       showCancelButton: true,
       confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar',
       confirmButtonColor: 'var(--primary-color)',
       cancelButtonColor: 'var(--text-secondary)',
-      preConfirm: () => {
+      preConfirm: async () => {
         const nombre = document.getElementById('nombre').value;
         const descripcion = document.getElementById('descripcion').value;
         const precio = document.getElementById('precio').value;
-        const img = document.getElementById('img').value;
-        
-        if (!nombre || !descripcion || !precio || !img) {
+
+        if (!nombre || !descripcion || !precio) {
           Swal.showValidationMessage('Todos los campos son obligatorios');
           return false;
         }
-        
+
+        let img = product.img;
+
+        if (nuevaImagenFile) {
+          const token = getCookie('user_token');
+          const formData = new FormData();
+          formData.append('image', nuevaImagenFile);
+
+          const response = await fetch('http://localhost:8000/api/subir-imagen/', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+            credentials: 'include',
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            Swal.showValidationMessage('Error al subir la nueva imagen');
+            return false;
+          }
+
+          img = data.image_url;
+        }
+
         return { nombre, descripcion, precio, img };
       }
     }).then((result) => {

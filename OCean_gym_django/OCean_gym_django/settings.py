@@ -122,8 +122,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Ocean_Gym',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'mysql',  
+        'PASSWORD': 'yacith2006',
+        'HOST': '127.0.0.1',  
         'PORT': '3306',
     }
 }
