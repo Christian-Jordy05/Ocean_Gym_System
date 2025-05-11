@@ -84,7 +84,6 @@ class MetodoDePago(models.Model):
     def __str__(self):
         return self.get_descripcion_display()
 
-
 class Inscripcion(models.Model):
     id_inscripcion = models.AutoField(primary_key=True)
     email = models.CharField(max_length=200)
@@ -113,25 +112,29 @@ class Inscripcion(models.Model):
         duracion = self.DURACION_INSCRIPCIONES.get(tipo_inscripcion)
         if duracion is None:
             raise ValueError("Tipo de inscripción no válido")
-        
-        # Si ya hay una fecha de expiración, sumamos los días
-        if self.fecha_expiracion:
+
+        ahora = timezone.now()
+
+        # Actualiza fecha de inscripción
+        self.fecha_inscripcion = ahora
+
+        if self.fecha_expiracion and self.fecha_expiracion > ahora:
             self.fecha_expiracion += timedelta(days=duracion)
         else:
-            # Si no hay fecha de expiración, se establece una nueva
-            self.fecha_expiracion = timezone.now() + timedelta(days=duracion)
+            self.fecha_expiracion = ahora + timedelta(days=duracion)
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.extender_inscripcion(self.tipo_inscripcion)
-        else:
-            self.extender_inscripcion(self.tipo_inscripcion)
+
         super().save(*args, **kwargs)
 
-        self.client.is_active = any(inscripcion.dias_restantes > 0 for inscripcion in self.client.inscripciones.all())
-        self.client.save()
+        if self.client:
+            self.client.is_active = any(
+                inscripcion.dias_restantes > 0 for inscripcion in self.client.inscripciones.all()
+            )
+            self.client.save()
 
-    
 
 class RegistroDePagos(models.Model):
     id_pago = models.AutoField(primary_key=True)
@@ -141,7 +144,8 @@ class RegistroDePagos(models.Model):
     id_inscripcion = models.ForeignKey(Inscripcion, on_delete=models.CASCADE, related_name='pagos') 
 
     def __str__(self):
-        return f"Pago {self.id_pago} - Cliente: {self.id_inscripcion.gmail} - Monto: {self.monto} - Fecha: {self.fecha_pago.strftime('%d/%m/%Y')}"
+       return f"Pago {self.id_pago} - Cliente: {self.id_inscripcion.email} - Monto: {self.monto} - Fecha: {self.fecha_pago.strftime('%d/%m/%Y')}"
+
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)

@@ -62,13 +62,6 @@ class ProductoSerializer(serializers.ModelSerializer):
         model = Producto
         fields = ['id_producto', 'nombre', 'descripcion', 'precio', 'img']
 
-
-
-    
-
-
-
-
 class MetodoDePagoSerializer(serializers.ModelSerializer):
     descripcion = serializers.CharField(source='get_descripcion_display', read_only=True)
 
@@ -84,8 +77,6 @@ class ContactSerializer(serializers.Serializer):
 
 
 
-
-
 from rest_framework import serializers
 from .models import RegistroDePagos, Client, Inscripcion 
 
@@ -96,11 +87,12 @@ class RegistroDePagosSerializer(serializers.ModelSerializer):
         read_only_fields = ['id_pago', 'fecha_pago']
 
 
-
-
 from rest_framework import serializers
 from .models import Inscripcion, Client
 from django.utils import timezone
+from django.utils.timezone import localtime
+
+
 
 class InscripcionSerializer(serializers.ModelSerializer):
     dias_restantes = serializers.IntegerField(read_only=True)
@@ -119,6 +111,7 @@ class InscripcionSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if 'tipo_inscripcion' in validated_data:
             instance.extender_inscripcion(validated_data['tipo_inscripcion'])
+            instance.fecha_inscripcion = timezone_now()  # <== Establece la nueva fecha de inscripción actualizada
 
         for attr, value in validated_data.items():
             if attr not in ['fecha_inscripcion', 'fecha_expiracion']:
@@ -130,16 +123,16 @@ class InscripcionSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         
-        # Formateo de fechas
+        # Formateo de fechas a hora local (Costa Rica)
         if instance.fecha_inscripcion:
-            data['fecha_inscripcion'] = instance.fecha_inscripcion.strftime('%d/%m/%Y')
+            data['fecha_inscripcion'] = localtime(instance.fecha_inscripcion).strftime('%d/%m/%Y')
         else:
             data['fecha_inscripcion'] = None 
 
         if instance.fecha_expiracion:
-            data['fecha_expiracion'] = instance.fecha_expiracion.strftime('%d/%m/%Y')
+            data['fecha_expiracion'] = localtime(instance.fecha_expiracion).strftime('%d/%m/%Y')
             dias_restantes = (instance.fecha_expiracion - timezone.now()).days
-            data['dias_restantes'] = dias_restantes
+            data['dias_restantes'] = max(0, dias_restantes)
             data['is_active'] = dias_restantes > 0 
         else:
             data['fecha_expiracion'] = None 
