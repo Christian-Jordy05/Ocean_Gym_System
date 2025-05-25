@@ -1,39 +1,52 @@
+version: "3.9"
+
 services:
-  app:
-    container_name: ocean_gym_react-production
-    image: ocean_gym_react-production:prod
-    build:
-      context: ./OCean_gym_react
-      target: production
-      args:
-        - NODE_ENV=production
-      dockerfile: Dockerfile.prod
+  mysql:
+    image: mysql:latest
+    container_name: mysql
     ports:
-      - 80:80
-    
-  ocean_gym_django:  
-    image: ocean_gym_django 
-    container_name: ocean_gym_django
+      - "3307:3306"
+    environment:
+      # La primera vez que el volumen esté vacío, MySQL creará esta BD
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Ocean_Gym
+    volumes:
+      - django_react_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ocean_gym_django:
     build:
       context: ./OCean_gym_django
+    container_name: ocean_gym_django
     ports:
       - "8000:8000"
     volumes:
       - ./OCean_gym_django:/app
-    command: ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    working_dir: "/app"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
 
-  mysql:
-    image: mysql:latest
+  react_app:
+    build:
+      context: ./OCean_gym_react
+      dockerfile: Dockerfile
+    container_name: ocean_gym_react-dev
     ports:
-      - "3307:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=Ocean_Gym
+      - "5173:5173"
     volumes:
-      - django_react_data:/data/db
-      - ./dumps:/docker-entrypoint-initdb.d:ro
+      - ./OCean_gym_react:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev"]
 
 volumes:
   django_react_data:

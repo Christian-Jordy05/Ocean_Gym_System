@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'react_app',"192.168.100.31","192.168.122.124"]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost",
     "http://127.0.0.1:5173",
     "http://react_app:5173",
     "http://172.19.16.1:5173",
@@ -37,7 +38,8 @@ CORS_ALLOWED_ORIGINS = [
     
 ]
 
-
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 SESSION_COOKIE_SECURE = False  
 CSRF_COOKIE_SECURE = False
@@ -75,8 +77,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Cambia esto según tu proveedor SMTP
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ydelgado@fwdcostarica.com'  
-EMAIL_HOST_PASSWORD = 'wlct fkiq htyl kndr'  
+EMAIL_HOST_USER = 'geusb222@gmail.com'  
+EMAIL_HOST_PASSWORD = 'apxvuatoskqiqnup'  
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
@@ -123,10 +125,12 @@ DATABASES = {
         'NAME': 'Ocean_Gym',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'mysql',  
-        'PORT': '3306',
+        'HOST': 'mysql',      
+        'PORT': '3306',       
     }
 }
+
+
 
 
 # Password validation

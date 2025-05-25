@@ -282,16 +282,23 @@ import requests
 
 clientId = 'fcd86062a529556'
 
+import traceback
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def generar_qr_imgur(request):
+    print("Entró a generar_qr_imgur")  # Para saber que entró
+
     if request.method == "POST":
         try:
             data = json.loads(request.body)
+            print("Datos recibidos:", data)  # Ver qué datos llegan
+
             qr_base64 = data.get("qr_base64")
             email = data.get("email")
 
             if not qr_base64 or not email:
+                print("Faltan datos qr_base64 o email")
                 return JsonResponse({"error": "El QR y el correo son obligatorios."}, status=400)
 
             headers = {
@@ -299,8 +306,9 @@ def generar_qr_imgur(request):
                 "Content-Type": "application/json"
             }
 
-            # Enviar la imagen a Imgur
             response = requests.post("https://api.imgur.com/3/image", headers=headers, json={"image": qr_base64})
+            print("Respuesta Imgur:", response.status_code, response.text)
+
             if response.status_code != 200:
                 return JsonResponse({"error": "Error al subir la imagen a Imgur"}, status=response.status_code)
 
@@ -308,29 +316,32 @@ def generar_qr_imgur(request):
             imgur_link = response_data["data"].get("link")
 
             if not imgur_link:
+                print("No se obtuvo link de Imgur")
                 return JsonResponse({"error": "Error al recibir la URL desde Imgur"}, status=500)
 
-            # Enviar correo electrónico con el enlace del QR
             subject = "Tu código QR"
             message = f"Aquí está tu código QR: {imgur_link}"
             from_email = "ydelgado@fwdcostarica.com"
             recipient_list = [email]
 
-            # Envía el correo y captura excepciones
             try:
                 send_mail(subject, message, from_email, recipient_list)
             except Exception as e:
+                print("Error enviando mail:", str(e))
+                traceback.print_exc()  # Imprime la traza del error
                 return JsonResponse({"error": f"Error al enviar el correo: {str(e)}"}, status=500)
 
             return JsonResponse({"imgur_link": imgur_link}, status=200)
 
         except json.JSONDecodeError:
+            print("Error: JSON inválido")
             return JsonResponse({"error": "Formato JSON inválido"}, status=400)
         except Exception as e:
+            print("Excepción general:", str(e))
+            traceback.print_exc()
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
-
 
 
 

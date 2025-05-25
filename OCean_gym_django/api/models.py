@@ -99,7 +99,7 @@ class Inscripcion(models.Model):
         'dia': 1,
         'semanal': 7,
         'quincenal': 15,
-        'mensual': 30
+        'mensual': 30,
     }
 
     @property
@@ -113,23 +113,31 @@ class Inscripcion(models.Model):
         duracion = self.DURACION_INSCRIPCIONES.get(tipo_inscripcion)
         if duracion is None:
             raise ValueError("Tipo de inscripción no válido")
-        
-        # Si ya hay una fecha de expiración, sumamos los días
-        if self.fecha_expiracion:
+
+        if self.fecha_expiracion and self.fecha_expiracion > timezone.now():
+            # Si aún está activa, se extiende desde la fecha actual
             self.fecha_expiracion += timedelta(days=duracion)
         else:
-            # Si no hay fecha de expiración, se establece una nueva
+            # Si ya expiró o no tiene fecha, se reinicia desde hoy
             self.fecha_expiracion = timezone.now() + timedelta(days=duracion)
 
     def save(self, *args, **kwargs):
         if not self.pk:
+            # Nueva inscripción
             self.extender_inscripcion(self.tipo_inscripcion)
         else:
-            self.extender_inscripcion(self.tipo_inscripcion)
+            # Edición de inscripción existente
+            old = Inscripcion.objects.get(pk=self.pk)
+            if old.tipo_inscripcion != self.tipo_inscripcion:
+                self.extender_inscripcion(self.tipo_inscripcion)
+
         super().save(*args, **kwargs)
 
-        self.client.is_active = any(inscripcion.dias_restantes > 0 for inscripcion in self.client.inscripciones.all())
+        # Actualizar el estado activo del cliente
+        inscripciones = self.client.inscripciones.all()
+        self.client.is_active = any(ins.dias_restantes > 0 for ins in inscripciones)
         self.client.save()
+
 
     
 
